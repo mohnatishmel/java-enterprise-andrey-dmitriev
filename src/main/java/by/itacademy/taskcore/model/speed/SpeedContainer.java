@@ -1,14 +1,32 @@
 package by.itacademy.taskcore.model.speed;
 
-import by.itacademy.taskcore.model.MeasurementContainer;
-import lombok.RequiredArgsConstructor;
+import by.itacademy.taskcore.model.Convertible;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 
-public class SpeedContainer implements MeasurementContainer {
+public class SpeedContainer implements Convertible {
 
-    private final double value;
-    private final String unit;
+    private final String id;
+    private double value;
+    private String unit;
+
+    @Override
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    @Override
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
 
     @Override
     public double getValue() {
@@ -18,6 +36,11 @@ public class SpeedContainer implements MeasurementContainer {
     @Override
     public String getUnit() {
         return unit;
+    }
+
+    @Override
+    public Convertible clone() {
+        return new SpeedContainer(id,value,unit);
     }
 
     @Override
