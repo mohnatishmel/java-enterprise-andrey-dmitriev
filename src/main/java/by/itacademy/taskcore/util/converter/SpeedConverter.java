@@ -3,7 +3,7 @@ package by.itacademy.taskcore.util.converter;
 import by.itacademy.taskcore.exception.IllegalUnitTypeException;
 import by.itacademy.taskcore.model.Convertible;
 
-public class Converter {
+public class SpeedConverter {
 
     public static Convertible convertToMetersPerSecond(Convertible convertible) throws IllegalUnitTypeException {
         double value = convertible.getValue();
@@ -21,6 +21,7 @@ public class Converter {
         } else {
             throw new IllegalUnitTypeException("Unit type can't be null");
         }
+        convertible = convertible.clone();
         convertible.setUnit("ms");
         convertible.setValue(value);
         return convertible;
