@@ -26,7 +26,7 @@ class DaoDataValidatorTest {
         validData = "1 ms";
         validData1 = "2 kmh";
         validData2 = "3 mph";
-        validData3 = "1 kh";
+        validData3 = "1 kn";
 
         invalidData = "123 sdfnhlkjhn";
         invalidData1 = "nhf/fgbrr3 ms";

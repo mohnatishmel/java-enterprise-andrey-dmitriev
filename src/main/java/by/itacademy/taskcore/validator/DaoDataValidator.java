@@ -6,7 +6,7 @@ public class DaoDataValidator implements Validator<String> {
     public boolean validate(String data) {
         boolean result = false;
         if (data != null) {
-            String regularExpression = "^\\d+\\s+(ms|kmh|mph|kh)";
+            String regularExpression = "^\\d+\\s+(ms|kmh|mph|kn)";
             result = data.matches(regularExpression);
         }
         return result;
