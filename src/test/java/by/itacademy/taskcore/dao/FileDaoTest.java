@@ -28,7 +28,7 @@ class FileDaoTest {
 
     @Test
     void positiveRead() throws DaoException {
-        actual = dao.read("test.txt");
+        actual = dao.read("test/daoTest.txt");
         assertEquals(actual, expected);
     }
 
