@@ -1,50 +1,42 @@
 package by.itacademy.taskcore.model.speed;
 
-import by.itacademy.taskcore.model.Convertible;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import by.itacademy.taskcore.model.Measurement;
+import by.itacademy.taskcore.model.MeasurementContainer;
 
-@AllArgsConstructor
-@EqualsAndHashCode
+import java.util.HashMap;
+import java.util.Map;
 
-public class SpeedContainer implements Convertible {
+public class SpeedContainer implements MeasurementContainer<Speed> {
 
-    private final String id;
-    private double value;
-    private String unit;
+    private final Map<String, Speed> measurements;
+    private final Speed original;
 
-    @Override
-    public void setValue(double value) {
-        this.value = value;
+    {
+        measurements = new HashMap<>(4);
+    }
+
+    public SpeedContainer(Speed speed) {
+        original = speed;
+        String unit = speed.getUnit();
+        measurements.put(unit, speed);
     }
 
     @Override
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void add(Measurement speed) {
+        String unit = speed.getUnit();
+        measurements.put(unit, (Speed) speed);
     }
 
     @Override
-    public String getId() {
-        return id;
+    public Speed getOriginal() {
+        return new Speed(original);
     }
 
     @Override
-    public double getValue() {
-        return value;
-    }
-
-    @Override
-    public String getUnit() {
-        return unit;
-    }
-
-    @Override
-    public Convertible clone() {
-        return new SpeedContainer(id,value,unit);
-    }
-
-    @Override
-    public String toString() {
-        return value + " " + unit;
+    public Speed get(String unit) {
+        Speed speed = measurements.get(unit);
+        return new Speed(speed);
     }
 }
+
+

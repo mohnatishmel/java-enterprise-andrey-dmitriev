@@ -1,10 +1,11 @@
 package by.itacademy.taskcore.model;
 
-public interface MeasurementContainer {
+public interface MeasurementContainer <T extends Measurement> {
 
-    String getId();
+    void add(Measurement t);
 
-    double getValue();
+    T getOriginal();
 
-    String getUnit();
+    T get(String unit);
+
 }
