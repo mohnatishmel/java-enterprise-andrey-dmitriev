@@ -36,8 +36,8 @@ ALTER TABLE `users`
 
 CREATE TABLE `personal_information` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL
+  `first_name` varchar(255),
+  `last_name` varchar(255)
 );
 --
 -- Indexes for table `personal_information`
@@ -130,8 +130,8 @@ ALTER TABLE `tasks`
 
 CREATE TABLE `task_information` (
   `id` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `file_path` varchar(255) NOT NULL
+  `description` varchar(255),
+  `file_path` varchar(255)
 );
 --
 -- Indexes for table `task_information`
