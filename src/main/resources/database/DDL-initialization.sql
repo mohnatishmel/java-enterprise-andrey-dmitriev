@@ -168,3 +168,33 @@ ALTER TABLE `collaborators`
 --
 -- Constraints for table `collaborators`
 --
+
+-- --------------------------------------------------------
+--                          CONSTRAINTS
+-- --------------------------------------------------------
+
+--
+-- Constraints for table `collaborators`
+--
+ALTER TABLE `collaborators`
+  ADD CONSTRAINT `FK_Collaborators` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `collaborators`
+  ADD CONSTRAINT `FK_Task_collaborators` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`);
+
+--
+-- Constraints for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `FK_Task_information` FOREIGN KEY (`task_information_id`) REFERENCES `task_information` (`id`);
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `FK_Users_task` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `FK_Authenticate` FOREIGN KEY (`authentication_id`) REFERENCES `authenticate` (`id`);
+ALTER TABLE `users`
+  ADD CONSTRAINT `FK_Personal_information` FOREIGN KEY (`personal_information_id`) REFERENCES `personal_information` (`id`);
+ALTER TABLE `users`
+  ADD CONSTRAINT `FK_Roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
