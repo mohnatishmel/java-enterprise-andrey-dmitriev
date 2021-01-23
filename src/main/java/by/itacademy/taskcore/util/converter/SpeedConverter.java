@@ -1,18 +1,17 @@
 package by.itacademy.taskcore.util.converter;
 
-import by.itacademy.taskcore.model.Measurement;
-import by.itacademy.taskcore.model.MeasurementContainer;
 import by.itacademy.taskcore.model.speed.Speed;
+import by.itacademy.taskcore.model.speed.SpeedContainer;
 
 import java.util.List;
 
 public class SpeedConverter {
 
-    public List<MeasurementContainer<Speed>> convertToMetersPerSecond(List<MeasurementContainer<Speed>> list) {
-        for (MeasurementContainer<Speed> mc : list) {
-            Measurement measurement = mc.getOriginal();
-            convertToMetersPerSecond(measurement);
-            mc.add(measurement);
+    public List<SpeedContainer> convertToMetersPerSecond(List<SpeedContainer> list) {
+        for (SpeedContainer sc : list) {
+            Speed speed = sc.getOriginal();
+            convertToMetersPerSecond(speed);
+            sc.add(speed);
         }
         return list;
     }
@@ -31,9 +30,8 @@ public class SpeedConverter {
                 value = knotsToMetersPerSecond(value);
             }
         }
-        measurement.setUnit("ms");
-        measurement.setValue(value);
-        return measurement;
+        speed.setUnit("ms");
+        speed.setValue(value);
     }
 
     private double kilometersPerHourToMetersPerSecond(double value) {

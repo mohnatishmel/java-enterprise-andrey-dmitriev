@@ -1,10 +1,12 @@
 package by.itacademy.taskcore.model.speed;
 
-import by.itacademy.taskcore.model.Measurement;
 import by.itacademy.taskcore.model.MeasurementContainer;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
+
+@EqualsAndHashCode
 
 public class SpeedContainer implements MeasurementContainer<Speed> {
 
@@ -22,9 +24,9 @@ public class SpeedContainer implements MeasurementContainer<Speed> {
     }
 
     @Override
-    public void add(Measurement speed) {
+    public void add(Speed speed) {
         String unit = speed.getUnit();
-        measurements.put(unit, (Speed) speed);
+        measurements.put(unit, speed);
     }
 
     @Override

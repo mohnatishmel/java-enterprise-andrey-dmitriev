@@ -3,12 +3,9 @@ package by.itacademy.taskcore.service;
 import by.itacademy.taskcore.dao.Dao;
 import by.itacademy.taskcore.dao.FileDao;
 import by.itacademy.taskcore.exception.DaoException;
-import by.itacademy.taskcore.model.MeasurementContainer;
 import by.itacademy.taskcore.model.speed.Speed;
 import by.itacademy.taskcore.model.speed.SpeedContainer;
 import by.itacademy.taskcore.util.converter.SpeedConverter;
-import by.itacademy.taskcore.validator.DaoDataValidator;
-import by.itacademy.taskcore.validator.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,8 +21,7 @@ import java.util.List;
 class SpeedServiceTest {
 
     SpeedService service;
-    Dao fileDaoMock;
-    Validator<String> validatorMock;
+    Dao<SpeedContainer> fileDaoMock;
     SpeedConverter converterMock;
     List<String> daoDataStringList;
     String fileName;
@@ -40,10 +36,7 @@ class SpeedServiceTest {
         fileDaoMock = Mockito.mock(FileDao.class);
         Mockito.when(fileDaoMock.read(wrongFileName)).thenThrow(DaoException.class);
 
-        validatorMock = Mockito.mock(DaoDataValidator.class);
-        Mockito.when(validatorMock.validate(any())).thenReturn(true);
-
-        List<MeasurementContainer<Speed>> list = Arrays.asList(
+        List<SpeedContainer> list = Arrays.asList(
                 new SpeedContainer( new Speed(1, "ms")),
                 new SpeedContainer( new Speed(1, "kn")),
                 new SpeedContainer( new Speed(2, "mph")),
@@ -58,7 +51,7 @@ class SpeedServiceTest {
         Mockito.when(converterMock.convertToMetersPerSecond(Collections.singletonList(any())))
                 .thenReturn(list);
 
-        service = new SpeedService(fileDaoMock, validatorMock, converterMock);
+        service = new SpeedService(fileDaoMock, converterMock);
     }
 
     @Test

@@ -1,13 +1,12 @@
 package by.itacademy.taskcore.model.speed;
 
 import by.itacademy.taskcore.model.Measurement;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.text.DecimalFormat;
 
 @AllArgsConstructor
-@EqualsAndHashCode
+@Data
 
 public class Speed implements Measurement {
 
@@ -17,26 +16,6 @@ public class Speed implements Measurement {
     public Speed(Speed speed) {
         value = speed.getValue();
         unit = speed.getUnit();
-    }
-
-    @Override
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    @Override
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    @Override
-    public double getValue() {
-        return value;
-    }
-
-    @Override
-    public String getUnit() {
-        return unit;
     }
 
     @Override

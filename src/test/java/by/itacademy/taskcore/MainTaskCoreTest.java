@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +11,6 @@ class MainTaskCoreTest {
 
     PrintStream out;
     ByteArrayOutputStream os;
-    ByteArrayInputStream in;
     String filename;
     String expected;
 
@@ -22,7 +20,6 @@ class MainTaskCoreTest {
         in = new ByteArrayInputStream(filename.getBytes(StandardCharsets.UTF_8));
         os = new ByteArrayOutputStream();
         out = new PrintStream(os);
-        System.setIn(in);
         System.setOut(out);
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/test/mainTest.txt"))) {
@@ -37,9 +34,16 @@ class MainTaskCoreTest {
     }
 
     @Test
-    void main() throws UnsupportedEncodingException {
-        MainTaskCore.main(new String[0]);
+    void mainPositive() throws UnsupportedEncodingException {
+        MainTaskCore.main(new String[] {filename});
         String actual = os.toString("UTF8");
         assertEquals(expected,actual);
+    }
+
+    @Test
+    void mainNegative() throws UnsupportedEncodingException {
+        MainTaskCore.main(new String[] {"wrongFIleName"});
+        String actual = os.toString("UTF8");
+        assertEquals("\n\n\n\nno\n\n",actual);
     }
 }

@@ -2,7 +2,7 @@ package by.itacademy.taskcore.model;
 
 public interface MeasurementContainer <T extends Measurement> {
 
-    void add(Measurement t);
+    void add(T t);
 
     T getOriginal();
 

@@ -1,8 +1,6 @@
 package by.itacademy.taskcore.model;
 
-public interface Convertible extends MeasurementContainer{
-
-    Convertible clone();
+public interface Convertible {
 
     void setValue(double value);
 
