@@ -17,7 +17,6 @@ class MainTaskCoreTest {
     @BeforeEach
     void init() throws IOException {
         filename = "speed.txt";
-        in = new ByteArrayInputStream(filename.getBytes(StandardCharsets.UTF_8));
         os = new ByteArrayOutputStream();
         out = new PrintStream(os);
         System.setOut(out);

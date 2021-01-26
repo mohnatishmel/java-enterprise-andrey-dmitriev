@@ -16,13 +16,11 @@ public class SpeedConverter {
         return list;
     }
 
-    public Measurement convertToMetersPerSecond(Measurement measurement) {
-        double value = measurement.getValue();
-        String unit = measurement.getUnit();
+    public void convertToMetersPerSecond(Speed speed) {
+        double value = speed.getValue();
+        String unit = speed.getUnit();
         if (unit != null) {
-            if (unit.equals("ms")) {
-                return measurement;
-            } if (unit.equals("kmh")) {
+            if (unit.equals("kmh")) {
                 value = kilometersPerHourToMetersPerSecond(value);
             }  if (unit.equals("mph")) {
                 value = milesPerHourToMetersPerSecond(value);

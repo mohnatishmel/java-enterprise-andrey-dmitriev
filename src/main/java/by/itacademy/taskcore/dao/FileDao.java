@@ -1,7 +1,6 @@
 package by.itacademy.taskcore.dao;
 
 import by.itacademy.taskcore.exception.DaoException;
-import by.itacademy.taskcore.model.MeasurementContainer;
 import by.itacademy.taskcore.model.speed.Speed;
 import by.itacademy.taskcore.model.speed.SpeedContainer;
 import by.itacademy.taskcore.validator.Validator;
