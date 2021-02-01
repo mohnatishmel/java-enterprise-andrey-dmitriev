@@ -1,12 +1,11 @@
 package by.itacademy.model.user;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
-@Getter
+@Data
 public class LoginPasswordCredentials {
 
+    private final int id;
     private final String login;
     private final String password;
 }

@@ -11,7 +11,4 @@ public interface UserDetails {
     String	getUsername();
 
     boolean	isAccountNonLocked();
-
-    boolean	isEnabled();
-
 }

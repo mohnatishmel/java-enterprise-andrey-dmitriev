@@ -1,15 +1,16 @@
 package by.itacademy.model.user;
 
 import by.itacademy.security.GrantedAuthority;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
+@Data
 public class Role implements GrantedAuthority {
 
+    private final int id;
     private final String role;
 
     @Override
     public String getAuthority() {
-        return null;
+        return role;
     }
 }
