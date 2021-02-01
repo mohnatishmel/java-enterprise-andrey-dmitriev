@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public final class JdbcConnector implements Connector{
 
-    private static final JdbcConnector INSTANCE = new JdbcConnector();
+    private static JdbcConnector instance;
 
     private static final String DATABASE_DRIVER;
     private static final String DATABASE_URL;
@@ -39,7 +39,10 @@ public final class JdbcConnector implements Connector{
     }
 
     public static JdbcConnector getInstance() {
-        return INSTANCE;
+        if (instance == null) {
+            instance = new JdbcConnector();
+        }
+        return instance;
     }
 
     public Connection getConnection() throws SQLException {

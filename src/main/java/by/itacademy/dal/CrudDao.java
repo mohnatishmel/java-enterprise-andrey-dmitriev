@@ -1,17 +1,19 @@
 package by.itacademy.dal;
 
+import by.itacademy.dal.jdbc.exception.DaoException;
+
 import java.util.List;
 
 public interface CrudDao<T> {
 
-    T getById(long id);
+    T getById(int id) throws DaoException;
 
-    List<T> getAll();
+    List<T> getAll() throws DaoException;
 
-    T create(T t);
+    T create(T t) throws DaoException;
 
-    T update(T t);
+    T update(T t) throws DaoException;
 
-    void delete(long id);
+    void delete(int id) throws DaoException;
 
 }

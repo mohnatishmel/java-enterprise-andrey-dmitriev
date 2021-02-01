@@ -48,4 +48,11 @@ public class C3P0Connector implements Connector {
     public Connection getConnection() throws SQLException {
             return dataSource.getConnection();
     }
+
+    public static C3P0Connector getInstance() {
+        if (instance == null) {
+            instance = new C3P0Connector();
+        }
+        return instance;
+    }
 }

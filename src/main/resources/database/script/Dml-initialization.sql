@@ -34,19 +34,19 @@ INSERT INTO personal_information (first_name, last_name) VALUES ('Simeon', 'Belh
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login_password_credentials`
+-- Table structure for table `credentials`
 --
 
-INSERT INTO login_password_credentials (login, password) VALUES ('user', 'pass');
-INSERT INTO login_password_credentials (login, password) VALUES ('admin', 'pass');
-INSERT INTO login_password_credentials (login, password) VALUES ('user1', 'OypZ5Qdjb');
-INSERT INTO login_password_credentials (login, password) VALUES ('user2', 'ZNpoafWzXkX');
-INSERT INTO login_password_credentials (login, password) VALUES ('user3', 'iICPFhu');
-INSERT INTO login_password_credentials (login, password) VALUES ('user4', 'B2SWfGyiKQPB');
-INSERT INTO login_password_credentials (login, password) VALUES ('user5', 'uRRqzDMsM');
-INSERT INTO login_password_credentials (login, password) VALUES ('user6', 'J2wtx7RW');
-INSERT INTO login_password_credentials (login, password) VALUES ('user7', 'OyA4vT4nQOa');
-INSERT INTO login_password_credentials (login, password) VALUES ('user8', 'QlH8W4F');
+INSERT INTO credentials (login, password) VALUES ('user', 'pass');
+INSERT INTO credentials (login, password) VALUES ('admin', 'pass');
+INSERT INTO credentials (login, password) VALUES ('user1', 'OypZ5Qdjb');
+INSERT INTO credentials (login, password) VALUES ('user2', 'ZNpoafWzXkX');
+INSERT INTO credentials (login, password) VALUES ('user3', 'iICPFhu');
+INSERT INTO credentials (login, password) VALUES ('user4', 'B2SWfGyiKQPB');
+INSERT INTO credentials (login, password) VALUES ('user5', 'uRRqzDMsM');
+INSERT INTO credentials (login, password) VALUES ('user6', 'J2wtx7RW');
+INSERT INTO credentials (login, password) VALUES ('user7', 'OyA4vT4nQOa');
+INSERT INTO credentials (login, password) VALUES ('user8', 'QlH8W4F');
 
 
 -- --------------------------------------------------------

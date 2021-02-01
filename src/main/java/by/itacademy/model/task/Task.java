@@ -10,11 +10,15 @@ import java.util.Date;
 @Builder
 public class Task {
 
-    private final int id;
-    private final int userId;
+    private int id;
+    private int userId;
     private TaskInformation taskInfo;
     private Date deaLine;
     private boolean fixed;
     private boolean inBasket;
     private Collection<User> collaborators;
+
+    public static TaskBuilder builder() {
+        return new TaskBuilder();
+    }
 }
