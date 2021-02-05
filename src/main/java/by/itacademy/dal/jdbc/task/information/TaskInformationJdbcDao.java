@@ -2,13 +2,10 @@ package by.itacademy.dal.jdbc.task.information;
 
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.HikariCPConnector;
-import by.itacademy.dal.jdbc.exception.DaoException;
+import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.TaskInformation;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class TaskInformationJdbcDao {
@@ -18,10 +15,10 @@ public class TaskInformationJdbcDao {
     private static TaskInformationJdbcDao instance = null;
 
 
-    private static final String GET_BY_ID_SQL = "SELECT 'task_information_id', 'description', 'filepath'  FROM task_information, WHERE 'task_information_id' = ?;";
-    private static final String UPDATE_SQL = "UPDATE  task_information SET 'description' = ?, 'filepath' = ?, WHERE 'task_information_id' = ?;";
-    private static final String CREATE_SQL = "INSERT INTO task_information('description', 'filepath') VALUES(?,?);";
-    private static final String DELETE_SQL = "DELETE FROM task_information, WHERE 'task_information_id' = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT task_information_id, description, file_path  FROM task_information WHERE task_information_id = ?;";
+    private static final String UPDATE_SQL = "UPDATE  task_information SET description = ?, file_path = ? WHERE task_information_id = ?;";
+    private static final String CREATE_SQL = "INSERT INTO task_information(description, file_path) VALUES(?,?);";
+    private static final String DELETE_SQL = "DELETE FROM task_information WHERE task_information_id = ?;";
 
     {
         connector = HikariCPConnector.getInstance();
@@ -50,7 +47,7 @@ public class TaskInformationJdbcDao {
 
     public TaskInformation create(TaskInformation taskInformation) throws DaoException {
         try (Connection connection = connector.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(CREATE_SQL);
+            PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
             processStatementInitialization(statement, taskInformation);
             statement.executeUpdate();
 
@@ -71,7 +68,8 @@ public class TaskInformationJdbcDao {
         try (Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
             processStatementInitialization(statement, taskInformation);
-            statement.executeQuery();
+            statement.setInt(3, taskInformation.getId());
+            statement.execute();
 
             return taskInformation;
 
@@ -86,7 +84,7 @@ public class TaskInformationJdbcDao {
         try (Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
             statement.setInt(1, id);
-            statement.executeUpdate();
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,9 +103,9 @@ public class TaskInformationJdbcDao {
         try {
             int id = rs.getInt("task_information_id");
             String description = rs.getString("description");
-            String filepath = rs.getString("filepath");
+            String filePath = rs.getString("file_path");
 
-            return new TaskInformation(id, description, filepath);
+            return new TaskInformation(id, description, filePath);
         } catch (SQLException e) {
             throw new DaoException("Error mapping resultSet to TaskInformation Object");
         }

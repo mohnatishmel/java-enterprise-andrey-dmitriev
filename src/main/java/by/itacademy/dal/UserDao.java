@@ -1,10 +1,10 @@
 package by.itacademy.dal;
 
-import by.itacademy.dal.jdbc.exception.DaoException;
+
 import by.itacademy.model.user.User;
+import by.itacademy.security.UserDetailService;
 
-public interface UserDao extends CrudDao<User> {
+public interface UserDao extends CrudDao<User>, UserDetailService {
 
-    User fondUserByName(String name) throws DaoException;
 
 }

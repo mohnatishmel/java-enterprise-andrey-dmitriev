@@ -1,6 +1,6 @@
 package by.itacademy.dal;
 
-import by.itacademy.dal.jdbc.exception.DaoException;
+import by.itacademy.exception.DaoException;
 
 import java.util.List;
 

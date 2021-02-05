@@ -3,16 +3,14 @@ package by.itacademy.dal.jdbc.task;
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.HikariCPConnector;
-import by.itacademy.dal.jdbc.exception.DaoException;
+import by.itacademy.exception.DaoException;
 import by.itacademy.dal.jdbc.task.information.TaskInformationJdbcDao;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,12 +19,12 @@ public class TaskJdbcDao implements TaskDao {
     private final Connector connector;
     private final TaskInformationJdbcDao taskInformationJdbcDao;
 
-    private static final String FIND_BY_USER_ID = "SELECT 'task_id', 'user_id', 'task_information_id', 'dead_line', 'fixed', 'in_basket'  FROM tasks, WHERE user_id = ?;";
-    private static final String GET_BY_ID_SQL = "SELECT 'task_id', 'user_id', 'task_information_id', 'dead_line', 'fixed', 'in_basket'  FROM tasks, WHERE 'task_id' = ?;";
-    private static final String GET_ALL_SQL = "SELECT 'task_id' 'user_id', 'task_information_id', 'dead_line', 'fixed', 'in_basket'  FROM tasks;";
-    private static final String UPDATE_SQL = "UPDATE  tasks SET 'user_id' = ?, 'task_information_id' = ?, 'dead_line' = ?, 'fixed' = ?, 'in_basket' = ?, WHERE 'task_id' = ?;";
-    private static final String CREATE_SQL = "INSERT INTO tasks('user_id', 'task_information_id', 'dead_line', 'fixed', 'in_basket') VALUES(?,?,?,?,?);";
-    private static final String DELETE_SQL = "DELETE FROM tasks, WHERE 'task_id' = ?;";
+    private static final String GET_BY_USER_ID = "SELECT task_id, user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks WHERE user_id = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks WHERE task_id = ?;";
+    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks;";
+    private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, task_information_id = ?, dead_line = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
+    private static final String CREATE_SQL = "INSERT INTO tasks(user_id, task_information_id, dead_line, fixed, in_basket) VALUES(?,?,?,?,?);";
+    private static final String DELETE_SQL = "DELETE FROM tasks WHERE task_id = ?;";
 
     {
         connector = HikariCPConnector.getInstance();
@@ -36,7 +34,7 @@ public class TaskJdbcDao implements TaskDao {
     @Override
     public List<Task> findByUserId(int id) throws DaoException {
         try (Connection connection = connector.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(GET_BY_ID_SQL);
+            PreparedStatement ps = connection.prepareStatement(GET_BY_USER_ID);
             ps.setInt(1, id);
             List<Task> taskList = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
@@ -80,18 +78,20 @@ public class TaskJdbcDao implements TaskDao {
     }
 
     @Override
-    public Task create(Task Task) throws DaoException {
+    public Task create(Task task) throws DaoException {
         try (Connection connection = connector.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(CREATE_SQL);
-            processStatementInitialization(statement, Task);
+            PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
+            processStatementInitialization(statement, task);
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                return getById(rs.getInt(1));
+                task.setId(rs.getInt(1));
+                task.setTaskInfo(taskInformationJdbcDao.create());
+                return task;
             }
 
-            throw new DaoException("Error generate ID for create entity: " + Task);
+            throw new DaoException("Error generate ID for create entity: " + task);
         } catch (SQLException | DaoException e) {
             e.printStackTrace();
             throw new DaoException("Error process create entity: " + e.getMessage(), e);
@@ -99,13 +99,15 @@ public class TaskJdbcDao implements TaskDao {
     }
 
     @Override
-    public Task update(Task Task) throws DaoException {
+    public Task update(Task task) throws DaoException {
         try (Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
-            processStatementInitialization(statement, Task);
+            processStatementInitialization(statement, task);
             statement.executeQuery();
 
-            return Task;
+            taskInformationJdbcDao.update(task.getTaskInfo());
+
+            return task;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,8 +137,8 @@ public class TaskJdbcDao implements TaskDao {
                     .id(rs.getInt("task_id"))
                     .userId(rs.getInt("user_id"))
                     .taskInfo(taskInformation)
-                    .deaLine(rs.getDate("dead_line"))  !!!!!!!
-                     .fixed(rs.getBoolean("fixed"))
+                    .deaLine(new Date(rs.getDate("dead_line").getTime()))
+                    .fixed(rs.getBoolean("fixed"))
                     .inBasket(rs.getBoolean("in_basket"))
                     .build();
         } catch (SQLException e) {
@@ -147,7 +149,7 @@ public class TaskJdbcDao implements TaskDao {
     private void processStatementInitialization(PreparedStatement ps, Task task) throws SQLException {
         ps.setInt(1, task.getUserId());
         ps.setInt(2, task.getTaskInfo().getId());
-        ps.setDate(3, task.getDeaLine());
+        ps.setDate(3, new java.sql.Date(task.getDeaLine().getTime()));
         ps.setBoolean(4, task.isFixed());
         ps.setBoolean(5, task.isInBasket());
     }

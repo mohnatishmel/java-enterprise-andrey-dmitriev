@@ -131,13 +131,13 @@ INSERT INTO collaborators (task_id, user_id) VALUES (6, 5);
 --
 
 
-INSERT INTO collaborators (role_id, user_id) VALUES (1, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (2, 2);
-INSERT INTO collaborators (role_id, user_id) VALUES (3, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (4, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (5, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (6, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (7, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (8, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (9, 1);
-INSERT INTO collaborators (role_id, user_id) VALUES (10, 1);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 1);
+INSERT INTO roles_map (role_id, user_id) VALUES (2, 2);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 3);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 4);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 5);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 6);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 7);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 8);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 9);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 10);

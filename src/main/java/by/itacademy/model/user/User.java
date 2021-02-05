@@ -1,25 +1,30 @@
 package by.itacademy.model.user;
 
+import by.itacademy.model.task.Task;
 import by.itacademy.security.CredentialsContainer;
 import by.itacademy.security.GrantedAuthority;
 import by.itacademy.security.UserDetails;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.Collection;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
 
 public class User implements UserDetails, CredentialsContainer {
 
     @Getter
-    private final int id;
-    private LoginPasswordCredentials credentials;
-    private final PersonalInformation personalInformation;
-    private final Collection<Role> roles;
-    private final boolean accountNotLocked;
+    private int id;
+    private Credentials credentials;
+    private PersonalInformation personalInformation;
+    private Collection<Role> roles;
+    private boolean accountNotLocked;
+
+    public static User.UserBuilder builder() {
+        return new User.UserBuilder();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

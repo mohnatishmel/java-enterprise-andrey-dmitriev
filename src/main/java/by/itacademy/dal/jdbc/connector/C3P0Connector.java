@@ -5,7 +5,9 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class C3P0Connector implements Connector {
 
@@ -54,5 +56,35 @@ public class C3P0Connector implements Connector {
             instance = new C3P0Connector();
         }
         return instance;
+    }
+
+    public void closeResultSet(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException ignore) {
+                // NOP
+            }
+        }
+    }
+
+    public void closeStatement(Statement statement) {
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException ignore) {
+                // NOP
+            }
+        }
+    }
+
+    public void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ignore) {
+                // NOP
+            }
+        }
     }
 }

@@ -100,18 +100,18 @@ ALTER TABLE `roles`
 
 CREATE TABLE `roles_map` (
   `roles_map_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL
+  `role_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 );
 --
--- Indexes for table `roles`
+-- Indexes for table `roles_map`
 --
-ALTER TABLE `roles`
+ALTER TABLE `roles_map`
   ADD PRIMARY KEY (`roles_map_id`);
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT for table `roles_map`
 --
-ALTER TABLE `roles`
+ALTER TABLE `roles_map`
   ALTER COLUMN `roles_map_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------

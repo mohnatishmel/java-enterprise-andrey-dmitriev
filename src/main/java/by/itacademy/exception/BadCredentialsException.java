@@ -1,4 +1,4 @@
-package by.itacademy.security.exception;
+package by.itacademy.exception;
 
 public class BadCredentialsException extends Exception {
     public BadCredentialsException() {
