@@ -34,19 +34,19 @@ INSERT INTO personal_information (first_name, last_name) VALUES ('Simeon', 'Belh
 -- --------------------------------------------------------
 
 --
--- Table structure for table `authenticate`
+-- Table structure for table `credentials`
 --
 
-INSERT INTO authenticate (login, password) VALUES ('user', 'pass');
-INSERT INTO authenticate (login, password) VALUES ('admin', 'pass');
-INSERT INTO authenticate (login, password) VALUES ('user1', 'OypZ5Qdjb');
-INSERT INTO authenticate (login, password) VALUES ('user2', 'ZNpoafWzXkX');
-INSERT INTO authenticate (login, password) VALUES ('user3', 'iICPFhu');
-INSERT INTO authenticate (login, password) VALUES ('user4', 'B2SWfGyiKQPB');
-INSERT INTO authenticate (login, password) VALUES ('user5', 'uRRqzDMsM');
-INSERT INTO authenticate (login, password) VALUES ('user6', 'J2wtx7RW');
-INSERT INTO authenticate (login, password) VALUES ('user7', 'OyA4vT4nQOa');
-INSERT INTO authenticate (login, password) VALUES ('user8', 'QlH8W4F');
+INSERT INTO credentials (login, password) VALUES ('user', 'pass');
+INSERT INTO credentials (login, password) VALUES ('admin', 'pass');
+INSERT INTO credentials (login, password) VALUES ('user1', 'OypZ5Qdjb');
+INSERT INTO credentials (login, password) VALUES ('user2', 'ZNpoafWzXkX');
+INSERT INTO credentials (login, password) VALUES ('user3', 'iICPFhu');
+INSERT INTO credentials (login, password) VALUES ('user4', 'B2SWfGyiKQPB');
+INSERT INTO credentials (login, password) VALUES ('user5', 'uRRqzDMsM');
+INSERT INTO credentials (login, password) VALUES ('user6', 'J2wtx7RW');
+INSERT INTO credentials (login, password) VALUES ('user7', 'OyA4vT4nQOa');
+INSERT INTO credentials (login, password) VALUES ('user8', 'QlH8W4F');
 
 
 -- --------------------------------------------------------
@@ -55,16 +55,16 @@ INSERT INTO authenticate (login, password) VALUES ('user8', 'QlH8W4F');
 -- Data for table `users`
 --
 
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (1, 1, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (2, 2, 2, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (3, 3, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (4, 4, 1, false);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (5, 5, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (6, 6, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (7, 7, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (8, 8, 1, true);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (9, 9, 1, false);
-INSERT INTO users (authentication_id, personal_information_id, role_id, profile_enable) VALUES (10, 10, 1, false);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (1, 1, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (2, 2, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (3, 3, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (4, 4, false);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (5, 5, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (6, 6, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (7, 7, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (8, 8, true);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (9, 9, false);
+INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALUES (10, 10, false);
 
 -- --------------------------------------------------------
 --          TASKS
@@ -121,3 +121,23 @@ INSERT INTO collaborators (task_id, user_id) VALUES (10, 10);
 INSERT INTO collaborators (task_id, user_id) VALUES (6, 7);
 INSERT INTO collaborators (task_id, user_id) VALUES (1, 3);
 INSERT INTO collaborators (task_id, user_id) VALUES (6, 5);
+
+
+-- --------------------------------------------------------
+
+
+--
+-- Data for table `roles_map`
+--
+
+
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 1);
+INSERT INTO roles_map (role_id, user_id) VALUES (2, 2);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 3);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 4);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 5);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 6);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 7);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 8);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 9);
+INSERT INTO roles_map (role_id, user_id) VALUES (1, 10);
