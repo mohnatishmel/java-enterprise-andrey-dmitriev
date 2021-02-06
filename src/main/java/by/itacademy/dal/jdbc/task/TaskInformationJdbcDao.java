@@ -1,7 +1,5 @@
-package by.itacademy.dal.jdbc.task.information;
+package by.itacademy.dal.jdbc.task;
 
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.TaskInformation;
 
@@ -10,8 +8,6 @@ import java.sql.*;
 
 public class TaskInformationJdbcDao {
 
-    private final Connector connector;
-
     private static TaskInformationJdbcDao instance = null;
 
 
@@ -19,11 +15,6 @@ public class TaskInformationJdbcDao {
     private static final String UPDATE_SQL = "UPDATE  task_information SET description = ?, file_path = ? WHERE task_information_id = ?;";
     private static final String CREATE_SQL = "INSERT INTO task_information(description, file_path) VALUES(?,?);";
     private static final String DELETE_SQL = "DELETE FROM task_information WHERE task_information_id = ?;";
-
-    {
-        connector = HikariCPConnector.getInstance();
-    }
-
 
     public TaskInformation getById(int id, Connection connection) throws DaoException {
         try {

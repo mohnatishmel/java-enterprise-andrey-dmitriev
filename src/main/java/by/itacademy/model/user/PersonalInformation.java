@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class PersonalInformation {
 
     private int id;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 }

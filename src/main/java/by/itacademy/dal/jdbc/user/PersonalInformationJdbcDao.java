@@ -1,7 +1,5 @@
 package by.itacademy.dal.jdbc.user;
 
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.PersonalInformation;
 
@@ -9,19 +7,12 @@ import java.sql.*;
 
 public class PersonalInformationJdbcDao {
 
-    private final Connector connector;
-
     private static PersonalInformationJdbcDao instance = null;
 
-    private static final String GET_BY_ID_SQL = "SELECT personal_information_id, firstname, lastname  FROM personal_information WHERE personal_information_id = ?;";
-    private static final String UPDATE_SQL = "UPDATE  personal_information SET firstname = ?, lastname = ? WHERE personal_information_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO personal_information(firstname, lastname) VALUES(?,?);";
+    private static final String GET_BY_ID_SQL = "SELECT personal_information_id, first_name, last_name  FROM personal_information WHERE personal_information_id = ?;";
+    private static final String UPDATE_SQL = "UPDATE  personal_information SET first_name = ?, last_name = ? WHERE personal_information_id = ?;";
+    private static final String CREATE_SQL = "INSERT INTO personal_information(first_name, last_name) VALUES(?,?);";
     private static final String DELETE_SQL = "DELETE FROM personal_information WHERE personal_information_id = ?;";
-
-    {
-        connector = HikariCPConnector.getInstance();
-    }
-
 
     public PersonalInformation getById(int id, Connection connection) throws DaoException {
         try {
@@ -63,9 +54,10 @@ public class PersonalInformationJdbcDao {
 
     public PersonalInformation update(PersonalInformation personalInformation, Connection connection) throws DaoException {
         try {
-            PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(UPDATE_SQL, Statement.RETURN_GENERATED_KEYS);
             processStatementInitialization(statement, personalInformation);
-            statement.executeQuery();
+            statement.setInt(3,personalInformation.getId());
+            statement.execute();
 
             return personalInformation;
 
@@ -98,17 +90,17 @@ public class PersonalInformationJdbcDao {
     private PersonalInformation processResultSetMapping(ResultSet rs) throws DaoException {
         try {
             int id = rs.getInt("personal_information_id");
-            String firstname = rs.getString("firstname");
-            String lastname = rs.getString("lastname");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
 
-            return new PersonalInformation(id, firstname, lastname);
+            return new PersonalInformation(id, firstName, lastName);
         } catch (SQLException e) {
             throw new DaoException("Error mapping resultSet to personal_information Object");
         }
     }
 
     private void processStatementInitialization(PreparedStatement ps, PersonalInformation personalInformation) throws SQLException {
-        ps.setString(1, personalInformation.getFirstname());
-        ps.setString(2, personalInformation.getLastname());
+        ps.setString(1, personalInformation.getFirstName());
+        ps.setString(2, personalInformation.getLastName());
     }
 }

@@ -50,11 +50,4 @@ public class User implements UserDetails, CredentialsContainer {
         credential = null;
     }
 
-    public String getFirstname() {
-        return personalInformation.getFirstname();
-    }
-
-    public String getLastname() {
-        return personalInformation.getFirstname();
-    }
 }

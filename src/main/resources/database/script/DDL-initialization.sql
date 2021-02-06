@@ -127,7 +127,7 @@ CREATE TABLE `tasks` (
   `task_information_id` int(11) NOT NULL,
   `deadline` datetime NOT NULL,
   `fixed` boolean(1) NOT NULL,
-  `deleted` boolean(1) NOT NULL
+  `in_basket` boolean(1) NOT NULL
 );
 --
 -- Indexes for table `tasks`
@@ -170,25 +170,25 @@ ALTER TABLE `task_information`
 --
 -- Table structure for table `collaborators`
 --
-
-CREATE TABLE `collaborators` (
-  `collaborator_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-);
 --
--- Indexes for table `collaborators`
---
-ALTER TABLE `collaborators`
-  ADD PRIMARY KEY (`collaborator_id`);
---
--- AUTO_INCREMENT for table `collaborators`
---
-ALTER TABLE `collaborators`
-  ALTER COLUMN `collaborator_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- Constraints for table `collaborators`
---
+--CREATE TABLE `collaborators` (
+--  `collaborator_id` int(11) NOT NULL,
+--  `task_id` int(11) NOT NULL,
+--  `user_id` int(11) NOT NULL
+--);
+----
+---- Indexes for table `collaborators`
+----
+--ALTER TABLE `collaborators`
+--  ADD PRIMARY KEY (`collaborator_id`);
+----
+---- AUTO_INCREMENT for table `collaborators`
+----
+--ALTER TABLE `collaborators`
+--  ALTER COLUMN `collaborator_id` int(11) NOT NULL AUTO_INCREMENT;
+----
+---- Constraints for table `collaborators`
+----
 
 -- --------------------------------------------------------
 --                          CONSTRAINTS
@@ -197,10 +197,10 @@ ALTER TABLE `collaborators`
 --
 -- Constraints for table `collaborators`
 --
-ALTER TABLE `collaborators`
-  ADD CONSTRAINT `FK_Collaborators` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-ALTER TABLE `collaborators`
-  ADD CONSTRAINT `FK_Task_collaborators` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
+--ALTER TABLE `collaborators`
+--  ADD CONSTRAINT `FK_Collaborators` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+--ALTER TABLE `collaborators`
+--  ADD CONSTRAINT `FK_Task_collaborators` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
 
 --
 -- Constraints for table `tasks`
@@ -220,7 +220,7 @@ ALTER TABLE `users`
 
 --
 -- Constraints for table `roles_map`
---
+--deleted
 ALTER TABLE `roles_map`
   ADD CONSTRAINT `FK_role_map_to_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 ALTER TABLE `roles_map`

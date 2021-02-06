@@ -1,30 +1,19 @@
 package by.itacademy.dal.jdbc.user;
 
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Credential;
 
 import java.sql.*;
 
 public class CredentialsJdbcDao {
-    private final Connector connector;
 
     private static CredentialsJdbcDao instance = null;
-
 
     private static final String GET_BY_ID_SQL = "SELECT credentials_id, login, password  FROM credentials WHERE credentials_id = ?;";
     private static final String GET_BY_LOGIN_SQL = "SELECT credentials_id, login, password  FROM credentials WHERE login = ?;";
     private static final String UPDATE_SQL = "UPDATE  credentials SET password = ? WHERE credentials_id = ?;";
     private static final String CREATE_SQL = "INSERT INTO credentials(login, password) VALUES(?,?);";
     private static final String DELETE_SQL = "DELETE FROM credentials WHERE credentials_id = ?;";
-
-
-
-    {
-        connector = HikariCPConnector.getInstance();
-    }
-
 
     public Credential getById(int id, Connection connection) throws DaoException {
         try {
@@ -89,7 +78,8 @@ public class CredentialsJdbcDao {
         try {
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
             statement.setString(1, credential.getPassword());
-            statement.executeQuery();
+            statement.setInt(2, credential.getId());
+            statement.execute();
 
             return credential;
 

@@ -1,7 +1,5 @@
 package by.itacademy.dal.jdbc.user;
 
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;
 
@@ -14,7 +12,6 @@ import java.util.List;
 
 public class RolesMapJdbcDao {
 
-    private final Connector connector;
     private final RoleJdbcDao roleJdbcDao;
 
     private static RolesMapJdbcDao instance = null;
@@ -25,7 +22,6 @@ public class RolesMapJdbcDao {
     private static final String DELETE_SQL = "DELETE FROM roles_map WHERE user_id = ?;";
 
     {
-        connector = HikariCPConnector.getInstance();
         roleJdbcDao = RoleJdbcDao.getInstance();
     }
 
@@ -104,6 +100,4 @@ public class RolesMapJdbcDao {
             throw new DaoException("Error mapping resultSet to Role Object");
         }
     }
-
-
 }

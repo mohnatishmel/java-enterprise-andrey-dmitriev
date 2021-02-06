@@ -4,7 +4,6 @@ import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
-import by.itacademy.dal.jdbc.task.information.TaskInformationJdbcDao;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
 
@@ -19,12 +18,15 @@ public class TaskJdbcDao implements TaskDao {
     private final Connector connector;
     private final TaskInformationJdbcDao taskInformationJdbcDao;
 
-    private static final String GET_BY_USER_ID = "SELECT task_id, user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks WHERE user_id = ?;";
-    private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks WHERE task_id = ?;";
-    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_information_id, dead_line, fixed, in_basket  FROM tasks;";
-    private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, task_information_id = ?, dead_line = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO tasks(user_id, task_information_id, dead_line, fixed, in_basket) VALUES(?,?,?,?,?);";
+    private static TaskJdbcDao instance = null;
+
+    private static final String GET_BY_USER_ID = "SELECT task_id, user_id, task_information_id, deadline, fixed, in_basket  FROM tasks WHERE user_id = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, task_information_id, deadline, fixed, in_basket  FROM tasks WHERE task_id = ?;";
+    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_information_id, deadline, fixed, in_basket  FROM tasks;";
+    private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, task_information_id = ?, deadline = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
+    private static final String CREATE_SQL = "INSERT INTO tasks(user_id, task_information_id, deadline, fixed, in_basket) VALUES(?,?,?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM tasks WHERE task_id = ?;";
+    private static final String DELETE_BY_USER_ID_SQL = "DELETE FROM tasks WHERE user_id = ?;";
 
     {
         connector = HikariCPConnector.getInstance();
@@ -128,6 +130,18 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
+    public void deleteByUserId(int userId, Connection connection) throws DaoException {
+        try {
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_USER_ID_SQL);
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error process delete entity method: " + e.getMessage());
+        }
+    }
+
     private List<Task> findTaskByUserId(int id, Connection connection) throws DaoException {
         try {
             PreparedStatement ps = connection.prepareStatement(GET_BY_USER_ID);
@@ -188,7 +202,7 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    public Task updateTask(Task task, Connection connection) throws DaoException {
+    private Task updateTask(Task task, Connection connection) throws DaoException {
         try {
 
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
@@ -205,10 +219,8 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    public void deleteTask(int id, Connection connection) throws DaoException {
+    private void deleteTask(int id, Connection connection) throws DaoException {
         try {
-
-
             PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -219,6 +231,12 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
+    public static TaskJdbcDao getInstance() {
+        if (instance == null) {
+            instance = new TaskJdbcDao();
+        }
+        return instance;
+    }
     private Task processResultSetMapping(ResultSet rs, Connection connection) throws DaoException {
         try {
             int taskInfoId = rs.getInt("task_information_id");
@@ -227,7 +245,7 @@ public class TaskJdbcDao implements TaskDao {
                     .id(rs.getInt("task_id"))
                     .userId(rs.getInt("user_id"))
                     .taskInfo(taskInformation)
-                    .deaLine(new Date(rs.getDate("dead_line").getTime()))
+                    .deaLine(new Date(rs.getDate("deadline").getTime()))
                     .fixed(rs.getBoolean("fixed"))
                     .inBasket(rs.getBoolean("in_basket"))
                     .build();

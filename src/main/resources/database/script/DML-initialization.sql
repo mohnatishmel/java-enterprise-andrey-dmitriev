@@ -91,16 +91,16 @@ INSERT INTO task_information (description, file_path) VALUES ('Integer ac leo. P
 -- Data for table `tasks`
 --
 
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (1, 1, '2020-07-17 13:54:18', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (1, 2, '2020-05-25 13:11:34', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (3, 3, '2020-10-02 20:20:28', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (4, 4, '2020-08-27 12:25:14', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (5, 5, '2021-01-06 17:30:44', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (1, 6, '2020-11-24 05:21:53', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (7, 7, '2020-03-09 00:11:56', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (8, 8, '2020-12-19 08:09:12', true, false);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (9, 9, '2020-09-04 11:36:04', true, false);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUES (10, 10, '2020-10-30 01:33:08', true, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 1, '2020-07-17 13:54:18', true, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 2, '2020-05-25 13:11:34', true, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (3, 3, '2020-10-02 20:20:28', false, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (4, 4, '2020-08-27 12:25:14', false, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (5, 5, '2021-01-06 17:30:44', false, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 6, '2020-11-24 05:21:53', false, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (7, 7, '2020-03-09 00:11:56', true, true);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (8, 8, '2020-12-19 08:09:12', true, false);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (9, 9, '2020-09-04 11:36:04', true, false);
+INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (10, 10, '2020-10-30 01:33:08', true, true);
 
 
 -- --------------------------------------------------------
@@ -110,17 +110,17 @@ INSERT INTO tasks (user_id, task_information_id, deadline, fixed, deleted) VALUE
 -- Data for table `collaborators`
 --
 
-
-INSERT INTO collaborators (task_id, user_id) VALUES (5, 9);
-INSERT INTO collaborators (task_id, user_id) VALUES (7, 9);
-INSERT INTO collaborators (task_id, user_id) VALUES (6, 4);
-INSERT INTO collaborators (task_id, user_id) VALUES (3, 1);
-INSERT INTO collaborators (task_id, user_id) VALUES (8, 1);
-INSERT INTO collaborators (task_id, user_id) VALUES (5, 8);
-INSERT INTO collaborators (task_id, user_id) VALUES (10, 10);
-INSERT INTO collaborators (task_id, user_id) VALUES (6, 7);
-INSERT INTO collaborators (task_id, user_id) VALUES (1, 3);
-INSERT INTO collaborators (task_id, user_id) VALUES (6, 5);
+--
+--INSERT INTO collaborators (task_id, user_id) VALUES (5, 9);
+--INSERT INTO collaborators (task_id, user_id) VALUES (7, 9);
+--INSERT INTO collaborators (task_id, user_id) VALUES (6, 4);
+--INSERT INTO collaborators (task_id, user_id) VALUES (3, 1);
+--INSERT INTO collaborators (task_id, user_id) VALUES (8, 1);
+--INSERT INTO collaborators (task_id, user_id) VALUES (5, 8);
+--INSERT INTO collaborators (task_id, user_id) VALUES (10, 10);
+--INSERT INTO collaborators (task_id, user_id) VALUES (6, 7);
+--INSERT INTO collaborators (task_id, user_id) VALUES (1, 3);
+--INSERT INTO collaborators (task_id, user_id) VALUES (6, 5);
 
 
 -- --------------------------------------------------------

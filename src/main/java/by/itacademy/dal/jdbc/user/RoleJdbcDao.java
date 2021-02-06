@@ -1,7 +1,5 @@
 package by.itacademy.dal.jdbc.user;
 
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;
 
@@ -11,18 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RoleJdbcDao {
-    
-    private final Connector connector;
 
     private static RoleJdbcDao instance = null;
     
-    private static final String GET_BY_ID_SQL = "SELECT id, role  FROM roles WHERE role_id = ?;";
-    private static final String GET_BY_ROLE_NAME_SQL = "SELECT id, role  FROM roles WHERE role = ?;";
-
-    {
-        connector = HikariCPConnector.getInstance();
-    }
-
+    private static final String GET_BY_ID_SQL = "SELECT role_id, role  FROM roles WHERE role_id = ?;";
+    private static final String GET_BY_ROLE_NAME_SQL = "SELECT role_id, role  FROM roles WHERE role = ?;";
 
     public Role getById(int id, Connection connection) throws DaoException {
         try {

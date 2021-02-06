@@ -3,9 +3,11 @@ package by.itacademy;
 import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.HikariCPConnector;
+import by.itacademy.dal.jdbc.task.TaskJdbcDao;
 import by.itacademy.dal.jdbc.user.UserJdbcDao;
 import by.itacademy.exception.DaoException;
 import by.itacademy.exception.UsernameNotFoundException;
+import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
 import by.itacademy.model.user.User;
 import org.h2.tools.RunScript;
@@ -17,6 +19,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Runner {
     // jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=runscript from 'classpath:/db.sql'
@@ -45,6 +49,7 @@ public class Runner {
 
             RunScript.execute(connection, new FileReader(Paths.get(ddlSql.toURI()).toFile()));
             RunScript.execute(connection, new FileReader(Paths.get(dmlSql.toURI()).toFile()));
+            connection.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,10 +64,23 @@ public class Runner {
         TaskInformation taskInformation;
 
         //User user = UserJdbcDao.getInstance().getById(1);
-        //User user = (User) UserJdbcDao.getInstance().loadUserByUsername("user1");
+        User user = (User) UserJdbcDao.getInstance().loadUserByUsername("user1");
+        System.out.println(user.toString());
 
-        //System.out.println(user.toString());
+        user = (User) UserJdbcDao.getInstance().getById(4);
+        System.out.println(user.toString());
 
+        user.getCredential().setPassword("QWERTY");
+        user = (User) UserJdbcDao.getInstance().update(user);
+        System.out.println(user.toString());
+
+        UserJdbcDao.getInstance().delete(user.getId());
+
+        List<Task> taskList = TaskJdbcDao.getInstance().getByUserId(1);
+        System.out.println(taskList.toString());
+
+        Task task = TaskJdbcDao.getInstance().getById(1);
+        System.out.println(taskList.toString());
         //SERVER.stop();
     }
 }
