@@ -25,8 +25,8 @@ public class TaskInformationJdbcDao {
     }
 
 
-    public TaskInformation getById(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public TaskInformation getById(int id, Connection connection) throws DaoException {
+        try {
             PreparedStatement ps = connection.prepareStatement(GET_BY_ID_SQL);
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -45,15 +45,16 @@ public class TaskInformationJdbcDao {
     }
 
 
-    public TaskInformation create(TaskInformation taskInformation) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public TaskInformation create(TaskInformation taskInformation, Connection connection) throws DaoException {
+        try {
             PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
             processStatementInitialization(statement, taskInformation);
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                return getById(rs.getInt(1));
+                taskInformation.setId(rs.getInt(1));
+                return taskInformation;
             }
 
             throw new DaoException("Error generate ID for create entity: " + taskInformation);
@@ -64,8 +65,8 @@ public class TaskInformationJdbcDao {
     }
 
 
-    public TaskInformation update(TaskInformation taskInformation) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public TaskInformation update(TaskInformation taskInformation, Connection connection) throws DaoException {
+        try {
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
             processStatementInitialization(statement, taskInformation);
             statement.setInt(3, taskInformation.getId());
@@ -80,8 +81,8 @@ public class TaskInformationJdbcDao {
     }
 
 
-    public void delete(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public void delete(int id, Connection connection) throws DaoException {
+        try {
             PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
             statement.setInt(1, id);
             statement.execute();

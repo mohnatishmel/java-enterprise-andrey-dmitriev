@@ -6,6 +6,8 @@ import lombok.*;
 import java.util.Collection;
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
 public class Task {

@@ -32,14 +32,110 @@ public class TaskJdbcDao implements TaskDao {
     }
 
     @Override
-    public List<Task> findByUserId(int id) throws DaoException {
+    public List<Task> getByUserId(int id) throws DaoException {
+        List<Task> taskList = null;
         try (Connection connection = connector.getConnection()) {
+            try {
+                taskList = findTaskByUserId(id, connection);
+                connection.commit();
+
+            } catch (DaoException e) {
+                connection.rollback();
+                throw new DaoException(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+        }
+        return taskList;
+    }
+
+    @Override
+    public Task getById(int id) throws DaoException {
+        Task task = null;
+        try (Connection connection = connector.getConnection()) {
+            try {
+                task = getTaskById(id, connection);
+                connection.commit();
+
+            } catch (DaoException e) {
+                connection.rollback();
+                throw new DaoException(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+        }
+        return task;
+    }
+
+
+    @Override
+    public Task create(Task task) throws DaoException {
+        try (Connection connection = connector.getConnection()) {
+            try {
+                task = createTask(task, connection);
+                connection.commit();
+
+            } catch (DaoException e) {
+                connection.rollback();
+                throw new DaoException(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+        }
+        return task;
+    }
+
+    @Override
+    public Task update(Task task) throws DaoException {
+        try (Connection connection = connector.getConnection()) {
+            try {
+                task = updateTask(task, connection);
+                connection.commit();
+
+            } catch (DaoException e) {
+                connection.rollback();
+                throw new DaoException(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+        }
+        return task;
+    }
+
+    @Override
+    public void delete(int id) throws DaoException {
+        try (Connection connection = connector.getConnection()) {
+            try {
+                deleteTask(id, connection);
+                connection.commit();
+
+            } catch (DaoException e) {
+                connection.rollback();
+                throw new DaoException(e);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+        }
+    }
+
+    private List<Task> findTaskByUserId(int id, Connection connection) throws DaoException {
+        try {
             PreparedStatement ps = connection.prepareStatement(GET_BY_USER_ID);
             ps.setInt(1, id);
             List<Task> taskList = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        taskList.add(processResultSetMapping(rs));
+                        taskList.add(processResultSetMapping(rs, connection));
                     }
                     return taskList;
 
@@ -52,14 +148,14 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    @Override
-    public Task getById(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+
+    private Task getTaskById(int id, Connection connection) throws DaoException {
+        try {
             PreparedStatement ps = connection.prepareStatement(GET_BY_ID_SQL);
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return processResultSetMapping(rs);
+                    return processResultSetMapping(rs, connection);
                 }
                 throw new DaoException("Invalid entity id: " + id);
 
@@ -72,14 +168,8 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    @Override
-    public List<Task> getAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Task create(Task task) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    private Task createTask(Task task, Connection connection) throws DaoException {
+        try {
             PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
             processStatementInitialization(statement, task);
             statement.executeUpdate();
@@ -87,7 +177,7 @@ public class TaskJdbcDao implements TaskDao {
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 task.setId(rs.getInt(1));
-                task.setTaskInfo(taskInformationJdbcDao.create());
+                task.setTaskInfo(taskInformationJdbcDao.create(task.getTaskInfo(), connection));
                 return task;
             }
 
@@ -98,14 +188,14 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    @Override
-    public Task update(Task task) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public Task updateTask(Task task, Connection connection) throws DaoException {
+        try {
+
             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
             processStatementInitialization(statement, task);
             statement.executeQuery();
 
-            taskInformationJdbcDao.update(task.getTaskInfo());
+            taskInformationJdbcDao.update(task.getTaskInfo(), connection);
 
             return task;
 
@@ -115,9 +205,10 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    @Override
-    public void delete(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
+    public void deleteTask(int id, Connection connection) throws DaoException {
+        try {
+
+
             PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -128,11 +219,10 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    private Task processResultSetMapping(ResultSet rs) throws DaoException {
+    private Task processResultSetMapping(ResultSet rs, Connection connection) throws DaoException {
         try {
-         //   'task_id', 'user_id', 'task_information_id', 'dead_line', 'fixed', 'in_basket'
             int taskInfoId = rs.getInt("task_information_id");
-            TaskInformation taskInformation = taskInformationJdbcDao.getById(taskInfoId);
+            TaskInformation taskInformation = taskInformationJdbcDao.getById(taskInfoId, connection);
             return Task.builder()
                     .id(rs.getInt("task_id"))
                     .userId(rs.getInt("user_id"))

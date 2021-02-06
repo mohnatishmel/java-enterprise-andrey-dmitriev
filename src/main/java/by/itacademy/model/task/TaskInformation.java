@@ -2,13 +2,15 @@ package by.itacademy.model.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
 
 public class TaskInformation {
 
-    private final int id;
+    private int id;
     private String description;
     private String filepath;
 }
