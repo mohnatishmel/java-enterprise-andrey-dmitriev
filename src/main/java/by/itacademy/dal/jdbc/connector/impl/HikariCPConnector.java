@@ -1,6 +1,7 @@
-package by.itacademy.dal.jdbc.connector;
+package by.itacademy.dal.jdbc.connector.impl;
 
 
+import by.itacademy.dal.jdbc.connector.Connector;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

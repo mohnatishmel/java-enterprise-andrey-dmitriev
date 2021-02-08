@@ -1,41 +1,34 @@
-package by.itacademy.dal.jdbc.task;
+package by.itacademy.dal.jdbc.dao.task;
 
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@RequiredArgsConstructor
 public class TaskJdbcDao implements TaskDao {
 
     private final Connector connector;
     private final TaskInformationJdbcDao taskInformationJdbcDao;
 
-    private static TaskJdbcDao instance = null;
-
     private static final String GET_BY_USER_ID = "SELECT task_id, user_id, task_information_id, deadline, fixed, in_basket  FROM tasks WHERE user_id = ?;";
     private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, task_information_id, deadline, fixed, in_basket  FROM tasks WHERE task_id = ?;";
-    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_information_id, deadline, fixed, in_basket  FROM tasks;";
+//    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_information_id, deadline, fixed, in_basket  FROM tasks;";
     private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, task_information_id = ?, deadline = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
     private static final String CREATE_SQL = "INSERT INTO tasks(user_id, task_information_id, deadline, fixed, in_basket) VALUES(?,?,?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM tasks WHERE task_id = ?;";
     private static final String DELETE_BY_USER_ID_SQL = "DELETE FROM tasks WHERE user_id = ?;";
 
-    {
-        connector = HikariCPConnector.getInstance();
-        taskInformationJdbcDao = TaskInformationJdbcDao.getInstance();
-    }
-
     @Override
     public List<Task> getByUserId(int id) throws DaoException {
-        List<Task> taskList = null;
+        List<Task> taskList;
         try (Connection connection = connector.getConnection()) {
             try {
                 taskList = findTaskByUserId(id, connection);
@@ -55,7 +48,7 @@ public class TaskJdbcDao implements TaskDao {
 
     @Override
     public Task getById(int id) throws DaoException {
-        Task task = null;
+        Task task;
         try (Connection connection = connector.getConnection()) {
             try {
                 task = getTaskById(id, connection);
@@ -78,7 +71,7 @@ public class TaskJdbcDao implements TaskDao {
     public Task create(Task task) throws DaoException {
         try (Connection connection = connector.getConnection()) {
             try {
-                task = createTask(task, connection);
+                createTask(task, connection);
                 connection.commit();
 
             } catch (DaoException e) {
@@ -97,7 +90,7 @@ public class TaskJdbcDao implements TaskDao {
     public Task update(Task task) throws DaoException {
         try (Connection connection = connector.getConnection()) {
             try {
-                task = updateTask(task, connection);
+                updateTask(task, connection);
                 connection.commit();
 
             } catch (DaoException e) {
@@ -130,6 +123,7 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
+    @Override
     public void deleteByUserId(int userId, Connection connection) throws DaoException {
         try {
             PreparedStatement statement = connection.prepareStatement(DELETE_BY_USER_ID_SQL);
@@ -231,12 +225,6 @@ public class TaskJdbcDao implements TaskDao {
         }
     }
 
-    public static TaskJdbcDao getInstance() {
-        if (instance == null) {
-            instance = new TaskJdbcDao();
-        }
-        return instance;
-    }
     private Task processResultSetMapping(ResultSet rs, Connection connection) throws DaoException {
         try {
             int taskInfoId = rs.getInt("task_information_id");

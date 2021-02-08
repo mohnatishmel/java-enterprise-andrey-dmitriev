@@ -1,10 +1,13 @@
 package by.itacademy;
 
 import by.itacademy.constant.ApplicationConstant;
+import by.itacademy.dal.TaskDao;
+import by.itacademy.dal.UserDao;
+import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
+import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
+import by.itacademy.dal.jdbc.dao.user.*;
 import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
-import by.itacademy.dal.jdbc.task.TaskJdbcDao;
-import by.itacademy.dal.jdbc.user.UserJdbcDao;
+import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.exception.UsernameNotFoundException;
 import by.itacademy.model.task.Task;
@@ -19,12 +22,9 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class Runner {
-    // jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=runscript from 'classpath:/db.sql'
-
 
     // for connect with UI tool to database use url - jdbc:h2:tcp://localhost/mem:jdbc
 
@@ -60,26 +60,34 @@ public class Runner {
 
     public static void main(String[] args) throws DaoException, UsernameNotFoundException {
 
+        Connector connector = new HikariCPConnector();
 
-        TaskInformation taskInformation;
+        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao();
+        TaskDao taskDao = new TaskJdbcDao(connector, taskInformationDao);
 
-        //User user = UserJdbcDao.getInstance().getById(1);
-        User user = (User) UserJdbcDao.getInstance().loadUserByUsername("user1");
+        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao();
+        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao();
+        RoleJdbcDao roleDao = new RoleJdbcDao();
+        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao();
+        UserDao userDao = new UserJdbcDao(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+
+
+        User user = (User) userDao.loadUserByUsername("user1");
         System.out.println(user.toString());
 
-        user = (User) UserJdbcDao.getInstance().getById(4);
+        user = userDao.getById(4);
         System.out.println(user.toString());
 
         user.getCredential().setPassword("QWERTY");
-        user = (User) UserJdbcDao.getInstance().update(user);
+        user = userDao.update(user);
         System.out.println(user.toString());
 
-        UserJdbcDao.getInstance().delete(user.getId());
+        userDao.delete(user.getId());
 
-        List<Task> taskList = TaskJdbcDao.getInstance().getByUserId(1);
+        List<Task> taskList = taskDao.getByUserId(1);
         System.out.println(taskList.toString());
 
-        Task task = TaskJdbcDao.getInstance().getById(1);
+        Task task = taskDao.getById(1);
         System.out.println(taskList.toString());
         //SERVER.stop();
     }

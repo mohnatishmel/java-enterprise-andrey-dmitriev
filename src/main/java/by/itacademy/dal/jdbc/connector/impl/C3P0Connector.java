@@ -1,19 +1,18 @@
-package by.itacademy.dal.jdbc.connector;
+package by.itacademy.dal.jdbc.connector.impl;
 
+import by.itacademy.dal.jdbc.connector.Connector;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class C3P0Connector implements Connector {
 
     private final static String JDBC_USERNAME = "root";
-    private final static String JDBC_PASSWORD = "root";
-    private final static String JDBC_URL = "jdbc:h2:d:\\info\\it_academy\\JD2_Winter_2020\\05 JDBC\\database\\db";
+    private final static String JDBC_PASSWORD = "";
+    private final static String JDBC_URL = "jdbc:h2:mem:jdbc;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE;";
     private final static String DATABASE_DRIVER_NAME = "org.h2.Driver";
 
     private final int maxStatements = 130;
@@ -56,35 +55,5 @@ public class C3P0Connector implements Connector {
             instance = new C3P0Connector();
         }
         return instance;
-    }
-
-    public void closeResultSet(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException ignore) {
-                // NOP
-            }
-        }
-    }
-
-    public void closeStatement(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (SQLException ignore) {
-                // NOP
-            }
-        }
-    }
-
-    public void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException ignore) {
-                // NOP
-            }
-        }
     }
 }

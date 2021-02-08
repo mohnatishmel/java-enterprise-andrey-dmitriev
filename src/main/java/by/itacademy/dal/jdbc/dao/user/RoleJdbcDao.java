@@ -1,4 +1,4 @@
-package by.itacademy.dal.jdbc.user;
+package by.itacademy.dal.jdbc.dao.user;
 
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;

@@ -1,22 +1,23 @@
-package by.itacademy.dal.jdbc.user;
+package by.itacademy.dal.jdbc.dao.user;
 
+import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.UserDao;
 import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.HikariCPConnector;
-import by.itacademy.dal.jdbc.task.TaskJdbcDao;
 import by.itacademy.exception.DaoException;
-import by.itacademy.dal.jdbc.user.metadata.UserMetaData;
+import by.itacademy.dal.jdbc.dao.user.metadata.UserMetaData;
 import by.itacademy.exception.UsernameNotFoundException;
 import by.itacademy.model.user.Credential;
 import by.itacademy.model.user.PersonalInformation;
 import by.itacademy.model.user.Role;
 import by.itacademy.model.user.User;
 import by.itacademy.security.UserDetails;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 
 public class UserJdbcDao implements UserDao {
 
@@ -24,9 +25,7 @@ public class UserJdbcDao implements UserDao {
     private final CredentialsJdbcDao credentialsJdbcDao;
     private final RolesMapJdbcDao rolesMapJdbcDao;
     private final PersonalInformationJdbcDao personalInformationJdbcDao;
-    private final TaskJdbcDao taskJdbcDao;
-
-    private static UserJdbcDao instance = null;
+    private final TaskDao taskDao;
 
     private static final String GET_BY_ID_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE user_id = ?;";
     private static final String GET_ALL_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable   FROM users;";
@@ -34,14 +33,6 @@ public class UserJdbcDao implements UserDao {
     private static final String CREATE_SQL = "INSERT INTO users(SELECT credentials_id, personal_information_id, profile_enable) VALUES(?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM users WHERE user_id = ?;";
     private static final String GET_BY_NAME_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE credentials_id = ?;";
-
-    {
-        connector = HikariCPConnector.getInstance();
-        credentialsJdbcDao = CredentialsJdbcDao.getInstance();
-        rolesMapJdbcDao = RolesMapJdbcDao.getInstance();
-        personalInformationJdbcDao = PersonalInformationJdbcDao.getInstance();
-        taskJdbcDao = TaskJdbcDao.getInstance();
-    }
 
     @Override
     public User getById(int id) throws DaoException {
@@ -230,7 +221,7 @@ public class UserJdbcDao implements UserDao {
 
             UserMetaData oldUser = getUserMetaDataById(id, connection);
 
-            taskJdbcDao.deleteByUserId(id, connection);
+            taskDao.deleteByUserId(id, connection);
             rolesMapJdbcDao.delete(oldUser.getId(), connection);
 
             statement.setInt(1, id);
@@ -285,13 +276,6 @@ public class UserJdbcDao implements UserDao {
         } catch (SQLException e) {
             throw new DaoException("Error initialize prepared statement: " + e.getMessage(), e);
         }
-    }
-
-    public static UserJdbcDao getInstance() {
-        if (instance == null) {
-            instance = new UserJdbcDao();
-        }
-        return instance;
     }
 
     private User processResultSetMappingForUser(UserMetaData userMetaData, Connection connection) throws DaoException {

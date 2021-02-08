@@ -8,8 +8,6 @@ public interface CrudDao<T> {
 
     T getById(int id) throws DaoException;
 
-    List<T> getAll() throws DaoException;
-
     T create(T t) throws DaoException;
 
     T update(T t) throws DaoException;

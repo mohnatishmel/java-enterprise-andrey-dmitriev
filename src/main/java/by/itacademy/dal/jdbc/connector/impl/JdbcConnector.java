@@ -1,4 +1,6 @@
-package by.itacademy.dal.jdbc.connector;
+package by.itacademy.dal.jdbc.connector.impl;
+
+import by.itacademy.dal.jdbc.connector.Connector;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -6,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public final class JdbcConnector implements Connector{
+public final class JdbcConnector implements Connector {
 
     private static JdbcConnector instance;
 

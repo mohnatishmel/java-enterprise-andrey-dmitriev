@@ -1,4 +1,4 @@
-package by.itacademy.dal.jdbc.user.metadata;
+package by.itacademy.dal.jdbc.dao.user.metadata;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
