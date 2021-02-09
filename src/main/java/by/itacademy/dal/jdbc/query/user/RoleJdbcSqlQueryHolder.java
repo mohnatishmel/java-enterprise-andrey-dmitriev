@@ -12,6 +12,4 @@ public class RoleJdbcSqlQueryHolder {
     public String getGetByNameSql() {
         return GET_BY_ROLE_NAME_SQL;
     }
-
-    }
 }

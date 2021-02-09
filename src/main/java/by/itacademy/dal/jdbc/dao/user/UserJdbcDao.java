@@ -2,7 +2,9 @@ package by.itacademy.dal.jdbc.dao.user;
 
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.UserDao;
+import by.itacademy.dal.jdbc.AbstractCrudJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
+import by.itacademy.dal.jdbc.query.user.UserJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.dal.jdbc.dao.user.metadata.UserMetaData;
 import by.itacademy.exception.UsernameNotFoundException;
@@ -11,109 +13,30 @@ import by.itacademy.model.user.PersonalInformation;
 import by.itacademy.model.user.Role;
 import by.itacademy.model.user.User;
 import by.itacademy.security.UserDetails;
-import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
 
-public class UserJdbcDao implements UserDao {
-
-    private final Connector connector;
     private final CredentialsJdbcDao credentialsJdbcDao;
     private final RolesMapJdbcDao rolesMapJdbcDao;
     private final PersonalInformationJdbcDao personalInformationJdbcDao;
     private final TaskDao taskDao;
 
-    private static final String GET_BY_ID_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE user_id = ?;";
-    private static final String GET_ALL_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable   FROM users;";
-    private static final String UPDATE_SQL = "UPDATE  users SET profile_enable = ?  WHERE user_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO users(SELECT credentials_id, personal_information_id, profile_enable) VALUES(?,?,?);";
-    private static final String DELETE_SQL = "DELETE FROM users WHERE user_id = ?;";
-    private static final String GET_BY_NAME_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE credentials_id = ?;";
-
-    @Override
-    public User getById(int id) throws DaoException {
-        User user;
-        try (Connection connection = connector.getConnection()) {
-            try {
-                user = processResultSetMappingForUser(getUserMetaDataById(id, connection), connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return user;
-    }
-
-    @Override
-    public User create(User user) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                user = createUser(user, connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return user;
-    }
-
-    @Override
-    public User update(User user) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                updateUser(user, connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return user;
-    }
-
-    @Override
-    public void delete(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                deleteUser(id, connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
+    public UserJdbcDao(Connector connector, CredentialsJdbcDao credentialsJdbcDao, RolesMapJdbcDao rolesMapJdbcDao, PersonalInformationJdbcDao personalInformationJdbcDao, TaskDao taskDao) {
+        super(connector);
+        this.credentialsJdbcDao = credentialsJdbcDao;
+        this.rolesMapJdbcDao = rolesMapJdbcDao;
+        this.personalInformationJdbcDao = personalInformationJdbcDao;
+        this.taskDao = taskDao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         UserDetails userDetails;
-        try (Connection connection = connector.getConnection()) {
+        try (Connection connection = getConnector().getConnection()) {
             try {
                 userDetails = getUserByName(name, connection);
                 connection.commit();
@@ -133,7 +56,7 @@ public class UserJdbcDao implements UserDao {
     @Override
     public List<User> getAll() throws DaoException {
         List<User> userList;
-        try (Connection connection = connector.getConnection()) {
+        try (Connection connection = getConnector().getConnection()) {
             try {
                 userList = getAllUsers(connection);
                 connection.commit();
@@ -150,10 +73,13 @@ public class UserJdbcDao implements UserDao {
         return userList;
     }
 
+    protected User getEntityById(int id, Connection connection) throws DaoException {
+        return processResultSetMappingForUser(getUserMetaDataById(id, connection), connection);
+    }
+
     private UserMetaData getUserMetaDataById(int id, Connection connection) throws DaoException {
         try {
-            PreparedStatement ps = connection.prepareStatement(GET_BY_ID_SQL);
-            ps.setInt(1, id);
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getByIdSql());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return processResultSetMappingForUserMetaData(rs);
@@ -168,10 +94,10 @@ public class UserJdbcDao implements UserDao {
         }
     }
 
-    private User createUser(User user, Connection connection) throws DaoException {
+    protected User createEntity(User user, Connection connection) throws DaoException {
         try {
 
-            PreparedStatement statement = connection.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql(), Statement.RETURN_GENERATED_KEYS);
 
             Credential credential = credentialsJdbcDao.create(user.getCredential(), connection);
             PersonalInformation personalInformation = personalInformationJdbcDao.create(user.getPersonalInformation(), connection);
@@ -197,10 +123,10 @@ public class UserJdbcDao implements UserDao {
         }
     }
 
-    private void updateUser(User user, Connection connection) throws DaoException {
+    protected User updateEntity(User user, Connection connection) throws DaoException {
         try {
 
-            PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().updateSql());
             statement.setBoolean(1, user.isAccountNotLocked());
             statement.setInt(2, user.getId());
             statement.execute();
@@ -211,13 +137,14 @@ public class UserJdbcDao implements UserDao {
         } catch (SQLException e) {
             throw new DaoException("Error process update entity method: " + e.getMessage(), e);
         }
+        return user;
     }
 
 
-    private void deleteUser(int id, Connection connection) throws DaoException {
+    protected void deleteEntity(int id, Connection connection) throws DaoException {
         try {
 
-            PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
 
             UserMetaData oldUser = getUserMetaDataById(id, connection);
 
@@ -244,7 +171,7 @@ public class UserJdbcDao implements UserDao {
     private List<User> getAllUsers(Connection connection) throws DaoException {
         try {
             List<User> userList = new ArrayList<>();
-            PreparedStatement ps = connection.prepareStatement(GET_ALL_SQL);
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getAllSql());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     UserMetaData userMetaData = processResultSetMappingForUserMetaData(rs);
@@ -262,7 +189,7 @@ public class UserJdbcDao implements UserDao {
 
     private UserMetaData getUserMetaDataByCredentialsId(int id, Connection connection) throws DaoException {
         try {
-            PreparedStatement ps = connection.prepareStatement(GET_BY_NAME_SQL);
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getGetByNameSql());
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -276,6 +203,10 @@ public class UserJdbcDao implements UserDao {
         } catch (SQLException e) {
             throw new DaoException("Error initialize prepared statement: " + e.getMessage(), e);
         }
+    }
+
+    private UserJdbcSqlQueryHolder getSqlHolder() {
+        return new UserJdbcSqlQueryHolder();
     }
 
     private User processResultSetMappingForUser(UserMetaData userMetaData, Connection connection) throws DaoException {
