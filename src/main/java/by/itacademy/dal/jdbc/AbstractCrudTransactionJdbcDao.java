@@ -42,7 +42,7 @@ public abstract class AbstractCrudTransactionJdbcDao<T> implements CrudTransacti
     public T create(T t, Connection connection) throws DaoException {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql(), Statement.RETURN_GENERATED_KEYS);
-            getStatementInitializer().processStatement(statement, t);
+            getStatementInitializer().processCreateStatement(statement, t);
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -61,8 +61,7 @@ public abstract class AbstractCrudTransactionJdbcDao<T> implements CrudTransacti
     public T update(T t, Connection connection) throws DaoException {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().updateSql());
-            getStatementInitializer().processStatement(statement, t);
-            getStatementInitializer().processStatement(statement, t);
+            getStatementInitializer().processUpdateStatement(statement, t);
             statement.execute();
 
             return t;

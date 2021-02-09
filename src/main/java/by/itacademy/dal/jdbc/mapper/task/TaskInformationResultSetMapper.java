@@ -1,7 +1,6 @@
-package by.itacademy.dal.jdbc.mapper.impl.task;
+package by.itacademy.dal.jdbc.mapper.task;
 
 import by.itacademy.dal.jdbc.mapper.AbstractResultSetMapper;
-import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.TaskInformation;
 

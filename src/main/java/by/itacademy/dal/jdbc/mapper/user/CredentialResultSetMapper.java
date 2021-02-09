@@ -1,7 +1,6 @@
-package by.itacademy.dal.jdbc.mapper.impl.user;
+package by.itacademy.dal.jdbc.mapper.user;
 
 import by.itacademy.dal.jdbc.mapper.AbstractResultSetMapper;
-import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Credential;
 

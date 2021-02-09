@@ -68,7 +68,7 @@ public class Runner {
         PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao();
         CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao();
         RoleJdbcDao roleDao = new RoleJdbcDao();
-        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao();
+        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(roleDao);
         UserDao userDao = new UserJdbcDao(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
 
@@ -89,6 +89,6 @@ public class Runner {
 
         Task task = taskDao.getById(1);
         System.out.println(taskList.toString());
-        //SERVER.stop();
+        SERVER.stop();
     }
 }

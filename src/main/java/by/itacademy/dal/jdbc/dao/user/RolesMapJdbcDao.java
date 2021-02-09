@@ -1,7 +1,9 @@
 package by.itacademy.dal.jdbc.dao.user;
 
+import by.itacademy.dal.jdbc.query.user.RoleMapJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,24 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class RolesMapJdbcDao {
 
     private final RoleJdbcDao roleJdbcDao;
 
-    private static RolesMapJdbcDao instance = null;
-
-
-    private static final String GET_BY_USER_ID_SQL = "SELECT role_id FROM roles_map WHERE user_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO roles_map(user_id, role_id) VALUES(?,?);";
-    private static final String DELETE_SQL = "DELETE FROM roles_map WHERE user_id = ?;";
-
-    {
-        roleJdbcDao = RoleJdbcDao.getInstance();
-    }
-
     public List<Role> getByUserId(int id, Connection connection) throws DaoException {
         try {
-            PreparedStatement ps = connection.prepareStatement(GET_BY_USER_ID_SQL);
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getByUserIdSql());
             ps.setInt(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -57,7 +49,7 @@ public class RolesMapJdbcDao {
 
     public void grantAuthorityToUser(int userId, Role role, Connection connection) throws DaoException {
         try {
-            PreparedStatement statement = connection.prepareStatement(CREATE_SQL);
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql());
             statement.setInt(1, userId);
             statement.setInt(1, role.getId());
             statement.executeUpdate();
@@ -70,7 +62,7 @@ public class RolesMapJdbcDao {
 
     public void delete(int userId, Connection connection) throws DaoException {
         try {
-            PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
             statement.setInt(1, userId);
             statement.executeUpdate();
 
@@ -80,11 +72,8 @@ public class RolesMapJdbcDao {
         }
     }
 
-    public static RolesMapJdbcDao getInstance() {
-        if (instance == null) {
-            instance = new RolesMapJdbcDao();
-        }
-        return instance;
+    private RoleMapJdbcSqlQueryHolder getSqlHolder() {
+        return new RoleMapJdbcSqlQueryHolder();
     }
 
     private List<Role> processResultSetMapping(ResultSet rs, Connection connection) throws DaoException {

@@ -1,4 +1,4 @@
-package by.itacademy.dal.jdbc.query.impl.task;
+package by.itacademy.dal.jdbc.query.task;
 
 import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
 
