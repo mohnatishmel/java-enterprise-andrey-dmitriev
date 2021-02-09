@@ -80,6 +80,7 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
     private UserMetaData getUserMetaDataById(int id, Connection connection) throws DaoException {
         try {
             PreparedStatement ps = connection.prepareStatement(getSqlHolder().getByIdSql());
+            ps.setInt(1,id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return processResultSetMappingForUserMetaData(rs);

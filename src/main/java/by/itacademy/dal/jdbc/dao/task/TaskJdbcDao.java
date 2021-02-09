@@ -47,7 +47,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().getDeleteByUserIdSql());
             statement.setInt(1, userId);
-            statement.executeUpdate();
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
 
     private List<Task> findTaskByUserId(int id, Connection connection) throws DaoException {
         try {
-            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getDeleteByUserIdSql());
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getGetByUserId());
             ps.setInt(1, id);
             List<Task> taskList = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
@@ -136,7 +136,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
             statement.setInt(1, id);
-            statement.executeUpdate();
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
