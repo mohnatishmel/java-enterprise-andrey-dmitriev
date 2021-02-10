@@ -11,7 +11,6 @@ import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.exception.UsernameNotFoundException;
 import by.itacademy.model.task.Task;
-import by.itacademy.model.task.TaskInformation;
 import by.itacademy.model.user.User;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
@@ -62,14 +61,14 @@ public class Runner {
 
         Connector connector = new HikariCPConnector();
 
-        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao();
+        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao(connector);
         TaskDao taskDao = new TaskJdbcDao(connector, taskInformationDao);
 
-        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao();
-        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao();
-        RoleJdbcDao roleDao = new RoleJdbcDao();
-        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(roleDao);
-        UserDao userDao = new UserJdbcDao(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(connector);
+        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(connector);
+        RoleJdbcDao roleDao = new RoleJdbcDao(connector);
+        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector,roleDao);
+        UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
 
         User user = (User) userDao.loadUserByUsername("user1");

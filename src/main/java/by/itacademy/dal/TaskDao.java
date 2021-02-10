@@ -10,6 +10,6 @@ public interface TaskDao extends CrudDao<Task> {
 
     List<Task> getByUserId(int id) throws DaoException;
 
-    void deleteByUserId(int userId, Connection connection) throws DaoException;
+    void deleteByUserId(int userId) throws DaoException;
 
 }

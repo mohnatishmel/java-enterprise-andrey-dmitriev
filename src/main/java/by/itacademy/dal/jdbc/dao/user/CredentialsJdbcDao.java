@@ -1,6 +1,7 @@
 package by.itacademy.dal.jdbc.dao.user;
 
-import by.itacademy.dal.jdbc.AbstractCrudTransactionJdbcDao;
+import by.itacademy.dal.jdbc.AbstractCrudJdbcDao;
+import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.dal.jdbc.mapper.user.CredentialResultSetMapper;
 import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
@@ -12,7 +13,11 @@ import by.itacademy.model.user.Credential;
 
 import java.sql.*;
 
-public class CredentialsJdbcDao extends AbstractCrudTransactionJdbcDao<Credential> {
+public class CredentialsJdbcDao extends AbstractCrudJdbcDao<Credential> {
+
+    public CredentialsJdbcDao(Connector connector) {
+        super(connector);
+    }
 
     @Override
     protected CrudJdbcSqlQueryHolder getSqlHolder() {
@@ -29,8 +34,8 @@ public class CredentialsJdbcDao extends AbstractCrudTransactionJdbcDao<Credentia
         return new CredentialStatementInitializer();
     }
 
-    public Credential getByLogin(String login, Connection connection) throws DaoException {
-        try {
+    public Credential getByLogin(String login) throws DaoException {
+        try(Connection connection = getConnector().getConnection()) {
             PreparedStatement ps = connection.prepareStatement(new CredentialsJdbcSqlQueryHolder().getByLoginSql());
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {

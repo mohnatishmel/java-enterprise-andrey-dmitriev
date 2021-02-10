@@ -1,18 +1,20 @@
 package by.itacademy.dal.jdbc.dao.user;
 
-import by.itacademy.dal.jdbc.AbstractCrudTransactionJdbcDao;
+import by.itacademy.dal.jdbc.AbstractCrudJdbcDao;
+import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.dal.jdbc.mapper.user.PersonalInformationResultSetMapper;
 import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.query.user.PersonalInformationJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.statement.StatementInitializer;
 import by.itacademy.dal.jdbc.statement.user.PersonalInformationStatementInitializer;
-import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.PersonalInformation;
 
-import java.sql.*;
+public class PersonalInformationJdbcDao extends AbstractCrudJdbcDao<PersonalInformation> {
 
-public class PersonalInformationJdbcDao extends AbstractCrudTransactionJdbcDao<PersonalInformation> {
+    public PersonalInformationJdbcDao(Connector connector) {
+        super(connector);
+    }
 
     @Override
     protected CrudJdbcSqlQueryHolder getSqlHolder() {

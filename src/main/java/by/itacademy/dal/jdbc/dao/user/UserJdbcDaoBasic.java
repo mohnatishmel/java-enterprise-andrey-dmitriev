@@ -2,7 +2,7 @@ package by.itacademy.dal.jdbc.dao.user;
 
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.UserDao;
-import by.itacademy.dal.jdbc.AbstractCrudJdbcDao;
+import by.itacademy.dal.jdbc.AbstractBasicCrudJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.user.UserJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
@@ -18,14 +18,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
+public class UserJdbcDaoBasic extends AbstractBasicCrudJdbcDao<User> implements UserDao {
 
     private final CredentialsJdbcDao credentialsJdbcDao;
     private final RolesMapJdbcDao rolesMapJdbcDao;
     private final PersonalInformationJdbcDao personalInformationJdbcDao;
     private final TaskDao taskDao;
 
-    public UserJdbcDao(Connector connector, CredentialsJdbcDao credentialsJdbcDao, RolesMapJdbcDao rolesMapJdbcDao, PersonalInformationJdbcDao personalInformationJdbcDao, TaskDao taskDao) {
+    public UserJdbcDaoBasic(Connector connector, CredentialsJdbcDao credentialsJdbcDao, RolesMapJdbcDao rolesMapJdbcDao, PersonalInformationJdbcDao personalInformationJdbcDao, TaskDao taskDao) {
         super(connector);
         this.credentialsJdbcDao = credentialsJdbcDao;
         this.rolesMapJdbcDao = rolesMapJdbcDao;
@@ -42,7 +42,6 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
                 connection.commit();
 
             } catch (DaoException e) {
-                connection.rollback();
                 throw new UsernameNotFoundException(e);
             }
 
@@ -100,9 +99,9 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
 
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql(), Statement.RETURN_GENERATED_KEYS);
 
-            Credential credential = credentialsJdbcDao.create(user.getCredential(), connection);
-            PersonalInformation personalInformation = personalInformationJdbcDao.create(user.getPersonalInformation(), connection);
-            List<Role> roleList = rolesMapJdbcDao.grantAuthoritiesToUser(user.getId(), (List<Role>) user.getAuthorities(), connection);
+            Credential credential = credentialsJdbcDao.create(user.getCredential());
+            PersonalInformation personalInformation = personalInformationJdbcDao.create(user.getPersonalInformation());
+            List<Role> roleList = rolesMapJdbcDao.grantAuthoritiesToUser(user.getId(), (List<Role>) user.getAuthorities());
 
             statement.setBoolean(1, user.isAccountNonLocked());
             statement.executeUpdate();
@@ -132,8 +131,8 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
             statement.setInt(2, user.getId());
             statement.execute();
 
-            credentialsJdbcDao.update(user.getCredential(), connection);
-            personalInformationJdbcDao.update(user.getPersonalInformation(), connection);
+            credentialsJdbcDao.update(user.getCredential());
+            personalInformationJdbcDao.update(user.getPersonalInformation());
 
         } catch (SQLException e) {
             throw new DaoException("Error process update entity method: " + e.getMessage(), e);
@@ -147,16 +146,16 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
 
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
 
-            UserMetaData oldUser = getUserMetaDataById(id, connection);
+            UserMetaData oldUser = getUserMetaDataById(id,connection);
 
-            taskDao.deleteByUserId(id, connection);
-            rolesMapJdbcDao.delete(oldUser.getId(), connection);
+            taskDao.deleteByUserId(id);
+            rolesMapJdbcDao.delete(oldUser.getId());
 
             statement.setInt(1, id);
             statement.executeUpdate();
 
-            credentialsJdbcDao.delete(oldUser.getCredentialsId(), connection);
-            personalInformationJdbcDao.delete(oldUser.getPersonalInformationId(), connection);
+            credentialsJdbcDao.delete(oldUser.getCredentialsId());
+            personalInformationJdbcDao.delete(oldUser.getPersonalInformationId());
 
         } catch (SQLException e) {
             throw new DaoException("Error process delete entity method: " + e.getMessage());
@@ -164,7 +163,7 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
     }
 
     private User getUserByName(String name, Connection connection) throws DaoException {
-        Credential credential = credentialsJdbcDao.getByLogin(name, connection);
+        Credential credential = credentialsJdbcDao.getByLogin(name);
         UserMetaData userMetaData = getUserMetaDataByCredentialsId(credential.getId(), connection);
         return processResultSetMappingForUser(userMetaData, connection);
     }
@@ -212,9 +211,9 @@ public class UserJdbcDao extends AbstractCrudJdbcDao<User> implements UserDao {
 
     private User processResultSetMappingForUser(UserMetaData userMetaData, Connection connection) throws DaoException {
 
-        Credential credential = credentialsJdbcDao.getById(userMetaData.getCredentialsId(), connection);
-        List<Role> roleList = rolesMapJdbcDao.getByUserId(userMetaData.getId(), connection);
-        PersonalInformation personalInformation = personalInformationJdbcDao.getById(userMetaData.getPersonalInformationId(), connection);
+        Credential credential = credentialsJdbcDao.getById(userMetaData.getCredentialsId());
+        List<Role> roleList = rolesMapJdbcDao.getByUserId(userMetaData.getId());
+        PersonalInformation personalInformation = personalInformationJdbcDao.getById(userMetaData.getPersonalInformationId());
 
         return processResultSetMappingForUser(userMetaData, credential, roleList, personalInformation);
     }

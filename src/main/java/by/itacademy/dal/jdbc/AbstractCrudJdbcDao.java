@@ -2,102 +2,91 @@ package by.itacademy.dal.jdbc;
 
 import by.itacademy.dal.CrudDao;
 import by.itacademy.dal.jdbc.connector.Connector;
+import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
+import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
+import by.itacademy.dal.jdbc.statement.StatementInitializer;
 import by.itacademy.exception.DaoException;
-import lombok.RequiredArgsConstructor;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
-@RequiredArgsConstructor
-public abstract class AbstractCrudJdbcDao<T> implements CrudDao<T> {
 
-    private final Connector connector;
+public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T> implements CrudDao<T> {
 
-    @Override
-    public T getById(int id) throws DaoException {
-        T t;
-        try (Connection connection = connector.getConnection()) {
-            try {
-                t = getEntityById(id, connection);
-                connection.commit();
+    protected abstract CrudJdbcSqlQueryHolder getSqlHolder();
 
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
+    protected abstract ResultSetMapper<T> getResultSetMapper();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return t;
+    protected abstract StatementInitializer<T> getStatementInitializer();
+
+    public AbstractCrudJdbcDao(Connector connector) {
+        super(connector);
     }
 
-    @Override
-    public T create(T t) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                t = createEntity(t, connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return t;
-    }
 
     @Override
-    public T update(T t) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                updateEntity(t, connection);
-                connection.commit();
+    protected T getEntityById(int id, Connection connection) throws DaoException {
+        try {
+            PreparedStatement ps = connection.prepareStatement(getSqlHolder().getByIdSql());
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return getResultSetMapper().processResultSet(rs);
+                }
+                throw new DaoException("Invalid entity id: " + id);
 
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
-        }
-        return t;
-    }
-
-    @Override
-    public void delete(int id) throws DaoException {
-        try (Connection connection = connector.getConnection()) {
-            try {
-                deleteEntity(id, connection);
-                connection.commit();
-
-            } catch (DaoException e) {
-                connection.rollback();
-                throw new DaoException(e);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException("Error receive database connection: " + e.getMessage(), e);
         }
     }
 
-    protected abstract T getEntityById(int id, Connection connection) throws DaoException;
+    @Override
+    protected T createEntity(T t, Connection connection) throws DaoException {
+        try {
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql(), Statement.RETURN_GENERATED_KEYS);
+            getStatementInitializer().processCreateStatement(statement, t);
+            statement.executeUpdate();
 
-    protected abstract T createEntity(T t, Connection connection) throws DaoException;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                return getResultSetMapper().processResultSet(rs, t);
+            }
 
-    protected abstract T updateEntity(T t, Connection connection) throws DaoException;
+            throw new DaoException("Error generate ID for create entity: " + t);
+        } catch (SQLException | DaoException e) {
+            e.printStackTrace();
+            throw new DaoException("Error process create entity: " + e.getMessage(), e);
+        }
+    }
 
-    protected abstract void deleteEntity(int id, Connection connection) throws DaoException;
+    @Override
+    protected T updateEntity(T t, Connection connection) throws DaoException {
+        try {
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().updateSql());
+            getStatementInitializer().processUpdateStatement(statement, t);
+            statement.execute();
 
-    protected Connector getConnector() {
-        return connector;
+            return t;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error process update entity method: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    protected void deleteEntity(int id, Connection connection) throws DaoException {
+        try {
+            PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
+            statement.setInt(1, id);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error process delete entity method: " + e.getMessage());
+        }
     }
 }

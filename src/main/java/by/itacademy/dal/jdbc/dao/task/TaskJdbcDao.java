@@ -1,7 +1,7 @@
 package by.itacademy.dal.jdbc.dao.task;
 
 import by.itacademy.dal.TaskDao;
-import by.itacademy.dal.jdbc.AbstractCrudJdbcDao;
+import by.itacademy.dal.jdbc.AbstractBasicCrudJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.task.TaskJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
+public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskDao {
 
     private final TaskInformationJdbcDao taskInformationJdbcDao;
 
@@ -43,15 +43,20 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
     }
 
     @Override
-    public void deleteByUserId(int userId, Connection connection) throws DaoException {
-        try {
-            PreparedStatement statement = connection.prepareStatement(getSqlHolder().getDeleteByUserIdSql());
-            statement.setInt(1, userId);
-            statement.execute();
+    public void deleteByUserId(int userId) throws DaoException {
+        try (Connection connection = getConnector().getConnection()) {
+            try {
+                PreparedStatement statement = connection.prepareStatement(getSqlHolder().getDeleteByUserIdSql());
+                statement.setInt(1, userId);
+                int i = statement.executeUpdate();
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DaoException("Error process delete entity method: " + e.getMessage());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error process delete entity method: " + e.getMessage());
+            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
         }
     }
 
@@ -61,10 +66,10 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
             ps.setInt(1, id);
             List<Task> taskList = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        taskList.add(processResultSetMapping(rs, connection));
-                    }
-                    return taskList;
+                while (rs.next()) {
+                    taskList.add(processResultSetMapping(rs, connection));
+                }
+                return taskList;
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -104,7 +109,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 task.setId(rs.getInt(1));
-                task.setTaskInfo(taskInformationJdbcDao.create(task.getTaskInfo(), connection));
+                task.setTaskInfo(taskInformationJdbcDao.create(task.getTaskInfo()));
                 return task;
             }
 
@@ -122,7 +127,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
             processStatementInitialization(statement, task);
             statement.executeQuery();
 
-            taskInformationJdbcDao.update(task.getTaskInfo(), connection);
+            taskInformationJdbcDao.update(task.getTaskInfo());
 
             return task;
 
@@ -151,7 +156,7 @@ public class TaskJdbcDao extends AbstractCrudJdbcDao<Task> implements TaskDao {
     private Task processResultSetMapping(ResultSet rs, Connection connection) throws DaoException {
         try {
             int taskInfoId = rs.getInt("task_information_id");
-            TaskInformation taskInformation = taskInformationJdbcDao.getById(taskInfoId, connection);
+            TaskInformation taskInformation = taskInformationJdbcDao.getById(taskInfoId);
             return Task.builder()
                     .id(rs.getInt("task_id"))
                     .userId(rs.getInt("user_id"))
