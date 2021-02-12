@@ -1,4 +1,6 @@
-package by.itacademy.security;
+package by.itacademy.security.model.authentication;
+
+import by.itacademy.security.model.GrantedAuthority;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package by.itacademy.security;
+package by.itacademy.security.model;
 
 public interface GrantedAuthority {
 
