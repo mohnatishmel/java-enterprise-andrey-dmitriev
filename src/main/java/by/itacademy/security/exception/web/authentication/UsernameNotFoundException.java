@@ -1,6 +1,6 @@
-package by.itacademy.exception;
+package by.itacademy.security.exception.web.authentication;
 
-public class UsernameNotFoundException extends Exception {
+public class UsernameNotFoundException extends AuthenticationException {
 
     public UsernameNotFoundException(Throwable cause) {
         super(cause);

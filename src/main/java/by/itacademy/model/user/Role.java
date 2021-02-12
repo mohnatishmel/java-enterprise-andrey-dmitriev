@@ -1,6 +1,6 @@
 package by.itacademy.model.user;
 
-import by.itacademy.security.GrantedAuthority;
+import by.itacademy.security.model.GrantedAuthority;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
