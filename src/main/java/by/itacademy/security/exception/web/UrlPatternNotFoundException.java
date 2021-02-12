@@ -1,4 +1,4 @@
-package by.itacademy.exception;
+package by.itacademy.security.exception.web;
 
 public class UrlPatternNotFoundException extends Exception {
 

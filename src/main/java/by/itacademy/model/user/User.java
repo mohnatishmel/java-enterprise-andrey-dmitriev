@@ -1,8 +1,8 @@
 package by.itacademy.model.user;
 
-import by.itacademy.security.CredentialsContainer;
-import by.itacademy.security.GrantedAuthority;
-import by.itacademy.security.UserDetails;
+import by.itacademy.security.model.CredentialsContainer;
+import by.itacademy.security.model.GrantedAuthority;
+import by.itacademy.security.model.UserDetails;
 import lombok.*;
 
 import java.util.Collection;
