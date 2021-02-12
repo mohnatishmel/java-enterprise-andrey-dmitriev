@@ -18,18 +18,16 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        WebSecurityConfig webSecurityConfig = WebSecurityConfig.getInstance();
-
         if(SecurityContext.getInstance().getPrincipal() == null) {
-            ((HttpServletResponse) servletResponse).sendRedirect(webSecurityConfig.getLoginUrl());
+            ((HttpServletResponse) servletResponse).sendRedirect(WebSecurityConfig.getInstance().getLoginUrl());
         }
 
-            String url =  ((HttpServletRequest)servletRequest).getRequestURL().toString();
+        String url =  ((HttpServletRequest)servletRequest).getRequestURL().toString();
         if (WebSecurityService.getInstance().authorize(url)) {
             filterChain.doFilter(servletRequest, servletResponse);
 
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect(webSecurityConfig.getNotAuthorizedUrl());
+            ((HttpServletResponse) servletResponse).sendRedirect(WebSecurityConfig.getInstance().getNotAuthorizedUrl());
         }
     }
 

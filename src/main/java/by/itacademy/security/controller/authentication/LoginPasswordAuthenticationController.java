@@ -29,7 +29,7 @@ public class LoginPasswordAuthenticationController extends HttpServlet {
         Authentication authentication = new LoginPasswordAuthenticationToken(userName, password);
 
         request.setAttribute("authentication", authentication);
-        request.setAttribute("errorMessage", authentication);
+        request.setAttribute("errorMessage", errorMessage);
 
         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/login");
         dispatcher.forward(request, response);

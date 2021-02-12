@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class Role implements GrantedAuthority {
 
+    public Role(String role) {
+        this.role = role;
+    }
+
     @Getter
     private int id;
     private String role;

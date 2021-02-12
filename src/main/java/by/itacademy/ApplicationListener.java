@@ -8,16 +8,18 @@ import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
 import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.dal.jdbc.dao.user.*;
-import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
-import by.itacademy.security.exception.web.authentication.UsernameNotFoundException;
+import by.itacademy.security.SecurityConfigurer;
+import by.itacademy.security.service.authentication.AuthenticationManager;
+import by.itacademy.security.service.authentication.provider.LoginPasswordAuthenticationProvider;
 import lombok.SneakyThrows;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import java.io.FileReader;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -25,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+@WebListener
 public class ApplicationListener implements ServletContextListener {
 
     // for connect with UI tool to database use url - jdbc:h2:tcp://localhost/mem:jdbc
@@ -35,11 +38,11 @@ public class ApplicationListener implements ServletContextListener {
     @SneakyThrows
     public void contextInitialized(ServletContextEvent event) {
 
-        try {
-            SERVER = Server.createTcpServer().start();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SERVER = Server.createTcpServer().start();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         DATABASE_CONNECTOR = HikariCPConnector.getInstance();
 
         try (Connection connection = DATABASE_CONNECTOR.getConnection()) {
@@ -67,6 +70,11 @@ public class ApplicationListener implements ServletContextListener {
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector, roleDao);
         UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
+        LoginPasswordAuthenticationProvider loginPasswordAuthenticationProvider = new LoginPasswordAuthenticationProvider(userDao);
+        AuthenticationManager.getInstance().add(loginPasswordAuthenticationProvider);
+
+        SecurityConfigurer.init();
+
 
         User user = (User) userDao.loadUserByUsername("user1");
         System.out.println(user.toString());
@@ -85,7 +93,11 @@ public class ApplicationListener implements ServletContextListener {
 
         Task task = taskDao.getById(1);
         System.out.println(taskList.toString());
-        SERVER.stop();
+        //SERVER.stop();
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
     }
 }

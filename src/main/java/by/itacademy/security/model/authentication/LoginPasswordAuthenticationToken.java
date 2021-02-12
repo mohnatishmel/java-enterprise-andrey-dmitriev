@@ -2,19 +2,21 @@ package by.itacademy.security.model.authentication;
 
 import by.itacademy.security.model.CredentialsContainer;
 import by.itacademy.security.model.GrantedAuthority;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collection;
 
-
-@AllArgsConstructor
 public class LoginPasswordAuthenticationToken implements Authentication, CredentialsContainer {
 
     private Object credentials;
     @Setter
     private Object principal;
     private boolean authenticated;
+
+    public LoginPasswordAuthenticationToken(Object credentials, Object principal) {
+        this.credentials = credentials;
+        this.principal = principal;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

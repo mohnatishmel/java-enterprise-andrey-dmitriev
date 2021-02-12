@@ -1,12 +1,12 @@
 package by.itacademy.security.service.web.config;
 
+import by.itacademy.model.user.Role;
 import by.itacademy.security.exception.web.UrlPatternNotFoundException;
 import by.itacademy.security.exception.web.UrlHasNotBeenDefinedException;
 import by.itacademy.security.model.GrantedAuthority;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WebSecurityConfig {
@@ -26,9 +26,11 @@ public class WebSecurityConfig {
         authorities = new ArrayList<>();
     }
 
-    public WebSecurityConfig add(String url, GrantedAuthority... auth) {
+    public WebSecurityConfig add(String url, String ... roles) {
         urls.add(url);
-        authorities.add(Arrays.asList(auth));
+        for (String role : roles) {
+            authorities.add((List<GrantedAuthority>) new Role(role));
+        }
         return this;
     }
 
