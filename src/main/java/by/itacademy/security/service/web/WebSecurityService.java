@@ -6,9 +6,11 @@ import by.itacademy.security.model.GrantedAuthority;
 import by.itacademy.security.service.SecurityContext;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
+@Log4j2
 @AllArgsConstructor
 
 public class WebSecurityService implements Authenticate<String> {
@@ -17,15 +19,18 @@ public class WebSecurityService implements Authenticate<String> {
 
     @Override
     public boolean authorize(String url) throws UrlPatternNotFoundException {
-        List<GrantedAuthority> grantedAuthorities =
-                (List<GrantedAuthority>) SecurityContext.getInstance().getPrincipal().getAuthorities();
-        List<GrantedAuthority> authoritiesNeeded = WebSecurityConfig.getInstance().findMatches(url);
 
-        if (!grantedAuthorities.isEmpty() && !authoritiesNeeded.isEmpty()) {
-            for (GrantedAuthority grantedAuthority : grantedAuthorities) {
-                for (GrantedAuthority authorityNeeded : authoritiesNeeded) {
-                    if (grantedAuthority != null && grantedAuthority.equals(authorityNeeded)) {
-                        return true;
+        if (SecurityContext.getInstance().isAuthorized()) {
+            List<GrantedAuthority> grantedAuthorities =
+                    (List<GrantedAuthority>) SecurityContext.getInstance().getPrincipal().getAuthorities();
+            List<GrantedAuthority> authoritiesNeeded = WebSecurityConfig.getInstance().findMatches(url);
+
+            if (!grantedAuthorities.isEmpty() && !authoritiesNeeded.isEmpty()) {
+                for (GrantedAuthority grantedAuthority : grantedAuthorities) {
+                    for (GrantedAuthority authorityNeeded : authoritiesNeeded) {
+                        if (grantedAuthority != null && grantedAuthority.equals(authorityNeeded)) {
+                            return true;
+                        }
                     }
                 }
             }

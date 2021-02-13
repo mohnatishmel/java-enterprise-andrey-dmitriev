@@ -4,7 +4,9 @@ import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.UserDao;
 import by.itacademy.dal.jdbc.connector.Connector;
+import by.itacademy.dal.jdbc.connector.impl.C3P0Connector;
 import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
+import by.itacademy.dal.jdbc.connector.impl.JdbcConnector;
 import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
 import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.dal.jdbc.dao.user.*;
@@ -14,6 +16,7 @@ import by.itacademy.security.SecurityConfigurer;
 import by.itacademy.security.service.authentication.AuthenticationManager;
 import by.itacademy.security.service.authentication.provider.LoginPasswordAuthenticationProvider;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
@@ -25,7 +28,9 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Arrays;
+
+@Log4j2
 
 @WebListener
 public class ApplicationListener implements ServletContextListener {
@@ -38,12 +43,17 @@ public class ApplicationListener implements ServletContextListener {
     @SneakyThrows
     public void contextInitialized(ServletContextEvent event) {
 
-//        try {
-//            SERVER = Server.createTcpServer().start();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        DATABASE_CONNECTOR = HikariCPConnector.getInstance();
+        try {
+            SERVER = Server.createTcpServer().start();
+            log.debug("H2 Server started");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.debug("Error starting H2 Server", Arrays.toString(e.getStackTrace()));
+        }
+
+//        DATABASE_CONNECTOR = HikariCPConnector.getInstance();
+        DATABASE_CONNECTOR = C3P0Connector.getInstance();
 
         try (Connection connection = DATABASE_CONNECTOR.getConnection()) {
 
@@ -56,19 +66,19 @@ public class ApplicationListener implements ServletContextListener {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error initialization in-memory database: " + e.getMessage());
+            String message = "Error initialization in-memory database: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            System.err.println(message + e.getMessage());
         }
 
-        Connector connector = new HikariCPConnector();
+        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao(DATABASE_CONNECTOR);
+        TaskDao taskDao = new TaskJdbcDao(DATABASE_CONNECTOR, taskInformationDao);
 
-        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao(connector);
-        TaskDao taskDao = new TaskJdbcDao(connector, taskInformationDao);
-
-        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(connector);
-        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(connector);
-        RoleJdbcDao roleDao = new RoleJdbcDao(connector);
-        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector, roleDao);
-        UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(DATABASE_CONNECTOR);
+        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(DATABASE_CONNECTOR);
+        RoleJdbcDao roleDao = new RoleJdbcDao(DATABASE_CONNECTOR);
+        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(DATABASE_CONNECTOR, roleDao);
+        UserDao userDao = new UserJdbcDaoBasic(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
         LoginPasswordAuthenticationProvider loginPasswordAuthenticationProvider = new LoginPasswordAuthenticationProvider(userDao);
         AuthenticationManager.getInstance().add(loginPasswordAuthenticationProvider);
@@ -76,23 +86,23 @@ public class ApplicationListener implements ServletContextListener {
         SecurityConfigurer.init();
 
 
-        User user = (User) userDao.loadUserByUsername("user1");
-        System.out.println(user.toString());
-
-        user = userDao.getById(4);
-        System.out.println(user.toString());
-
-        user.getCredential().setPassword("QWERTY");
-        user = userDao.update(user);
-        System.out.println(user.toString());
-
-        userDao.delete(user.getId());
-
-        List<Task> taskList = taskDao.getByUserId(1);
-        System.out.println(taskList.toString());
-
-        Task task = taskDao.getById(1);
-        System.out.println(taskList.toString());
+//        User user = (User) userDao.loadUserByUsername("user1");
+//        System.out.println(user.toString());
+//
+//        user = userDao.getById(4);
+//        System.out.println(user.toString());
+//
+//        user.getCredential().setPassword("QWERTY");
+//        user = userDao.update(user);
+//        System.out.println(user.toString());
+//
+//        userDao.delete(user.getId());
+//
+//        List<Task> taskList = taskDao.getByUserId(1);
+//        System.out.println(taskList.toString());
+//
+//        Task task = taskDao.getById(1);
+//        System.out.println(taskList.toString());
         //SERVER.stop();
     }
 

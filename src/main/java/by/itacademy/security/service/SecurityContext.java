@@ -21,4 +21,8 @@ public class SecurityContext {
         }
         return instance;
     }
+
+    public boolean isAuthorized() {
+        return CURRENT_PRINCIPAL.get() != null;
+    }
 }

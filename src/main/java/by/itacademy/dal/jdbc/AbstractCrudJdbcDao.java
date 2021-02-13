@@ -6,9 +6,12 @@ import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.statement.StatementInitializer;
 import by.itacademy.exception.DaoException;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
+import java.util.Arrays;
 
+@Log4j2
 
 public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T> implements CrudDao<T> {
 
@@ -30,16 +33,21 @@ public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T>
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    log.info("getEntityById method called in " + this.getClass() );
                     return getResultSetMapper().processResultSet(rs);
                 }
                 throw new DaoException("Invalid entity id: " + id);
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
+                String message = "Error process getById entity method: ";
+                log.debug(message, Arrays.toString(e.getStackTrace()));
+                throw new DaoException(message + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error receive database connection: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -52,13 +60,18 @@ public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T>
 
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
+                log.info("createEntity method called in " + this.getClass() );
                 return getResultSetMapper().processResultSet(rs, t);
             }
 
-            throw new DaoException("Error generate ID for create entity: " + t);
+            String message = "Error generate ID for create entity: ";
+            log.debug(message + t);
+            throw new DaoException(message + t);
         } catch (SQLException | DaoException e) {
             e.printStackTrace();
-            throw new DaoException("Error process create entity: " + e.getMessage(), e);
+            String message = "Error process create entity: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -69,11 +82,14 @@ public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T>
             getStatementInitializer().processUpdateStatement(statement, t);
             statement.execute();
 
+            log.info("updateEntity method called in " + this.getClass() );
             return t;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error process update entity method: " + e.getMessage(), e);
+            String message = "Error process update entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -83,10 +99,13 @@ public abstract class AbstractCrudJdbcDao<T> extends AbstractBasicCrudJdbcDao<T>
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());
             statement.setInt(1, id);
             statement.execute();
+            log.info("deleteEntity method called in " + this.getClass() );
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error process delete entity method: " + e.getMessage());
+            String message = "Error process delete entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage());
         }
     }
 }

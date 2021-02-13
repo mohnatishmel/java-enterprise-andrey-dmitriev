@@ -2,11 +2,17 @@ package by.itacademy.dal.jdbc.connector.impl;
 
 import by.itacademy.dal.jdbc.connector.Connector;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import lombok.extern.log4j.Log4j2;
+
+
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+
+@Log4j2
 
 public class C3P0Connector implements Connector {
 
@@ -40,8 +46,11 @@ public class C3P0Connector implements Connector {
             cpds.setMaxPoolSize(maxPoolSize);
 
             this.dataSource = cpds;
+            log.info("C3P0 Connection pool initialized");
+
         } catch (PropertyVetoException ex) {
             System.err.println("Error init connectionPool " + ex);
+            log.debug("Error init connectionPool", Arrays.toString(ex.getStackTrace()));
         }
     }
 

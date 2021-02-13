@@ -6,11 +6,15 @@ import by.itacademy.dal.jdbc.mapper.user.RoleResultSetMapper;
 import by.itacademy.dal.jdbc.query.user.RoleJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+
+@Log4j2
 
 public class RoleJdbcDao extends BaseAbstractJdbcDao {
 
@@ -30,10 +34,14 @@ public class RoleJdbcDao extends BaseAbstractJdbcDao {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
+                String message = "Error process getById entity method: ";
+                log.debug(message, Arrays.toString(e.getStackTrace()));
+                throw new DaoException(message + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
     public Role getByRoleName(String role) throws DaoException {
@@ -48,10 +56,14 @@ public class RoleJdbcDao extends BaseAbstractJdbcDao {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
+                String message = "Error process getByRoleName entity method: ";
+                log.debug(message, Arrays.toString(e.getStackTrace()));
+                throw new DaoException(message + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -60,7 +72,7 @@ public class RoleJdbcDao extends BaseAbstractJdbcDao {
         return new RoleJdbcSqlQueryHolder();
     }
     
-   private RoleResultSetMapper getResultSetMapper() {
+    private RoleResultSetMapper getResultSetMapper() {
         return new RoleResultSetMapper();
    }
 }

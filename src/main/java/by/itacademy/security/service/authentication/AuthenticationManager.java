@@ -1,6 +1,5 @@
 package by.itacademy.security.service.authentication;
 
-import by.itacademy.security.exception.NoSuchAuthenticationMethodException;
 import by.itacademy.security.exception.web.authentication.AuthenticationException;
 import by.itacademy.security.model.authentication.Authentication;
 import by.itacademy.security.service.authentication.provider.AuthenticationProvider;

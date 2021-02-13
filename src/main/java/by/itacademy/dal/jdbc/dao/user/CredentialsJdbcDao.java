@@ -10,8 +10,12 @@ import by.itacademy.dal.jdbc.statement.StatementInitializer;
 import by.itacademy.dal.jdbc.statement.user.CredentialStatementInitializer;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Credential;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
+import java.util.Arrays;
+
+@Log4j2
 
 public class CredentialsJdbcDao extends AbstractCrudJdbcDao<Credential> {
 
@@ -42,14 +46,20 @@ public class CredentialsJdbcDao extends AbstractCrudJdbcDao<Credential> {
                 if (rs.next()) {
                     return getResultSetMapper().processResultSet(rs);
                 }
-                throw new DaoException("Invalid login: " + login);
+                String message = "login not found";
+                log.debug(message);
+                throw new DaoException(message);
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
+                String message = "Error process getById entity method: ";
+                log.debug(message, Arrays.toString(e.getStackTrace()));
+                throw new DaoException(message + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error receive database connection: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 }

@@ -9,9 +9,12 @@ import by.itacademy.dal.jdbc.dao.user.*;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.exception.DaoException;
+import by.itacademy.security.SecurityConfigurer;
 import by.itacademy.security.exception.web.authentication.UsernameNotFoundException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
+import by.itacademy.security.service.authentication.AuthenticationManager;
+import by.itacademy.security.service.authentication.provider.LoginPasswordAuthenticationProvider;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
@@ -69,6 +72,11 @@ public class Runner {
         RoleJdbcDao roleDao = new RoleJdbcDao(connector);
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector,roleDao);
         UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+
+        LoginPasswordAuthenticationProvider loginPasswordAuthenticationProvider = new LoginPasswordAuthenticationProvider(userDao);
+        AuthenticationManager.getInstance().add(loginPasswordAuthenticationProvider);
+
+        SecurityConfigurer.init();
 
 
         User user = (User) userDao.loadUserByUsername("user1");

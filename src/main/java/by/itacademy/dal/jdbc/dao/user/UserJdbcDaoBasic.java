@@ -13,10 +13,14 @@ import by.itacademy.model.user.PersonalInformation;
 import by.itacademy.model.user.Role;
 import by.itacademy.model.user.User;
 import by.itacademy.security.model.UserDetails;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+@Log4j2
 
 public class UserJdbcDaoBasic extends AbstractBasicCrudJdbcDao<User> implements UserDao {
 
@@ -47,7 +51,9 @@ public class UserJdbcDaoBasic extends AbstractBasicCrudJdbcDao<User> implements 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UsernameNotFoundException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new UsernameNotFoundException(message + e.getMessage(), e);
         }
         return userDetails;
     }
@@ -67,7 +73,9 @@ public class UserJdbcDaoBasic extends AbstractBasicCrudJdbcDao<User> implements 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
         return userList;
     }

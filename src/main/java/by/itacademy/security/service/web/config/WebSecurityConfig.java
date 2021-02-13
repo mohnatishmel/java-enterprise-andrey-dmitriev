@@ -5,9 +5,12 @@ import by.itacademy.security.exception.web.UrlPatternNotFoundException;
 import by.itacademy.security.exception.web.UrlHasNotBeenDefinedException;
 import by.itacademy.security.model.GrantedAuthority;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
+
+@Log4j2
 
 public class WebSecurityConfig {
 
@@ -28,9 +31,11 @@ public class WebSecurityConfig {
 
     public WebSecurityConfig add(String url, String ... roles) {
         urls.add(url);
+        List<GrantedAuthority> roleList = new ArrayList<>();
         for (String role : roles) {
-            authorities.add((List<GrantedAuthority>) new Role(role));
+            roleList.add(new Role(role));
         }
+        authorities.add(roleList);
         return this;
     }
 
@@ -41,19 +46,25 @@ public class WebSecurityConfig {
                 return authorities.get(i);
             }
         }
-        throw new UrlPatternNotFoundException("No matches to url '" + url + "'");
+        String message = "No matches to url '" + url + "'";
+        log.debug(message);
+        throw new UrlPatternNotFoundException(message);
     }
 
     public String getLoginUrl() throws UrlHasNotBeenDefinedException {
         if (loginUrl == null) {
-            throw new UrlHasNotBeenDefinedException("login url has no been defined in WebSecurityConfig");
+            String message = "login url has no been defined in WebSecurityConfig";
+            log.debug(message);
+            throw new UrlHasNotBeenDefinedException(message);
         }
         return loginUrl;
     }
 
     public String getNotAuthorizedUrl() throws UrlHasNotBeenDefinedException {
         if (notAuthorizedUrl == null) {
-            throw new UrlHasNotBeenDefinedException("'Not authorized' url has no been defined in WebSecurityConfig");
+            String message = "'Not authorized' url has no been defined in WebSecurityConfig";
+            log.debug(message);
+            throw new UrlHasNotBeenDefinedException(message);
         }
         return notAuthorizedUrl;
     }

@@ -7,11 +7,15 @@ import by.itacademy.dal.jdbc.query.task.TaskJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+@Log4j2
 
 public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskDao {
 
@@ -31,13 +35,14 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
                 connection.commit();
 
             } catch (DaoException e) {
-                connection.rollback();
                 throw new DaoException(e);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error receive database connection: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
         return taskList;
     }
@@ -56,7 +61,9 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error receive database connection: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -76,11 +83,11 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
                 throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            throw new DaoException("Error initialize prepared statement: " + e.getMessage(), e);
         }
     }
 
-
+    @Override
     protected Task getEntityById(int id, Connection connection) throws DaoException {
         try {
             PreparedStatement ps = connection.prepareStatement(getSqlHolder().getByIdSql());
@@ -96,10 +103,11 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
                 throw new DaoException("Error process getById entity method: " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            throw new DaoException("Error initialize prepared statement: " + e.getMessage(), e);
         }
     }
 
+    @Override
     protected Task createEntity(Task task, Connection connection) throws DaoException {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql(), Statement.RETURN_GENERATED_KEYS);
@@ -120,6 +128,7 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
         }
     }
 
+    @Override
     protected Task updateEntity(Task task, Connection connection) throws DaoException {
         try {
 
@@ -137,6 +146,7 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
         }
     }
 
+    @Override
     protected void deleteEntity(int id, Connection connection) throws DaoException {
         try {
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().deleteSql());

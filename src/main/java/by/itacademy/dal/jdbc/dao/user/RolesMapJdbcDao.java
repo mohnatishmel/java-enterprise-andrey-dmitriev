@@ -5,13 +5,17 @@ import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.user.RoleMapJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.model.user.Role;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+@Log4j2
 
 public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
 
@@ -35,7 +39,9 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -66,7 +72,9 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -83,7 +91,9 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 
@@ -106,7 +116,9 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoException("Error receive database connection: " + e.getMessage(), e);
+            String message = "Error process getById entity method: ";
+            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new DaoException(message + e.getMessage(), e);
         }
     }
 }
