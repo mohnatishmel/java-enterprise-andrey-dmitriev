@@ -4,9 +4,7 @@ import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.UserDao;
 import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.impl.C3P0Connector;
 import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
-import by.itacademy.dal.jdbc.connector.impl.JdbcConnector;
 import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
 import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.dal.jdbc.dao.user.*;
@@ -14,7 +12,7 @@ import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.SecurityConfigurer;
 import by.itacademy.security.service.authentication.AuthenticationManager;
-import by.itacademy.security.service.authentication.provider.LoginPasswordAuthenticationProvider;
+import by.itacademy.security.service.AuthenticationProvider;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.h2.tools.RunScript;
@@ -29,6 +27,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 
@@ -43,6 +42,8 @@ public class ApplicationListener implements ServletContextListener {
     @SneakyThrows
     public void contextInitialized(ServletContextEvent event) {
 
+        System.setProperty("log4j.configurationFile", "logger/log4j2.xml");
+
         try {
             SERVER = Server.createTcpServer().start();
             log.debug("H2 Server started");
@@ -52,8 +53,8 @@ public class ApplicationListener implements ServletContextListener {
             log.debug("Error starting H2 Server", Arrays.toString(e.getStackTrace()));
         }
 
-//        DATABASE_CONNECTOR = HikariCPConnector.getInstance();
-        DATABASE_CONNECTOR = C3P0Connector.getInstance();
+        DATABASE_CONNECTOR = HikariCPConnector.getInstance();
+//        DATABASE_CONNECTOR = C3P0Connector.getInstance();
 
         try (Connection connection = DATABASE_CONNECTOR.getConnection()) {
 
@@ -80,29 +81,29 @@ public class ApplicationListener implements ServletContextListener {
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(DATABASE_CONNECTOR, roleDao);
         UserDao userDao = new UserJdbcDaoBasic(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
-        LoginPasswordAuthenticationProvider loginPasswordAuthenticationProvider = new LoginPasswordAuthenticationProvider(userDao);
-        AuthenticationManager.getInstance().add(loginPasswordAuthenticationProvider);
+        AuthenticationProvider authenticationProvider = new AuthenticationProvider(userDao);
+        AuthenticationManager.getInstance().add(authenticationProvider);
 
         SecurityConfigurer.init();
 
 
-//        User user = (User) userDao.loadUserByUsername("user1");
-//        System.out.println(user.toString());
-//
-//        user = userDao.getById(4);
-//        System.out.println(user.toString());
-//
-//        user.getCredential().setPassword("QWERTY");
-//        user = userDao.update(user);
-//        System.out.println(user.toString());
-//
-//        userDao.delete(user.getId());
-//
-//        List<Task> taskList = taskDao.getByUserId(1);
-//        System.out.println(taskList.toString());
-//
-//        Task task = taskDao.getById(1);
-//        System.out.println(taskList.toString());
+        User user = (User) userDao.loadUserByUsername("user1");
+
+
+        user = userDao.getById(4);
+        System.out.println(user.toString());
+
+        user.getCredential().setPassword("QWERTY");
+        user = userDao.update(user);
+        System.out.println(user.toString());
+
+        userDao.delete(user.getId());
+
+        List<Task> taskList = taskDao.getByUserId(1);
+        System.out.println(taskList.toString());
+
+        Task task = taskDao.getById(1);
+        System.out.println(taskList.toString());
         //SERVER.stop();
     }
 

@@ -10,11 +10,11 @@ import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.exception.DaoException;
 import by.itacademy.security.SecurityConfigurer;
-import by.itacademy.security.exception.web.authentication.UsernameNotFoundException;
+import by.itacademy.security.exception.authentication.UsernameNotFoundException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.service.authentication.AuthenticationManager;
-import by.itacademy.security.service.authentication.provider.LoginPasswordAuthenticationProvider;
+import by.itacademy.security.service.AuthenticationProvider;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
@@ -34,6 +34,9 @@ public class Runner {
     private static Connector DATABASE_CONNECTOR;
 
     static {
+
+        System.setProperty("log4j.configurationFile", "logger/log4j2.xml");
+
         try {
             SERVER = Server.createTcpServer().start();
         } catch (SQLException e) {
@@ -73,8 +76,8 @@ public class Runner {
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector,roleDao);
         UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
-        LoginPasswordAuthenticationProvider loginPasswordAuthenticationProvider = new LoginPasswordAuthenticationProvider(userDao);
-        AuthenticationManager.getInstance().add(loginPasswordAuthenticationProvider);
+        AuthenticationProvider authenticationProvider = new AuthenticationProvider(userDao);
+        AuthenticationManager.getInstance().add(authenticationProvider);
 
         SecurityConfigurer.init();
 

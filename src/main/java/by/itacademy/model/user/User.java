@@ -1,6 +1,5 @@
 package by.itacademy.model.user;
 
-import by.itacademy.security.model.CredentialsContainer;
 import by.itacademy.security.model.GrantedAuthority;
 import by.itacademy.security.model.UserDetails;
 import lombok.*;

@@ -23,7 +23,7 @@ public class HikariCPConnector implements Connector {
 
     static {
         try {
-            CONFIG_FILE = "src/main/resources/database/hikari.properties";
+            CONFIG_FILE = "/database/hikari.properties";
             CONFIG = new HikariConfig(CONFIG_FILE);
             DATA_SOURCE = new HikariDataSource(CONFIG);
             log.info("Hikari Connection pool initialized");

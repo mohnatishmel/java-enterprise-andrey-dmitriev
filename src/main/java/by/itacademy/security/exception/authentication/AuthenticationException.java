@@ -1,4 +1,4 @@
-package by.itacademy.security.exception.web.authentication;
+package by.itacademy.security.exception.authentication;
 
 public class AuthenticationException extends Exception{
 

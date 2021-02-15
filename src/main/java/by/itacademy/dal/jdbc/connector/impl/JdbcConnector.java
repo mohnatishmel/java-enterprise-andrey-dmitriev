@@ -18,7 +18,7 @@ public final class JdbcConnector implements Connector {
     private static final String DATABASE_PASSWORD;
 
     static {
-        try (InputStream resourceAsStream = JdbcConnector.class.getResourceAsStream("src/main/resources/database/data-source.properties")) {
+        try (InputStream resourceAsStream = JdbcConnector.class.getResourceAsStream("/database/data-source.properties")) {
 
             Properties properties = new Properties();
             properties.load(resourceAsStream);

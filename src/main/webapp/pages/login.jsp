@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
+<html>
 <head>
     <title>Title</title>
 </head>
@@ -20,11 +22,11 @@
     <div class="container">
         <h1>Welcome</h1>
 
-        <p style="color: red;">${errorString}</p>
+<%--        <p style="color: red;">${errorString}</p>--%>
 
-        <form class="form" method="POST" action="${pageContext.request.contextPath}/login">
-            <input type="text" placeholder="Username" name="userName" value= "${user.userName}" >
-            <input type="password" placeholder="Password" name="password" value= "${user.password}">
+        <form class="form" method="POST" action="<c:url value="/login" />">
+            <input type="text" placeholder="Username" name="userName" value= "${user.userName}" />
+            <input type="password" placeholder="Password" name="password" value= "${user.password}"/>
             <button type="submit" id="login-button">Login</button>
         </form>
     </div>

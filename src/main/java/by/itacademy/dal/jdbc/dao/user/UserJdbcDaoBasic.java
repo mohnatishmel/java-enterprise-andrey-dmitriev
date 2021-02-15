@@ -7,7 +7,7 @@ import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.user.UserJdbcSqlQueryHolder;
 import by.itacademy.exception.DaoException;
 import by.itacademy.dal.jdbc.dao.user.metadata.UserMetaData;
-import by.itacademy.security.exception.web.authentication.UsernameNotFoundException;
+import by.itacademy.security.exception.authentication.UsernameNotFoundException;
 import by.itacademy.model.user.Credential;
 import by.itacademy.model.user.PersonalInformation;
 import by.itacademy.model.user.Role;

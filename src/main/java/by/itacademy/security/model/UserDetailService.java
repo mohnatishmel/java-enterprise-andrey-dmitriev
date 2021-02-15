@@ -1,6 +1,6 @@
 package by.itacademy.security.model;
 
-import by.itacademy.security.exception.web.authentication.UsernameNotFoundException;
+import by.itacademy.security.exception.authentication.UsernameNotFoundException;
 
 public interface UserDetailService {
 
