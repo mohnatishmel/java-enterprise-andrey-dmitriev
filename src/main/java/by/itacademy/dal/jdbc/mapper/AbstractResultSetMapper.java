@@ -1,6 +1,6 @@
 package by.itacademy.dal.jdbc.mapper;
 
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.Unique;
 
 import java.sql.ResultSet;

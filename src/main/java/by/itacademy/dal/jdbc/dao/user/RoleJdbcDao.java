@@ -4,7 +4,7 @@ import by.itacademy.dal.jdbc.BaseAbstractJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.mapper.user.RoleResultSetMapper;
 import by.itacademy.dal.jdbc.query.user.RoleJdbcSqlQueryHolder;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.user.Role;
 import lombok.extern.log4j.Log4j2;
 

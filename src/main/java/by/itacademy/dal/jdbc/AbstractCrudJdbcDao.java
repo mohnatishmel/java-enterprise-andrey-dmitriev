@@ -5,7 +5,7 @@ import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.mapper.ResultSetMapper;
 import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.statement.StatementInitializer;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;

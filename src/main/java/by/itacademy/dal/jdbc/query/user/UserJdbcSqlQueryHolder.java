@@ -5,7 +5,7 @@ public class UserJdbcSqlQueryHolder {
     private static final String GET_BY_ID_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE user_id = ?;";
     private static final String GET_ALL_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable   FROM users;";
     private static final String UPDATE_SQL = "UPDATE  users SET profile_enable = ?  WHERE user_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO users(SELECT credentials_id, personal_information_id, profile_enable) VALUES(?,?,?);";
+    private static final String CREATE_SQL = "INSERT INTO users(credentials_id, personal_information_id, profile_enable) VALUES(?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM users WHERE user_id = ?;";
     private static final String GET_BY_NAME_SQL = "SELECT user_id, credentials_id, personal_information_id, profile_enable  FROM users WHERE credentials_id = ?;";
 

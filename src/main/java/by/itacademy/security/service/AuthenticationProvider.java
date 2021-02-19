@@ -1,26 +1,30 @@
 package by.itacademy.security.service;
 
-import by.itacademy.security.exception.authentication.AuthenticationException;
-import by.itacademy.security.exception.authentication.BadCredentialsException;
-import by.itacademy.security.exception.authentication.UsernameNotFoundException;
-import by.itacademy.security.model.UserDetailService;
-import by.itacademy.security.model.UserDetails;
-import by.itacademy.security.model.authentication.AuthenticationToken;
+import by.itacademy.dal.UserDao;
+import by.itacademy.dal.jdbc.dao.user.UserJdbcDao;
+import by.itacademy.exception.dao.DaoException;
+import by.itacademy.exception.security.authentication.AuthenticationException;
+import by.itacademy.exception.security.authentication.BadCredentialsException;
+import by.itacademy.exception.security.authentication.UsernameNotFoundException;
+import by.itacademy.model.security.user.UserDetails;
+import by.itacademy.model.security.authentication.AuthenticationToken;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.Arrays;
+
 @Log4j2
+
 
 @NoArgsConstructor
 public class AuthenticationProvider {
 
     private static AuthenticationProvider instance;
-    private UserDetailService userDetailService;
+    private static UserDao userDetailService;
 
-    public AuthenticationProvider(UserDetailService userDetailService) {
-        this.userDetailService = userDetailService;
+    {
+        userDetailService = UserJdbcDao.getInstance();
     }
-
 
     public UserDetails authenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
         UserDetails user = null;
@@ -29,16 +33,16 @@ public class AuthenticationProvider {
             String password = authenticationToken.getPassword();
 
             if (login != null) {
-                user = userDetailService.loadUserByUsername(login);
-                if (password != null && password.equals(user.getPassword())) {
-
-                } else {
+                user = userDetailService.getByName(login);
+                if (! password.equals(user.getPassword())) {
                     log.debug("bad credentials");
                     throw new BadCredentialsException();
                 }
             }
-        } catch (UsernameNotFoundException e) {
-            e.printStackTrace();
+        } catch (DaoException e) {
+            String message = String.format("User with login %s not found", authenticationToken.getLogin());
+//            log.debug(message, Arrays.toString(e.getStackTrace()));
+            throw new UsernameNotFoundException(message, e);
         }
         return user;
     }

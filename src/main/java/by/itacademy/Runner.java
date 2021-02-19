@@ -8,13 +8,11 @@ import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.dal.jdbc.dao.user.*;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.security.SecurityConfigurer;
-import by.itacademy.security.exception.authentication.UsernameNotFoundException;
+import by.itacademy.exception.security.authentication.UsernameNotFoundException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
-import by.itacademy.security.service.authentication.AuthenticationManager;
-import by.itacademy.security.service.AuthenticationProvider;
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
@@ -74,15 +72,13 @@ public class Runner {
         CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(connector);
         RoleJdbcDao roleDao = new RoleJdbcDao(connector);
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(connector,roleDao);
-        UserDao userDao = new UserJdbcDaoBasic(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+        UserDao userDao = new UserJdbcDao(connector, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
-        AuthenticationProvider authenticationProvider = new AuthenticationProvider(userDao);
-        AuthenticationManager.getInstance().add(authenticationProvider);
-
+//        AuthenticationProvider.getInstance().;
         SecurityConfigurer.init();
 
 
-        User user = (User) userDao.loadUserByUsername("user1");
+        User user = userDao.getByName("user1");
         System.out.println(user.toString());
 
         user = userDao.getById(4);

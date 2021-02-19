@@ -1,6 +1,6 @@
 package by.itacademy.dal.jdbc;
 
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 
 import java.sql.Connection;
 

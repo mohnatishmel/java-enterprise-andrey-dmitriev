@@ -1,7 +1,8 @@
 package by.itacademy.model.user;
 
-import by.itacademy.security.model.GrantedAuthority;
-import by.itacademy.security.model.UserDetails;
+import by.itacademy.model.security.user.CredentialsContainer;
+import by.itacademy.model.security.user.GrantedAuthority;
+import by.itacademy.model.security.user.UserDetails;
 import lombok.*;
 
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class User implements UserDetails, CredentialsContainer {
     }
 
     @Override
-    public String getUsername() {
+    public String getLogin() {
         return credential.getLogin();
     }
 

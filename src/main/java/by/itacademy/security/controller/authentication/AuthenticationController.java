@@ -1,8 +1,8 @@
 package by.itacademy.security.controller.authentication;
 
-import by.itacademy.security.exception.authentication.AuthenticationException;
-import by.itacademy.security.model.UserDetails;
-import by.itacademy.security.model.authentication.AuthenticationToken;
+import by.itacademy.exception.security.authentication.AuthenticationException;
+import by.itacademy.model.security.user.UserDetails;
+import by.itacademy.model.security.authentication.AuthenticationToken;
 import by.itacademy.security.service.AuthenticationProvider;
 import by.itacademy.security.service.SecurityContext;
 

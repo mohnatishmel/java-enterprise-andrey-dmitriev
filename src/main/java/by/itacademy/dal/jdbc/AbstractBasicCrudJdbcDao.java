@@ -2,8 +2,7 @@ package by.itacademy.dal.jdbc;
 
 import by.itacademy.dal.CrudDao;
 import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.exception.DaoException;
-import lombok.RequiredArgsConstructor;
+import by.itacademy.exception.dao.DaoException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

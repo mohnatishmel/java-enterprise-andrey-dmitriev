@@ -1,9 +1,8 @@
 package by.itacademy.dal;
 
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.task.Task;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface TaskDao extends CrudDao<Task> {

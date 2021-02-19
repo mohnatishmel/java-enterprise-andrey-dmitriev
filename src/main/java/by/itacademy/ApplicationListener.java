@@ -11,7 +11,6 @@ import by.itacademy.dal.jdbc.dao.user.*;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.SecurityConfigurer;
-import by.itacademy.security.service.authentication.AuthenticationManager;
 import by.itacademy.security.service.AuthenticationProvider;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -79,16 +78,13 @@ public class ApplicationListener implements ServletContextListener {
         CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(DATABASE_CONNECTOR);
         RoleJdbcDao roleDao = new RoleJdbcDao(DATABASE_CONNECTOR);
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(DATABASE_CONNECTOR, roleDao);
-        UserDao userDao = new UserJdbcDaoBasic(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
-
-        AuthenticationProvider authenticationProvider = new AuthenticationProvider(userDao);
-        AuthenticationManager.getInstance().add(authenticationProvider);
+        UserDao userDao = new UserJdbcDao(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
 
         SecurityConfigurer.init();
 
 
-        User user = (User) userDao.loadUserByUsername("user1");
-
+        User user = userDao.getByName("user1");
+        System.out.println(user.toString());
 
         user = userDao.getById(4);
         System.out.println(user.toString());

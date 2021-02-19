@@ -1,8 +1,6 @@
 package by.itacademy.dal;
 
-import by.itacademy.exception.DaoException;
-
-import java.util.List;
+import by.itacademy.exception.dao.DaoException;
 
 public interface CrudDao<T> {
 

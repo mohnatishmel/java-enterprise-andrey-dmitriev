@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class Credential implements Unique {
 
+    public Credential(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     private int id;
     private String login;
     private String password;

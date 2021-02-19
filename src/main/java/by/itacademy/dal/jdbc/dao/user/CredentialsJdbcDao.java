@@ -8,7 +8,8 @@ import by.itacademy.dal.jdbc.query.CrudJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.query.user.CredentialsJdbcSqlQueryHolder;
 import by.itacademy.dal.jdbc.statement.StatementInitializer;
 import by.itacademy.dal.jdbc.statement.user.CredentialStatementInitializer;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
+import by.itacademy.exception.security.authentication.UsernameNotFoundException;
 import by.itacademy.model.user.Credential;
 import lombok.extern.log4j.Log4j2;
 
@@ -38,7 +39,7 @@ public class CredentialsJdbcDao extends AbstractCrudJdbcDao<Credential> {
         return new CredentialStatementInitializer();
     }
 
-    public Credential getByLogin(String login) throws DaoException {
+    public Credential getByLogin(String login) throws DaoException, UsernameNotFoundException {
         try(Connection connection = getConnector().getConnection()) {
             PreparedStatement ps = connection.prepareStatement(new CredentialsJdbcSqlQueryHolder().getByLoginSql());
             ps.setString(1, login);
@@ -48,7 +49,7 @@ public class CredentialsJdbcDao extends AbstractCrudJdbcDao<Credential> {
                 }
                 String message = "login not found";
                 log.debug(message);
-                throw new DaoException(message);
+                throw new UsernameNotFoundException(message);
 
             } catch (SQLException e) {
                 e.printStackTrace();

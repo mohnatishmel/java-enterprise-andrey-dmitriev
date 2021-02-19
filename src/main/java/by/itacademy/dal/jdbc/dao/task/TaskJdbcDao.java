@@ -4,7 +4,7 @@ import by.itacademy.dal.TaskDao;
 import by.itacademy.dal.jdbc.AbstractBasicCrudJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.task.TaskJdbcSqlQueryHolder;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.task.TaskInformation;
 import lombok.extern.log4j.Log4j2;

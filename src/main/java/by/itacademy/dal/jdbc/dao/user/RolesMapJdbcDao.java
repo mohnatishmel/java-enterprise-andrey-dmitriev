@@ -3,7 +3,7 @@ package by.itacademy.dal.jdbc.dao.user;
 import by.itacademy.dal.jdbc.BaseAbstractJdbcDao;
 import by.itacademy.dal.jdbc.connector.Connector;
 import by.itacademy.dal.jdbc.query.user.RoleMapJdbcSqlQueryHolder;
-import by.itacademy.exception.DaoException;
+import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.user.Role;
 import lombok.extern.log4j.Log4j2;
 

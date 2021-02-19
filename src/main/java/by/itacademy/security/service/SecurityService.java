@@ -1,9 +1,9 @@
 package by.itacademy.security.service;
 
 
-import by.itacademy.security.exception.authorization.AuthorizationException;
-import by.itacademy.security.exception.authorization.UrlPatternNotFoundException;
-import by.itacademy.security.model.GrantedAuthority;
+import by.itacademy.exception.security.authorization.AuthorizationException;
+import by.itacademy.exception.security.authorization.UrlPatternNotFoundException;
+import by.itacademy.model.security.user.GrantedAuthority;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
 
 import java.util.Arrays;
