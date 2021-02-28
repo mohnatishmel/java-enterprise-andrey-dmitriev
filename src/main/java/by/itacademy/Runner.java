@@ -1,13 +1,12 @@
 package by.itacademy;
 
 import by.itacademy.constant.ApplicationConstant;
-import by.itacademy.dal.TaskDao;
-import by.itacademy.dal.UserDao;
-import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
-import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
-import by.itacademy.dal.jdbc.dao.user.*;
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
+import by.itacademy.persistance.TaskDao;
+import by.itacademy.persistance.UserDao;
+import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
+import by.itacademy.persistance.jdbc.dao.user.*;
+import by.itacademy.persistance.jdbc.connector.Connector;
+import by.itacademy.persistance.jdbc.connector.impl.HikariCPConnector;
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.security.SecurityConfigurer;
 import by.itacademy.exception.security.authentication.UsernameNotFoundException;
@@ -65,8 +64,8 @@ public class Runner {
 
         Connector connector = new HikariCPConnector();
 
-        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao(connector);
-        TaskDao taskDao = new TaskJdbcDao(connector, taskInformationDao);
+
+        TaskDao taskDao = new TaskJdbcDao(connector);
 
         PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(connector);
         CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(connector);
@@ -78,7 +77,7 @@ public class Runner {
         SecurityConfigurer.init();
 
 
-        User user = userDao.getByName("user1");
+        User user = (User) userDao.getByName("user1");
         System.out.println(user.toString());
 
         user = userDao.getById(4);

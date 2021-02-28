@@ -4,7 +4,7 @@ import by.itacademy.model.security.user.UserDetails;
 
 public class SecurityContext {
 
-    private final static ThreadLocal<UserDetails> CURRENT_PRINCIPAL = new ThreadLocal<>();
+    private static ThreadLocal<UserDetails> CURRENT_PRINCIPAL = new ThreadLocal<>();
     private static SecurityContext instance;
 
     public UserDetails getPrincipal() {
@@ -22,7 +22,7 @@ public class SecurityContext {
         return instance;
     }
 
-    public boolean isAuthorized() {
-        return CURRENT_PRINCIPAL.get() != null;
+    public boolean isLogedIn() {
+        return CURRENT_PRINCIPAL.get() == null;
     }
 }

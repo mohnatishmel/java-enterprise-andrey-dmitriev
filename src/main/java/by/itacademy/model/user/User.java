@@ -3,9 +3,11 @@ package by.itacademy.model.user;
 import by.itacademy.model.security.user.CredentialsContainer;
 import by.itacademy.model.security.user.GrantedAuthority;
 import by.itacademy.model.security.user.UserDetails;
+import by.itacademy.model.task.Task;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class User implements UserDetails, CredentialsContainer {
     private PersonalInformation personalInformation;
     private Collection<Role> roles;
     private boolean accountNotLocked;
+    private List<Task> taskList;
 
     public static User.UserBuilder builder() {
         return new User.UserBuilder();

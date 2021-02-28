@@ -8,7 +8,9 @@
 <%--%>--%>
 
 <c:if test="${!empty requestScope.error}" >
-    <h2 style="color:red">* Error: ${requestScope.error} </h2>
+    <div class="alert alert-danger" role="alert">
+     ${requestScope.error}
+    </div>
 </c:if>
 
 

@@ -1,7 +1,7 @@
 package by.itacademy.front.command;
 
 
-import by.itacademy.dal.jdbc.dao.user.UserJdbcDao;
+import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.security.user.Roles;
 import by.itacademy.model.security.user.UserDetails;

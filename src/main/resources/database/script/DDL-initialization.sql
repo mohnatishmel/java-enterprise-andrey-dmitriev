@@ -124,7 +124,8 @@ ALTER TABLE `roles_map`
 CREATE TABLE `tasks` (
   `task_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `task_information_id` int(11) NOT NULL,
+  `task_name` varchar(255),
+  `description` varchar(255),
   `deadline` datetime NOT NULL,
   `fixed` boolean(1) NOT NULL,
   `in_basket` boolean(1) NOT NULL
@@ -146,24 +147,24 @@ ALTER TABLE `tasks`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `task_information`
+-- Table structure for table `task_files`
 --
 
-CREATE TABLE `task_information` (
-  `task_information_id` int(11) NOT NULL,
-  `description` varchar(255),
-  `file_path` varchar(255)
+CREATE TABLE `task_files` (
+  `task_file_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `file` BLOB(10M)
 );
 --
--- Indexes for table `task_information`
+-- Indexes for table `task_files`
 --
-ALTER TABLE `task_information`
-  ADD PRIMARY KEY (`task_information_id`);
+ALTER TABLE `task_files`
+  ADD PRIMARY KEY (`task_file_id`);
 --
--- AUTO_INCREMENT for table `task_information`
+-- AUTO_INCREMENT for table `task_files`
 --
-ALTER TABLE `task_information`
-  ALTER COLUMN `task_information_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `task_files`
+  ALTER COLUMN `task_file_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------
 
@@ -201,15 +202,16 @@ ALTER TABLE `task_information`
 --  ADD CONSTRAINT `FK_Collaborators` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 --ALTER TABLE `collaborators`
 --  ADD CONSTRAINT `FK_Task_collaborators` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
-
 --
 -- Constraints for table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `FK_Task_information` FOREIGN KEY (`task_information_id`) REFERENCES `task_information` (`task_information_id`);
-ALTER TABLE `tasks`
   ADD CONSTRAINT `FK_Users_task` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
+--
+-- Constraints for table `task_files`
+--
+ALTER TABLE `task_files`
+    ADD CONSTRAINT `FK_Task_files` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
 --
 -- Constraints for table `users`
 --

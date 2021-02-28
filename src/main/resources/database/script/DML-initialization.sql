@@ -70,37 +70,21 @@ INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALU
 --          TASKS
 -- --------------------------------------------------------
 
---
--- Data for table `task_information`
---
-
-INSERT INTO task_information (description, file_path) VALUES ('Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.','');
-INSERT INTO task_information (description, file_path) VALUES ('','');
-INSERT INTO task_information (description, file_path) VALUES ('','');
-INSERT INTO task_information (description, file_path) VALUES ('','');
-INSERT INTO task_information (description, file_path) VALUES ('In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.','');
-INSERT INTO task_information (description, file_path) VALUES ('Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.','');
-INSERT INTO task_information (description, file_path) VALUES ('Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.','');
-INSERT INTO task_information (description, file_path) VALUES ('','');
-INSERT INTO task_information (description, file_path) VALUES ('Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.','');
-INSERT INTO task_information (description, file_path) VALUES ('Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.','');
-
--- --------------------------------------------------------
 
 --
 -- Data for table `tasks`
 --
 
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 1, '2020-07-17 13:54:18', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 2, '2020-05-25 13:11:34', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (3, 3, '2020-10-02 20:20:28', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (4, 4, '2020-08-27 12:25:14', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (5, 5, '2021-01-06 17:30:44', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (1, 6, '2020-11-24 05:21:53', false, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (7, 7, '2020-03-09 00:11:56', true, true);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (8, 8, '2020-12-19 08:09:12', true, false);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (9, 9, '2020-09-04 11:36:04', true, false);
-INSERT INTO tasks (user_id, task_information_id, deadline, fixed, in_basket) VALUES (10, 10, '2020-10-30 01:33:08', true, true);
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-07-17 13:54:18', 'task1', true, true, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-05-25 13:11:34', 'task2', true, true,'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (3, '2020-10-02 20:20:28', 'task3', false, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (4, '2020-08-27 12:25:14', 'task4', false, true, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (5, '2021-01-06 17:30:44', 'task5', false, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-11-24 05:21:53', 'task6', false, true, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (7, '2020-03-09 00:11:56', 'task7', true, true, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (8, '2020-12-19 08:09:12', 'task8', true, false, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (9, '2020-09-04 11:36:04', 'task9', true, false, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (10, '2020-10-30 01:33:08', 'task10', true, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
 
 
 -- --------------------------------------------------------
@@ -141,3 +125,16 @@ INSERT INTO roles_map (role_id, user_id) VALUES (1, 7);
 INSERT INTO roles_map (role_id, user_id) VALUES (1, 8);
 INSERT INTO roles_map (role_id, user_id) VALUES (1, 9);
 INSERT INTO roles_map (role_id, user_id) VALUES (1, 10);
+
+
+
+-- INSERT INTO task_information (description, deadline) VALUES ('Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', '2020-07-17 13:54:18');
+-- INSERT INTO task_information (description, deadline) VALUES ('','2020-05-25 13:11:34');
+-- INSERT INTO task_information (description, deadline) VALUES ('','2020-10-02 20:20:28');
+-- INSERT INTO task_information (description, deadline) VALUES ('','2020-08-27 12:25:14');
+-- INSERT INTO task_information (description, deadline) VALUES ('In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.','2021-01-06 17:30:44');
+-- INSERT INTO task_information (description, deadline) VALUES ('Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.','2020-11-24 05:21:53');
+-- INSERT INTO task_information (description, deadline) VALUES ('Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.','2020-03-09 00:11:56');
+-- INSERT INTO task_information (description, deadline) VALUES ('','2020-12-19 08:09:12');
+-- INSERT INTO task_information (description, deadline) VALUES ('Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.','2020-09-04 11:36:04');
+-- INSERT INTO task_information (description, deadline) VALUES ('Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.','2020-10-30 01:33:08')

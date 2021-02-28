@@ -1,17 +1,15 @@
 package by.itacademy;
 
 import by.itacademy.constant.ApplicationConstant;
-import by.itacademy.dal.TaskDao;
-import by.itacademy.dal.UserDao;
-import by.itacademy.dal.jdbc.connector.Connector;
-import by.itacademy.dal.jdbc.connector.impl.HikariCPConnector;
-import by.itacademy.dal.jdbc.dao.task.TaskInformationJdbcDao;
-import by.itacademy.dal.jdbc.dao.task.TaskJdbcDao;
-import by.itacademy.dal.jdbc.dao.user.*;
+import by.itacademy.persistance.TaskDao;
+import by.itacademy.persistance.UserDao;
+import by.itacademy.persistance.jdbc.connector.Connector;
+import by.itacademy.persistance.jdbc.connector.impl.HikariCPConnector;
+import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
+import by.itacademy.persistance.jdbc.dao.user.*;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.SecurityConfigurer;
-import by.itacademy.security.service.AuthenticationProvider;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.h2.tools.RunScript;
@@ -71,8 +69,8 @@ public class ApplicationListener implements ServletContextListener {
             System.err.println(message + e.getMessage());
         }
 
-        TaskInformationJdbcDao taskInformationDao = new TaskInformationJdbcDao(DATABASE_CONNECTOR);
-        TaskDao taskDao = new TaskJdbcDao(DATABASE_CONNECTOR, taskInformationDao);
+
+        TaskDao taskDao = new TaskJdbcDao(DATABASE_CONNECTOR);
 
         PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(DATABASE_CONNECTOR);
         CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(DATABASE_CONNECTOR);
@@ -83,7 +81,7 @@ public class ApplicationListener implements ServletContextListener {
         SecurityConfigurer.init();
 
 
-        User user = userDao.getByName("user1");
+        User user = (User) userDao.getByName("user1");
         System.out.println(user.toString());
 
         user = userDao.getById(4);

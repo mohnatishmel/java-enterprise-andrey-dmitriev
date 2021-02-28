@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<form action="<c:url value="/registration" />" method="post">
+<form action="<c:url value="/" />" method="post">
     <h3>Simple Registration form</h3>
     <p>
         <label for="login">Login</label>

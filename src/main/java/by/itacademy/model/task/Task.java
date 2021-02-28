@@ -14,11 +14,11 @@ public class Task {
 
     private int id;
     private int userId;
-    private TaskInformation taskInfo;
+    private String name;
+    private String description;
     private Date deaLine;
     private boolean fixed;
     private boolean inBasket;
-    private Collection<User> collaborators;
 
     public static TaskBuilder builder() {
         return new TaskBuilder();
