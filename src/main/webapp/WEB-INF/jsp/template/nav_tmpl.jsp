@@ -71,9 +71,9 @@
             <textarea class="form-control" id="taskDescription" rows="3" placeholder="Description"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="datetime">Select dead line date:</label>
-            <input id="datetime" class="form-control" type="datetime-local">
+        <div class="form-group d-none" id="date-container">
+            <label for="date">Select dead line date:</label>
+            <input id="date" class="form-control" type="date" placeholder="dd/mm/yyyy">
         </div>
 
         <div class="form-group">

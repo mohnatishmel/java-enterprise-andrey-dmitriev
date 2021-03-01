@@ -13,15 +13,7 @@
     jQuery(function () {
 
         $(document).ready(function () {
-            fetchTasks().done(function () {
                 fillTaskTable();
-            })
-                .fail(function () {
-                    console.log("error");
-                })
-                .always(function () {
-                    console.log("complete");
-                });
         });
 
         function clearBox(elementID) {
@@ -65,6 +57,12 @@
         $(document).on("click", "#todayView", function () {
             currentView = "TODAY";
             console.log(currentView);
+
+            document.getElementById("todayView").classList.add("active");
+            document.getElementById("tomorrowView").classList.remove("active");
+            document.getElementById("somedayView").classList.remove("active");
+            document.getElementById("date-container").classList.add("d-none");
+
             todayView();
         });
 
@@ -72,18 +70,22 @@
             let today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            initTaskTableForTodayView();
+            $.getJSON("/?command=LoadTaskList", function (result) {
 
-            taskList.forEach(function (task, i) {
-                let taskDeadline = new Date(task.deaLine);
-                taskDeadline.setHours(0, 0, 0, 0)
-                if (taskDeadline.getTime() == today.getTime()) {
-                    $("<tr>").appendTo($("#taskTable"))
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").text(task.name))
-                        .append($("<td>").text(task.description))
-                        .append($("<td>").text(task.fixed))
-                }
+                clearBox("taskTable");
+                initTaskTableForTodayView();
+
+                $.each(result, function (i, task) {
+                    let taskDeadline = new Date(task.deaLine);
+                    taskDeadline.setHours(0, 0, 0, 0)
+                    if (taskDeadline.getTime() == today.getTime()) {
+                        $("<tr>").appendTo($("#taskTable"))
+                            .append($("<td>").text(i + 1))
+                            .append($("<td>").text(task.name))
+                            .append($("<td>").text(task.description))
+                            .append($("<td>").text(task.fixed))
+                    }
+                });
             });
         }
 
@@ -104,6 +106,12 @@
         $(document).on("click", "#tomorrowView", function () {
             currentView = "TOMORROW"
             console.log(currentView);
+
+            document.getElementById("todayView").classList.remove("active");
+            document.getElementById("tomorrowView").classList.add("active");
+            document.getElementById("somedayView").classList.remove("active");
+            document.getElementById("date-container").classList.add("d-none");
+
             tomorrowView();
         });
 
@@ -112,20 +120,24 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setHours(0, 0, 0, 0);
 
-            initTaskTableForTomorrowView();
-
             console.log(tomorrow);
 
-            taskList.forEach(function (task, i) {
-                let taskDeadline = new Date(task.deaLine);
-                taskDeadline.setHours(0, 0, 0, 0);
-                if (taskDeadline.getTime() == tomorrow.getTime()) {
-                    $("<tr>").appendTo($("#taskTable"))
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").text(task.name))
-                        .append($("<td>").text(task.description))
-                        .append($("<td>").text(task.fixed))
-                }
+            $.getJSON("/?command=LoadTaskList", function (result) {
+
+                clearBox("taskTable");
+                initTaskTableForTomorrowView();
+
+                $.each(result, function (i, task) {
+                    let taskDeadline = new Date(task.deaLine);
+                    taskDeadline.setHours(0, 0, 0, 0);
+                    if (taskDeadline.getTime() == tomorrow.getTime()) {
+                        $("<tr>").appendTo($("#taskTable"))
+                            .append($("<td>").text(i + 1))
+                            .append($("<td>").text(task.name))
+                            .append($("<td>").text(task.description))
+                            .append($("<td>").text(task.fixed))
+                    }
+                });
             });
         }
 
@@ -139,6 +151,7 @@
                 </tr>
             `;
         }
+
         // ---------------------- TASK VIEW TOMORROW -------------------
         //==============================================================
         // ---------------------- TASK VIEW SOMEDAY --------------------
@@ -146,6 +159,12 @@
         $(document).on("click", "#somedayView", function () {
             currentView = "SOMEDAY"
             console.log(currentView);
+
+            document.getElementById("todayView").classList.remove("active");
+            document.getElementById("tomorrowView").classList.remove("active");
+            document.getElementById("somedayView").classList.add("active");
+            document.getElementById("date-container").classList.remove("d-none");
+
             somedayView();
         });
 
@@ -154,19 +173,23 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setHours(0, 0, 0, 0);
 
-            initTaskTableForSomedayView();
+            $.getJSON("/?command=LoadTaskList", function (result) {
 
-            taskList.forEach(function (task, i) {
-                let taskDeadline = new Date(task.deaLine);
-                taskDeadline.setHours(0, 0, 0, 0)
-                if (taskDeadline.getTime() > tomorrow.getTime()) {
-                    $("<tr>").appendTo($("#taskTable"))
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").text(task.name))
-                        .append($("<td>").text(task.description))
-                        .append($("<td>").text(task.fixed))
-                        .append($("<td>").text(taskDeadline.toDateString()));
-                }
+                clearBox("taskTable");
+                initTaskTableForSomedayView();
+
+                $.each(result, function (i, task) {
+                    let taskDeadline = new Date(task.deaLine);
+                    taskDeadline.setHours(0, 0, 0, 0)
+                    if (taskDeadline.getTime() > tomorrow.getTime()) {
+                        $("<tr>").appendTo($("#taskTable"))
+                            .append($("<td>").text(i + 1))
+                            .append($("<td>").text(task.name))
+                            .append($("<td>").text(task.description))
+                            .append($("<td>").text(task.fixed))
+                            .append($("<td>").text(taskDeadline.toDateString()));
+                    }
+                });
             });
         }
 
@@ -181,6 +204,7 @@
                 </tr>
             `;
         }
+
         // ---------------------- TASK VIEW SOMEDAY --------------------
         //==============================================================
         // ---------------------- TASK VIEW ----------------------------
@@ -198,13 +222,6 @@
         }
 
         // ---------------------- TASK VIEW ----------------------------
-        function fetchTasks() {
-
-            return $.getJSON("/?command=LoadTaskList", function (result) {
-                taskList = result;
-                console.log(taskList);
-            });
-        }
 
         // -----------------------------------------------
         //                  TASK  VIEW
@@ -226,7 +243,7 @@
                     date.setHours(0, 0, 0, 0);
                     break;
                 default:
-                    date = new Date((document.getElementById('datetime').value));
+                    date = new Date((document.getElementById('date').value));
             }
             task.deadLine = date.getTime();
             task.fixed = true;
@@ -260,23 +277,13 @@
                 success: function (data) {
                     taskList = data;
                     document.getElementById('createButton').click();
-                    clearBox("taskTable");
                     fillTaskTable();
                 },
                 error: function (data, status, er) {
                     alert("error: " + data + " status: " + status + " er:" + er);
                 }
             });
-
-            fetchTasks().done(function () {
                 fillTaskTable();
-            })
-                .fail(function () {
-                    console.log("error");
-                })
-                .always(function () {
-                    console.log("complete");
-                });
         }
 
         // -----------------------------------------------
