@@ -5,6 +5,7 @@ import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.persistance.TaskDao;
 import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
+import by.itacademy.security.service.SecurityContext;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
@@ -27,10 +28,19 @@ public class Service {
             taskList = taskDao.getByUserId(id);
 
         } catch (DaoException e) {
-            e.printStackTrace();
             log.debug(Arrays.toString(e.getStackTrace()));
         }
         return taskList;
+    }
+
+    public void createTask(Task task) {
+        int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
+        task.setUserId(userId);
+        try {
+            taskDao.create(task);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+        }
     }
 
     public static Service getInstance() {

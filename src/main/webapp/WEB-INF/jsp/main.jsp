@@ -14,9 +14,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<%--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"--%>
-<%--            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"--%>
-<%--            crossorigin="anonymous"></script>--%>
+    <%--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"--%>
+    <%--            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"--%>
+    <%--            crossorigin="anonymous"></script>--%>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -27,44 +27,35 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-<%--    <script>--%>
-<%--        <c:import url="/WEB-INF/modules/moment.js"/>--%>
-<%--    </script>--%>
+    <%--    <script>--%>
+    <%--        <c:import url="/WEB-INF/modules/moment.js"/>--%>
+    <%--    </script>--%>
 
 
-<%--    <script>--%>
-<%--        <c:import url="/WEB-INF/modules/date-time-picker-bootstrap-4/build/js/bootstrap-datetimepicker.min.js"/>--%>
-<%--    </script>--%>
+    <%--    <script>--%>
+    <%--        <c:import url="/WEB-INF/modules/date-time-picker-bootstrap-4/build/js/bootstrap-datetimepicker.min.js"/>--%>
+    <%--    </script>--%>
 
-<%--    <script>--%>
-<%--    $('#example').datetimepicker();--%>
-<%--    </script>--%>
+    <%--    <script>--%>
+    <%--    $('#example').datetimepicker();--%>
+    <%--    </script>--%>
 
 
+    <%--    <link rel="stylesheet" href="src/main/webapp/WEB-INF/modules/font-awesome-4.7.0/css/font-awesome.min.css">--%>
 
-<%--    <link rel="stylesheet" href="src/main/webapp/WEB-INF/modules/font-awesome-4.7.0/css/font-awesome.min.css">--%>
-
-<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">--%>
+    <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">--%>
     <style>
 
-<%--        <c:import url="/WEB-INF/modules/font-awesome-4.7.0/css/font-awesome.min.css"/>--%>
-<%--        <c:import url="/WEB-INF/modules/date-time-picker-bootstrap-4/build/css/bootstrap-datetimepicker.min.css"/>--%>
+        <%--        <c:import url="/WEB-INF/modules/font-awesome-4.7.0/css/font-awesome.min.css"/>--%>
+        <%--        <c:import url="/WEB-INF/modules/date-time-picker-bootstrap-4/build/css/bootstrap-datetimepicker.min.css"/>--%>
 
 
         body {
-            /*background-color: #FAFDFD;*/
+            /*background-color: #bababa;*/
         }
 
         .header {
-            margin-bottom: 100px;
-        }
-
-        tr.table {
-            border-radius: 5px;
-        }
-
-        .container {
-            border-radius: 5px;
+            border-bottom: 1px solid #495057;
         }
 
 
@@ -74,11 +65,11 @@
 <header class="header">
     <c:import url="/WEB-INF/jsp/template/header_tmpl.jsp"/>
 </header>
+
 <div class="container">
-
     <c:import url="/WEB-INF/jsp/template/nav_tmpl.jsp"/>
-
     <c:import url="/WEB-INF/jsp/template/task_viewer_tmpl.jsp"/>
 </div>
+
 </body>
 </html>

@@ -17,12 +17,12 @@ import java.util.List;
 public class User implements UserDetails, CredentialsContainer {
 
     @Getter
-    private int id;
-    private Credential credential;
+    private transient int id;
+    private transient Credential credential;
     private PersonalInformation personalInformation;
     private Collection<Role> roles;
     private boolean accountNotLocked;
-    private List<Task> taskList;
+    private transient List<Task> taskList;
 
     public static User.UserBuilder builder() {
         return new User.UserBuilder();

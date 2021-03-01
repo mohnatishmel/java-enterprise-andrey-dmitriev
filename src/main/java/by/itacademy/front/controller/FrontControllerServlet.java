@@ -33,15 +33,19 @@ public class FrontControllerServlet extends HttpServlet {
 
     private void process(Map<String, String[]> params, HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        String commandName = "";
+        try {
+            String commandName = "";
 
-        if (params.containsKey("command")) {
-            commandName = params.get("command")[0];
+            if (params.containsKey("command")) {
+                commandName = params.get("command")[0];
+            }
+
+            FrontCommand command = getCommand(commandName);
+            command.init(getServletContext(), request, response);
+            command.process();
+        } catch (java.lang.IllegalStateException e) {
+            e.printStackTrace();
         }
-
-        FrontCommand command = getCommand(commandName);
-        command.init(getServletContext(), request, response);
-        command.process();
     }
 
     private FrontCommand getCommand(String commandName) throws ServletException, IOException {

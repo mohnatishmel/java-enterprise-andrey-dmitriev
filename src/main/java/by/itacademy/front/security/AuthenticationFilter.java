@@ -36,10 +36,9 @@ public class AuthenticationFilter implements Filter {
         if (SecurityContext.getInstance().getPrincipal() == null
                 || !servletPath.matches(SecurityConfigurer.LOGIN_PAGE)) {
 
-            ((HttpServletRequest) request)
+            request.getServletContext()
                     .getRequestDispatcher("/")
                     .forward(request, response);
-            chain.doFilter(request, response);
             return;
         }
 

@@ -75,16 +75,16 @@ INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALU
 -- Data for table `tasks`
 --
 
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-07-17 13:54:18', 'task1', true, true, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-05-25 13:11:34', 'task2', true, true,'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (3, '2020-10-02 20:20:28', 'task3', false, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (4, '2020-08-27 12:25:14', 'task4', false, true, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2021-07-17 13:54:18', 'task1', true, true, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2021-05-25 13:11:34', 'task2', true, true,'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (3, '2021-10-02 20:20:28', 'task3', false, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (4, '2021-08-27 12:25:14', 'task4', false, true, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.');
 INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (5, '2021-01-06 17:30:44', 'task5', false, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-11-24 05:21:53', 'task6', false, true, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (7, '2020-03-09 00:11:56', 'task7', true, true, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (8, '2020-12-19 08:09:12', 'task8', true, false, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (9, '2020-09-04 11:36:04', 'task9', true, false, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (10, '2020-10-30 01:33:08', 'task10', true, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2021-11-24 05:21:53', 'task6', false, true, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (7, '2021-03-09 00:11:56', 'task7', true, true, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (8, '2021-12-19 08:09:12', 'task8', true, false, 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (9, '2021-09-04 11:36:04', 'task9', true, false, 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (10, '2021-10-30 01:33:08', 'task10', true, true, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
 
 
 -- --------------------------------------------------------

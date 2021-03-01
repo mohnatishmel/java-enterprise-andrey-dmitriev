@@ -13,7 +13,7 @@ import java.util.Date;
 public class Task {
 
     private int id;
-    private int userId;
+    private transient int userId;
     private String name;
     private String description;
     private Date deaLine;
