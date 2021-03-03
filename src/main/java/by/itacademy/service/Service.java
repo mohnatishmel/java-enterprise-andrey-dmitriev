@@ -1,5 +1,6 @@
 package by.itacademy.service;
 
+import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
@@ -33,13 +34,25 @@ public class Service {
         return taskList;
     }
 
-    public void createTask(Task task) {
+    public void createTask(Task task) throws ApplicationBasedException {
         int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
         task.setUserId(userId);
         try {
             taskDao.create(task);
         } catch (DaoException e) {
             log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public void updateTask(Task task) throws ApplicationBasedException {
+        int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
+        task.setUserId(userId);
+        try {
+            taskDao.update(task);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
         }
     }
 

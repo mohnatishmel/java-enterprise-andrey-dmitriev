@@ -15,10 +15,84 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+
+    <style>
+
+        body {
+            background: #eee
+        }
+
+        .login-form {
+            max-width: 600px;
+            margin: 150px auto;
+            padding: 0;
+            padding: 1.5em;
+            background-color: white;
+            /*border: 1px solid #868e96;*/
+            border-radius: 5px;
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
+        }
+
+        .login-btn {
+
+        }
+
+        .input-group {
+            border: 2px solid #eee;
+            position: relative;
+            background: #eee;
+            margin: 25px 0;
+            border-radius: 2px;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .input-group input{
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            font-weight: 500;
+            font-family: "Open Sans", sans-serif;
+            font-size: 16px;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            padding-left: 10px;
+            font-weight: 500;
+            color: #aaa;
+        }
+
+        input-form,
+        .card-footer {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .card-footer input {
+        width: 100%;
+        padding: 25px;
+        font-size: 24px;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        background: #195f91;
+        border: none;
+        color: #fff;
+        box-shadow: none;
+        outline: none;
+        cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="container">
+<div class="login-form">
 
     <c:import url="/WEB-INF/jsp/template/error_tmpl.jsp"/>
 

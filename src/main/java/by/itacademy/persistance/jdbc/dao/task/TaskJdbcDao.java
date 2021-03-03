@@ -131,8 +131,9 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
         try {
 
             PreparedStatement statement = connection.prepareStatement(getSqlHolder().updateSql());
+            statement.setInt(7,task.getId());
             processStatementInitialization(statement, task);
-            statement.executeQuery();
+            statement.executeUpdate();
             return task;
 
         } catch (SQLException e) {
@@ -165,7 +166,7 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
                     .userId(rs.getInt("user_id"))
                     .description(rs.getString("description"))
                     .name(rs.getString("task_name"))
-                    .deaLine(new Date(rs.getDate("deadline").getTime()))
+                    .deadLine(new Date(rs.getDate("deadline").getTime()))
                     .fixed(rs.getBoolean("fixed"))
                     .inBasket(rs.getBoolean("in_basket"))
                     .build();
@@ -178,7 +179,7 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
         ps.setInt(1, task.getUserId());
         ps.setString(2, task.getName());
         ps.setString(3, task.getDescription());
-        ps.setDate(4, new java.sql.Date(task.getDeaLine().getTime()));
+        ps.setDate(4, new java.sql.Date(task.getDeadLine().getTime()));
         ps.setBoolean(5, task.isFixed());
         ps.setBoolean(6, task.isInBasket());
     }

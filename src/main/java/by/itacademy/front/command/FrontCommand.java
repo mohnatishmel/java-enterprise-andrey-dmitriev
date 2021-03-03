@@ -1,5 +1,7 @@
 package by.itacademy.front.command;
 
+import by.itacademy.exception.ApplicationBasedException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,7 +23,7 @@ public abstract class FrontCommand {
         this.response = servletResponse;
     }
 
-    public abstract void process() throws ServletException, IOException;
+    public abstract void process() throws ServletException, IOException, ApplicationBasedException;
 
     protected void forward(String target) throws ServletException, IOException {
         target = String.format("/WEB-INF/jsp/%s.jsp", target);

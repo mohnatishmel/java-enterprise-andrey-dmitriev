@@ -125,7 +125,7 @@ CREATE TABLE `tasks` (
   `task_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `task_name` varchar(255),
-  `description` varchar(255),
+  `description` varchar(600),
   `deadline` datetime NOT NULL,
   `fixed` boolean(1) NOT NULL,
   `in_basket` boolean(1) NOT NULL

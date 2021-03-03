@@ -1,5 +1,6 @@
 package by.itacademy.front.controller;
 
+import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.front.command.FrontCommand;
 import by.itacademy.front.command.UnknownCommand;
 
@@ -42,7 +43,14 @@ public class FrontControllerServlet extends HttpServlet {
 
             FrontCommand command = getCommand(commandName);
             command.init(getServletContext(), request, response);
-            command.process();
+
+            try {
+                command.process();
+            } catch (ApplicationBasedException e) {
+                e.printStackTrace();
+                throw new IOException(e);
+            }
+
         } catch (java.lang.IllegalStateException e) {
             e.printStackTrace();
         }

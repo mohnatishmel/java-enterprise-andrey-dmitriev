@@ -16,36 +16,18 @@
 
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+<%--        <ul class="navbar-nav mr-auto">--%>
 
-            <li class="nav-item  active" id="todayView">
-                <a class="nav-link" href="#">Today</a>
-            </li>
-            <li class="nav-item" id="tomorrowView">
-                <a class="nav-link" href="#">Tomorrow</a>
-            </li>
-            <li class="nav-item" id="somedayView">
-                <a class="nav-link" href="#">Someday</a>
+<%--            <li class="nav-item  active" id="todayView">--%>
+<%--                <a class="nav-link" href="#">Today</a>--%>
 <%--            </li>--%>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="#">Done</a>--%>
+<%--            <li class="nav-item" id="tomorrowView">--%>
+<%--                <a class="nav-link" href="#">Tomorrow</a>--%>
 <%--            </li>--%>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="#">Basket</a>--%>
+<%--            <li class="nav-item" id="somedayView">--%>
+<%--                <a class="nav-link" href="#">Someday</a>--%>
 <%--            </li>--%>
-            <%--            <li class="nav-item dropdown">--%>
-            <%--                <div class="input-group mb-3">--%>
-            <%--                    <select class="custom-select" id="inputGroupSelect02">--%>
-            <%--                        <option selected>Sort by</option>--%>
-            <%--                        <option value="1">Date</option>--%>
-            <%--                        <option value="2">Name</option>--%>
-            <%--                    </select>--%>
-            <%--                    <div class="input-group-append">--%>
-            <%--                        <label class="input-group-text" for="inputGroupSelect02">Options</label>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </li>--%>
-        </ul>
+<%--        </ul>--%>
         <form class="form-inline my-2 my-lg-0">
             <button class="btn btn-primary btn-outline-dark mr-sm-2" type="button" id="createButton"
                     data-toggle="collapse" data-target="#collapseTaskCreateForm" aria-expanded="false"
@@ -68,7 +50,7 @@
 
         <div class="form-group">
             <label for="taskDescription">Description</label>
-            <textarea class="form-control" id="taskDescription" rows="3" placeholder="Description"></textarea>
+            <textarea class="form-control" id="taskDescription" rows="3" placeholder="Description" maxlength="600"></textarea>
         </div>
 
         <div class="form-group d-none" id="date-container">

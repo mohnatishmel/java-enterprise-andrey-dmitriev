@@ -2,11 +2,11 @@ package by.itacademy.persistance.jdbc.query.task;
 
 public class TaskJdbcSqlQueryHolder {
 
-    private static final String GET_BY_USER_ID = "SELECT task_id, user_id, description, task_name, deadline, fixed, in_basket  FROM tasks WHERE user_id = ?;";
-    private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, description, task_name, deadline, fixed, in_basket  FROM tasks WHERE task_id = ?;";
-    //    private static final String GET_ALL_SQL = "SELECT task_id user_id, description, task_name, deadline, fixed, in_basket  FROM tasks;";
-    private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, description = ?, task_name = ?, deadline = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
-    private static final String CREATE_SQL = "INSERT INTO tasks(user_id, description, task_name, deadline, fixed, in_basket) VALUES(?,?,?,?,?,?);";
+    private static final String GET_BY_USER_ID = "SELECT task_id, user_id, task_name, description, deadline, fixed, in_basket  FROM tasks WHERE user_id = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT task_id, user_id, task_name, description, deadline, fixed, in_basket  FROM tasks WHERE task_id = ?;";
+    //    private static final String GET_ALL_SQL = "SELECT task_id user_id, task_name, description, deadline, fixed, in_basket  FROM tasks;";
+    private static final String UPDATE_SQL = "UPDATE  tasks SET user_id = ?, task_name = ?, description = ?, deadline = ?, fixed = ?, in_basket = ? WHERE task_id = ?;";
+    private static final String CREATE_SQL = "INSERT INTO tasks(user_id, task_name, description, deadline, fixed, in_basket) VALUES(?,?,?,?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM tasks WHERE task_id = ?;";
     private static final String DELETE_BY_USER_ID_SQL = "DELETE FROM tasks WHERE user_id = ?;";
 

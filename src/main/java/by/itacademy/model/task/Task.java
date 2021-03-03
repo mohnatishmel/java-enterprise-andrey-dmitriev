@@ -16,7 +16,7 @@ public class Task {
     private transient int userId;
     private String name;
     private String description;
-    private Date deaLine;
+    private Date deadLine;
     private boolean fixed;
     private boolean inBasket;
 
