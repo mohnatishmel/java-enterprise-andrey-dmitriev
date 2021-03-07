@@ -2,9 +2,11 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.dao.DaoException;
+import by.itacademy.model.file.File;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.persistance.TaskDao;
+import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
 import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.security.service.SecurityContext;
 import lombok.extern.log4j.Log4j2;
@@ -18,9 +20,11 @@ public class Service {
     private static Service instance;
 
     private TaskDao taskDao;
+    private TaskFileJdbcDao taskFleJdbcDao;
 
     {
         taskDao = TaskJdbcDao.getInstance();
+        taskFleJdbcDao = TaskFileJdbcDao.getInstance();
     }
 
     public List<Task> getTasksForUser(int id) {
@@ -50,6 +54,33 @@ public class Service {
         task.setUserId(userId);
         try {
             taskDao.update(task);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public void deleteTask(int id) throws ApplicationBasedException {
+        try {
+            taskDao.delete(id);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public void createFileForTask(File file) throws ApplicationBasedException {
+        try {
+            taskFleJdbcDao.create(file);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public File getFile(long id) throws ApplicationBasedException {
+        try {
+            return taskFleJdbcDao.getById((int) id);
         } catch (DaoException e) {
             log.debug(Arrays.toString(e.getStackTrace()));
             throw new ApplicationBasedException(e);

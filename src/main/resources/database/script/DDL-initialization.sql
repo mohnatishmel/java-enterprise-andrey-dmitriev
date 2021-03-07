@@ -151,8 +151,8 @@ ALTER TABLE `tasks`
 --
 
 CREATE TABLE `task_files` (
-  `task_file_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL,
+  `task_file_id` BIGINT NOT NULL,
+  `file_name` varchar(255),
   `file` BLOB(10M)
 );
 --
@@ -163,8 +163,8 @@ ALTER TABLE `task_files`
 --
 -- AUTO_INCREMENT for table `task_files`
 --
-ALTER TABLE `task_files`
-  ALTER COLUMN `task_file_id` int(11) NOT NULL AUTO_INCREMENT;
+-- ALTER TABLE `task_files`
+--   ALTER COLUMN `task_file_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------
 
@@ -210,8 +210,8 @@ ALTER TABLE `tasks`
 --
 -- Constraints for table `task_files`
 --
-ALTER TABLE `task_files`
-    ADD CONSTRAINT `FK_Task_files` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
+-- ALTER TABLE `task_files`
+--     ADD CONSTRAINT `FK_Task_files` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`);
 --
 -- Constraints for table `users`
 --

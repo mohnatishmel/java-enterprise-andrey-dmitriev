@@ -5,16 +5,16 @@ import by.itacademy.model.user.User;
 import by.itacademy.security.service.SecurityContext;
 import by.itacademy.service.Service;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
 
-public class LoadTaskListCommand extends FrontCommand {
+public class LoadTaskListTrashBoxCommand extends LoadTaskListCommand {
 
     private Service service;
 
@@ -25,20 +25,13 @@ public class LoadTaskListCommand extends FrontCommand {
     @Override
     public void process() throws ServletException, IOException {
         List<Task> taskList = loadTskListForCurrentUser();
-        returnTskList(taskList);
-    }
+        List<Task> trashBox = new ArrayList<>();
 
-    protected List<Task> loadTskListForCurrentUser() {
-        User user = (User) SecurityContext.getInstance().getPrincipal();
-        return service.getTasksForUser(1);
-    }
-
-    protected void returnTskList(List<Task> taskList) throws IOException {
-
-        String json = new Gson().toJson(taskList);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        for (Task task : taskList) {
+            if (task.isInBasket()) {
+                trashBox.add(task);
+            }
+        }
+        returnTskList(trashBox);
     }
 }

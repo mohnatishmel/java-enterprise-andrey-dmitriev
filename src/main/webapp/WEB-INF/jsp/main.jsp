@@ -16,7 +16,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -34,9 +34,9 @@
 
         /*------------------  TASK LIST  --------------------*/
         .tools i {
-            background-color: white;
+            /*background-color: white;*/
             color: #b5b3b3;
-            border: 1px solid white;
+            border: 1px solid rgba(0,0,0,0);
             padding: 6px;
             /*margin-left: 4px;*/
             border-radius: 5px;
@@ -62,17 +62,21 @@
             cursor: pointer;
         }
 
-        .clock {
-            color: #343a40;
+        .check-icon {
+            font-size: 19px;
+            color: forestgreen;
         }
+
          .inactive {
              color: #868e96;
          }
-        .tools div:hover,
-        .active-task-view {
+
+        .clock,
+        .task-view:hover,
+        .tools i:hover,
+        .active-task-view,
+        .active-task-view i{
             color: #343a40;
-            /*text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 2px #eee;*/
-            /*font-weight: 600;*/
         }
 
         .list-group li {
@@ -90,10 +94,9 @@
             background: #fff
         }
 
-        .checkicon {
-            color: green;
-            font-size: 19px
+        .fixed {
         }
+
 
         .date-time {
             font-size: 12px
@@ -180,6 +183,14 @@
         }
         /*------------------  TOGGLE SWITCH  --------------------*/
 
+        .container {
+            max-width: 800px;
+        }
+
+        .trash-box i {
+            display: block;
+        }
+
         .tools div{
             margin-top: 0.3em;
             margin-right: 1em;
@@ -189,12 +200,21 @@
         .bg-white {
             background-color: white;
         }
-        .tools div i:hover,
+        .tools i:hover,
         .icons i:hover,
         .task-list li,
         .smooth-shadowbox {
             color: #343a40;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .outOfTrashBox i:hover{
+            color: darkgreen;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .delete i:hover {
+            color: #dc322f;
         }
 
         body {

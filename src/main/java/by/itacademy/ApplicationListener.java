@@ -5,6 +5,7 @@ import by.itacademy.persistance.TaskDao;
 import by.itacademy.persistance.UserDao;
 import by.itacademy.persistance.jdbc.connector.Connector;
 import by.itacademy.persistance.jdbc.connector.impl.HikariCPConnector;
+import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
 import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.persistance.jdbc.dao.user.*;
 import by.itacademy.model.task.Task;
@@ -77,6 +78,7 @@ public class ApplicationListener implements ServletContextListener {
         RoleJdbcDao roleDao = new RoleJdbcDao(DATABASE_CONNECTOR);
         RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(DATABASE_CONNECTOR, roleDao);
         UserDao userDao = new UserJdbcDao(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
+        TaskFileJdbcDao taskFileJdbcDao = new TaskFileJdbcDao(DATABASE_CONNECTOR);
 
         SecurityConfigurer.init();
 

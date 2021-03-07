@@ -8,10 +8,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(value = "")
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 B
+        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxRequestSize = 1024 * 1024 * 100   // 100 MB
+)
+
 public class FrontControllerServlet extends HttpServlet {
 
     @Override
