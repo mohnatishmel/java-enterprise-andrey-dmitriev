@@ -30,52 +30,11 @@
         // -----------------------------------------------
         //                    LOGIN
         // -----------------------------------------------
+        <c:import url="/WEB-INF/jsp/js/controller/Controller.jsp"/>
+        <c:import url="/WEB-INF/jsp/js/model/model.jsp"/>
+        <c:import url="/WEB-INF/jsp/js/view/view.jsp"/>
 
-        document.getElementById("submitUserFormLogin").addEventListener("click", function () {
-           authenticate("Login");
-        })
 
-        document.getElementById("submitUserFormRegister").addEventListener("click", function () {
-            authenticate("Register");
-        })
-
-        function authenticate(command) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var token = {}
-            token.login = document.getElementById("loginInput").value;
-            token.password = document.getElementById("passwordInput").value;
-
-            var jsonToken = JSON.stringify({token});
-
-            $.ajax({
-                url: "/?command="+ command,
-                type: 'POST',
-                dataType: 'json',
-                data: jsonToken,
-                contentType: 'application/json',
-
-                success: function (data) {
-                    $("#userForm").find(".alert").hide();
-                    console.log("User authenticated")
-                    $("#userForm").modal("hide");
-                    $("#userDropdownMenuButton").text(data.credential.login)
-                    console.log("User " + data.credential.login + " authenticated")
-                },
-                error: function (data, status, er) {
-                    const message = data.responseJSON.message;
-                    console.log("Authentication error")
-                    console.log(message)
-                    var $alert = $("#userForm").find(".alert")
-                   $alert.show()
-                   $alert.text(message)
-                }
-            });
-        }
 
         // -----------------------------------------------
         //                    LOGIN
@@ -83,38 +42,7 @@
         // -----------------------------------------------
         //                    LOGOUT
         // -----------------------------------------------
-        $(document).on("click", "#logOut", function () {
-            logout();
-        })
 
-        function logout() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: "/?command=Logout",
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-
-                success: function (data) {
-                    $("#userForm").find(".alert").hide();
-                    $("#userForm").modal("show");
-                    console.log(data.message)
-                },
-                error: function (data, status, er) {
-                    const message = data.responseJSON.message;
-                    console.log("Authentication error")
-                    console.log(message)
-                    var $alert = $("#userForm").find(".alert")
-                    $alert.show()
-                    $alert.text(message)
-                }
-            });
-        }
         // -----------------------------------------------
         //                    LOGOUT
         // -----------------------------------------------
