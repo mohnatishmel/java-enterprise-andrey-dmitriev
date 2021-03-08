@@ -10,17 +10,114 @@
 
     var currentView = "TODAY";
 
+    var logged = <c:out value = "${requestScope.alreadyLogged}"/>
+
     jQuery(function () {
 
-        $(document).ready(function () {
-            fillTaskTable();
-            showTime();
-        });
+        if (logged === false) {
+            $(document).ready(function () {
+                $("#userForm").find(".alert").hide();
+                fillTaskTable();
+                showTime();
+                $("#userForm").modal("show");
+            });
+        }
 
         function clearBox(elementID) {
                 $("#" + elementID).empty();
         }
 
+        // -----------------------------------------------
+        //                    LOGIN
+        // -----------------------------------------------
+
+        document.getElementById("submitUserFormLogin").addEventListener("click", function () {
+           authenticate("Login");
+        })
+
+        document.getElementById("submitUserFormRegister").addEventListener("click", function () {
+            authenticate("Register");
+        })
+
+        function authenticate(command) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var token = {}
+            token.login = document.getElementById("loginInput").value;
+            token.password = document.getElementById("passwordInput").value;
+
+            var jsonToken = JSON.stringify({token});
+
+            $.ajax({
+                url: "/?command="+ command,
+                type: 'POST',
+                dataType: 'json',
+                data: jsonToken,
+                contentType: 'application/json',
+
+                success: function (data) {
+                    $("#userForm").find(".alert").hide();
+                    console.log("User authenticated")
+                    $("#userForm").modal("hide");
+                    $("#userDropdownMenuButton").text(data.credential.login)
+                    console.log("User " + data.credential.login + " authenticated")
+                },
+                error: function (data, status, er) {
+                    const message = data.responseJSON.message;
+                    console.log("Authentication error")
+                    console.log(message)
+                    var $alert = $("#userForm").find(".alert")
+                   $alert.show()
+                   $alert.text(message)
+                }
+            });
+        }
+
+        // -----------------------------------------------
+        //                    LOGIN
+        // -----------------------------------------------
+        // -----------------------------------------------
+        //                    LOGOUT
+        // -----------------------------------------------
+        $(document).on("click", "#logOut", function () {
+            logout();
+        })
+
+        function logout() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "/?command=Logout",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+
+                success: function (data) {
+                    $("#userForm").find(".alert").hide();
+                    $("#userForm").modal("show");
+                    console.log(data.message)
+                },
+                error: function (data, status, er) {
+                    const message = data.responseJSON.message;
+                    console.log("Authentication error")
+                    console.log(message)
+                    var $alert = $("#userForm").find(".alert")
+                    $alert.show()
+                    $alert.text(message)
+                }
+            });
+        }
+        // -----------------------------------------------
+        //                    LOGOUT
+        // -----------------------------------------------
         // -----------------------------------------------
         //                  TASK  VIEW
         // -----------------------------------------------
@@ -573,6 +670,7 @@
                 }
                 const byteArray = new Uint8Array(byteNumbers);
                 const blob = new Blob([byteArray]);
+
                 var a = document.createElement('a');
                 var url = window.URL.createObjectURL(blob);
                 a.href = url;
@@ -851,6 +949,10 @@
         <i class="fa fa-minus-circle" aria-hidden="true"></i>
     </div>
 </div>
+
+
+
+<c:import url="/WEB-INF/jsp/template/login_form_tmpl.jsp"/>
 
 
 

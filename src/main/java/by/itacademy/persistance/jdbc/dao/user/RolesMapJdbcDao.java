@@ -63,7 +63,7 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
             try {
                 PreparedStatement statement = connection.prepareStatement(getSqlHolder().createSql());
                 statement.setInt(1, userId);
-                statement.setInt(1, role.getId());
+                statement.setInt(2, role.getId());
                 statement.executeUpdate();
 
             } catch (SQLException e) {

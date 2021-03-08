@@ -28,7 +28,7 @@ public class UpdateTaskCommand extends FrontCommand {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        Task task = JsonToJavaTaskMapper.map(br);
+        Task task = JsonToJavaTaskMapper.map(request);
         service.updateTask(task);
 
         FrontCommand command = new LoadTaskListCommand();

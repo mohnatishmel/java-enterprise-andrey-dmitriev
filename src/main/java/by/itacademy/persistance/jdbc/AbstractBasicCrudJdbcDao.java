@@ -53,7 +53,6 @@ public abstract class AbstractBasicCrudJdbcDao<T> extends BaseAbstractJdbcDao im
         try (Connection connection = getConnector().getConnection()) {
             try {
                 updateEntity(t, connection);
-                connection.commit();
 
             } catch (DaoException e) {
                 throw new DaoException(e);

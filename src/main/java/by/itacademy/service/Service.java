@@ -6,8 +6,10 @@ import by.itacademy.model.file.File;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.persistance.TaskDao;
+import by.itacademy.persistance.UserDao;
 import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
 import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
+import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
 import by.itacademy.security.service.SecurityContext;
 import lombok.extern.log4j.Log4j2;
 
@@ -19,10 +21,12 @@ import java.util.List;
 public class Service {
     private static Service instance;
 
+    private UserDao userDao;
     private TaskDao taskDao;
     private TaskFileJdbcDao taskFleJdbcDao;
 
     {
+        userDao = UserJdbcDao.getInstance();
         taskDao = TaskJdbcDao.getInstance();
         taskFleJdbcDao = TaskFileJdbcDao.getInstance();
     }
@@ -69,12 +73,17 @@ public class Service {
         }
     }
 
-    public void createFileForTask(File file) throws ApplicationBasedException {
+    public void uploadFileForTask(File file) throws ApplicationBasedException {
         try {
             taskFleJdbcDao.create(file);
         } catch (DaoException e) {
             log.debug(Arrays.toString(e.getStackTrace()));
-            throw new ApplicationBasedException(e);
+            try {
+                taskFleJdbcDao.update(file);
+            } catch (DaoException daoException) {
+                log.debug(Arrays.toString(e.getStackTrace()));
+                throw new ApplicationBasedException(e);
+            }
         }
     }
 
@@ -85,6 +94,16 @@ public class Service {
             log.debug(Arrays.toString(e.getStackTrace()));
             throw new ApplicationBasedException(e);
         }
+    }
+
+    public User registerUser(User user) throws ApplicationBasedException {
+        try {
+            user = userDao.create(user);
+        } catch (DaoException e) {
+            log.debug(Arrays.toString(e.getStackTrace()));
+            throw new ApplicationBasedException(e);
+        }
+        return user;
     }
 
     public static Service getInstance() {

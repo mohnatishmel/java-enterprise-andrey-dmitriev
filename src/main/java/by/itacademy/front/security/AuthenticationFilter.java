@@ -31,11 +31,9 @@ public class AuthenticationFilter implements Filter {
         if (session != null) {
             UserDetails principle = (UserDetails) session.getAttribute("principle");
             SecurityContext.getInstance().setPrincipal(principle);
-        }
-
-        if (SecurityContext.getInstance().getPrincipal() == null
-                || !servletPath.matches(SecurityConfigurer.LOGIN_PAGE)) {
-
+            request.setAttribute("alreadyLogged", true);
+        } else {
+            request.setAttribute("alreadyLogged", false);
             request.getServletContext()
                     .getRequestDispatcher("/")
                     .forward(request, response);

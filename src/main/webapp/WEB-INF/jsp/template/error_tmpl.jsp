@@ -7,12 +7,6 @@
 <%--    }--%>
 <%--%>--%>
 
-<c:if test="${!empty requestScope.error}" >
-    <div class="alert alert-danger" role="alert">
-     ${requestScope.error}
-    </div>
-</c:if>
-
 
 <%--<% if (request.getAttribute("error") != null) { %>--%>
 <%--<h2 style="color:red">* Error: <%= request.getAttribute("error") %> </h2>--%>

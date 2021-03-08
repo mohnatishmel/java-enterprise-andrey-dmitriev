@@ -28,10 +28,102 @@
 
     <style>
 
+
         body {
             background: #eee
         }
 
+        /*------------------  LOGIN FORM  --------------------*/
+        .user-form {
+            max-width: 600px;
+            min-width: 600px;
+            margin: auto;
+            padding: 0;
+            padding: 1.5em;
+            background-color: white;
+            /*border: 1px solid #868e96;*/
+            /*border-radius: 5px;*/
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
+        }
+
+        .login-btn {
+
+        }
+
+        .input-group {
+            border: 2px solid #eee;
+            position: relative;
+            background: #eee;
+            margin: 25px 0;
+            border-radius: 2px;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .input-group input{
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            font-weight: 500;
+            font-family: "Open Sans", sans-serif;
+            font-size: 16px;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            padding-left: 10px;
+            font-weight: 500;
+            color: #aaa;
+        }
+
+        .user-form {
+
+        }
+
+        .modal-content,
+        .modal-dialog {
+            /*position: fixed;*/
+            background: #eee;
+            margin: auto;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            border: 0;
+        }
+        .modal,
+        .modal-dialog {
+            max-width: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .card-footer input {
+            width: 100%;
+            padding: 25px;
+            font-size: 24px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            background: #195f91;
+            border: none;
+            color: #fff;
+            box-shadow: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .action-change {
+            border-color: rgba(0,0,0,0);
+            margin: auto;
+        }
+
+        .btn-group {
+            display: inline-block;
+        }
+        /*------------------  LOGIN FORM  --------------------*/
         /*------------------  TASK LIST  --------------------*/
         .tools i {
             /*background-color: white;*/
@@ -71,6 +163,7 @@
              color: #868e96;
          }
 
+        .action-change:hover,
         .clock,
         .task-view:hover,
         .tools i:hover,
@@ -223,10 +316,6 @@
 
         .header {
             border-bottom: 1px solid #495057;
-        }
-
-        .text-box {
-            max-width: 100%;
         }
 
     </style>

@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.*;
-import java.util.Arrays;
 
 @Log4j2
 
@@ -43,7 +42,7 @@ public class UploadFileCommand extends FrontCommand {
 
         File file = new File(id, bytes, fileName);
 
-        service.createFileForTask(file);
+        service.uploadFileForTask(file);
 
         response.getWriter().print("Sucessfully Java file upload.");
     }

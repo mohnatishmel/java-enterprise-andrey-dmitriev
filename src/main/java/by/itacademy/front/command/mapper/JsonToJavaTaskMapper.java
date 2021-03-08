@@ -6,13 +6,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 
 public class JsonToJavaTaskMapper {
 
-    public static Task map(BufferedReader br) throws IOException {
+    public static Task map(HttpServletRequest request) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+
         String json = "";
         Task task = null;
 

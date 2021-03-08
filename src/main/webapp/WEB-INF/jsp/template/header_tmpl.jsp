@@ -16,14 +16,13 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <div class="nav-item dropdown  navbar-brand">
-            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="userDropdownMenuButton"
                     data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="text-transform: capitalize">
-                <c:out value="${sessionScope.principle.login}"/>
+                    aria-haspopup="true" aria-expanded="false" style="text-transform: capitalize"><c:out value = "${sessionScope.principle.credential.login}"/>
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?command=Logout">Personal Info</a>
-                <a class="dropdown-item" href="?command=Logout">Logout</a>
+            <div class="dropdown-menu" aria-labelledby="userDropdownMenuButton">
+<%--                <a class="dropdown-item" href="?command=Logout">Personal Info</a>--%>
+                <span id="logOut" class="dropdown-item cursor-pointer">Logout</span>
             </div>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

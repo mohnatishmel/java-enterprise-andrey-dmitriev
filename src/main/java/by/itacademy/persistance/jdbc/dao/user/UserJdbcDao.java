@@ -44,7 +44,6 @@ public class UserJdbcDao extends AbstractBasicCrudJdbcDao<User> implements UserD
         User user;
         try (Connection connection = getConnector().getConnection()) {
                 user = getUserByName(name, connection);
-                connection.commit();
 
         } catch (SQLException | DaoException e) {
             e.printStackTrace();
@@ -119,12 +118,13 @@ public class UserJdbcDao extends AbstractBasicCrudJdbcDao<User> implements UserD
             statement.setBoolean(3, user.isAccountNonLocked());
             statement.executeUpdate();
 
-            List<Role> roleList = rolesMapJdbcDao.grantAuthoritiesToUser(user.getId(), (List<Role>) user.getAuthorities());
-
             ResultSet rs = statement.getGeneratedKeys();
+
             if (rs.next()) {
+                int id = rs.getInt("user_id");
+                List<Role> roleList = rolesMapJdbcDao.grantAuthoritiesToUser(id, (List<Role>) user.getAuthorities());
                 return User.builder()
-                        .id(rs.getInt("user_id"))
+                        .id(id)
                         .credential(credential)
                         .personalInformation(personalInformation)
                         .roles(roleList)

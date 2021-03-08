@@ -5,7 +5,6 @@ import by.itacademy.model.user.User;
 import by.itacademy.security.service.SecurityContext;
 import by.itacademy.service.Service;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -30,7 +29,7 @@ public class LoadTaskListCommand extends FrontCommand {
 
     protected List<Task> loadTskListForCurrentUser() {
         User user = (User) SecurityContext.getInstance().getPrincipal();
-        return service.getTasksForUser(1);
+        return service.getTasksForUser(user.getId());
     }
 
     protected void returnTskList(List<Task> taskList) throws IOException {

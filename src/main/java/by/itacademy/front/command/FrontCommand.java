@@ -1,6 +1,8 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
+import by.itacademy.service.Service;
+import lombok.AllArgsConstructor;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,9 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public abstract class FrontCommand {
+
+    protected Service service;
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
+
+    {
+        service = Service.getInstance();
+    }
 
     public void init(
             ServletContext servletContext,
@@ -29,5 +37,16 @@ public abstract class FrontCommand {
         target = String.format("/WEB-INF/jsp/%s.jsp", target);
         RequestDispatcher dispatcher = context.getRequestDispatcher(target);
         dispatcher.forward(request, response);
+    }
+
+    protected void returnResponse(String json) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+    }
+
+    @AllArgsConstructor
+    protected class Message {
+        private String message;
     }
 }
