@@ -167,8 +167,8 @@
         .clock,
         .task-view:hover,
         .tools i:hover,
-        .active-task-view,
-        .active-task-view i{
+        .active-btn,
+        .active-btn i{
             color: #343a40;
         }
 

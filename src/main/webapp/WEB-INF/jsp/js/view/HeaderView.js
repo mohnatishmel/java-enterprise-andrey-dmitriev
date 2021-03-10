@@ -1,4 +1,7 @@
 var header = {};
+
+header.userName = $("#userDropdownMenuButton");
+
 header.setUserName = function (name) {
-    $("#userDropdownMenuButton").text(name);
+    this.userName.text(name);
 }

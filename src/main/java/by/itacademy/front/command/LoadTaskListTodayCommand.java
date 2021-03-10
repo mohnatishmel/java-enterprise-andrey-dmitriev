@@ -26,7 +26,7 @@ public class LoadTaskListTodayCommand extends LoadTaskListCommand {
 
     @Override
     public void process() throws ServletException, IOException {
-        List<Task> taskList = loadTskListForCurrentUser();
+         List<Task> taskList = loadTskListForCurrentUser();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);

@@ -4,3 +4,5 @@
 
 <c:import url="/WEB-INF/jsp/js/model/AuthenticateModel.js"/>
 <c:import url="/WEB-INF/jsp/js/model/LogOutModel.js"/>
+<c:import url="/WEB-INF/jsp/js/model/TaskModel.js"/>
+<c:import url="/WEB-INF/jsp/js/model/FileModel.js"/>

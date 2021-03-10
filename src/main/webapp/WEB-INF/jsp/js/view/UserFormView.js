@@ -1,19 +1,32 @@
-function hideUserFormAlert() {
-    let $alert = $("#userForm").find(".alert");
-    $alert.hide();
-    $alert.find(".alert").empty();
+var userForm = {}
+
+userForm.alert = $("#userForm").find(".alert");
+userForm.loginInput = document.getElementById("loginInput");
+userForm.passwordInput = document.getElementById("passwordInput");
+
+userForm.hideAlert = function () {
+    this.alert.hide();
+    this.alert.empty();
 }
 
-function showUserFormAlert(message) {
-    $("#userForm").find(".alert").text(message);
+userForm.showAlert = function (message) {
+    this.alert.show();
+    this.alert.text(message);
 }
 
-function hideUserForm() {
-    hideUserFormAlert()
+userForm.hide = function () {
+    this.hideAlert();
     $("#userForm").modal("hide");
 }
 
-function showUserForm() {
-    hideUserFormAlert()
+userForm.show = function () {
+    this.hideAlert();
     $("#userForm").modal("show");
+}
+
+userForm.getToken = function () {
+    let token = {}
+    token.login = this.loginInput.value;
+    token.password = this.passwordInput.value;
+    return token
 }
