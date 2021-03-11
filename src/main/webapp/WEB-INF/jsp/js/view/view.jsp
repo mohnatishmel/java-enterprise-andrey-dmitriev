@@ -8,4 +8,5 @@
 <c:import url="/WEB-INF/jsp/js/view/Effects.js"/>
 <c:import url="/WEB-INF/jsp/js/view/ClockView.js"/>
 <c:import url="/WEB-INF/jsp/js/view/FileUploadView.js"/>
-<c:import url="/WEB-INF/jsp/js/view/UpdateFormView.js"/>
+<c:import url="/WEB-INF/jsp/js/view/UpdateTaskFormView.js"/>
+<c:import url="/WEB-INF/jsp/js/view/CreateTaskForm.js"/>

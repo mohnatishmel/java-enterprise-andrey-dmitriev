@@ -7,3 +7,4 @@
 <c:import url="/WEB-INF/jsp/js/controller/TaskViewController.js"/>
 <c:import url="/WEB-INF/jsp/js/controller/UpdateTaskController.js"/>
 <c:import url="/WEB-INF/jsp/js/controller/FileController.js"/>
+<c:import url="/WEB-INF/jsp/js/controller/DeleteTaskController.js"/>

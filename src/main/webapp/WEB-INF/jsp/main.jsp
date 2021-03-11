@@ -125,6 +125,10 @@
         }
         /*------------------  LOGIN FORM  --------------------*/
         /*------------------  TASK LIST  --------------------*/
+
+        .name {
+            min-height: 0.75em;
+        }
         .tools i {
             /*background-color: white;*/
             color: #b5b3b3;
@@ -301,12 +305,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-        .outOfTrashBox i:hover{
+        .outOfTrashBoxBtn i:hover{
             color: darkgreen;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-        .delete i:hover {
+        .deleteBtn i:hover {
             color: #dc322f;
         }
 

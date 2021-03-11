@@ -62,6 +62,11 @@ function Task(id) {
         document.getElementById("fixed" + id).value = val;
     }
 
+    this.hide = function () {
+        let $t = $("#headingTask" + id);
+        fadeOut($t);
+    }
+
     this.toggleFixed = function () {
         let $li = $("#headingTask" + id)
         let f = this.isFixed();
@@ -74,6 +79,18 @@ function Task(id) {
             $li.find("#fixedIcon").addClass("inactive")
             fadeOut($li)
             this.setFixed(true);
+        }
+    }
+
+    this.toggleInBasket = function () {
+        let f = this.isInBasket();
+        let t = true;
+        if(String(f) == String(t)) {
+            this.hide();
+            this.setInBasket(false);
+        } else {
+            this.hide();
+            this.setInBasket(true);
         }
     }
 
@@ -90,3 +107,51 @@ function TaskToolBoxStandard(id) {
     }
 
 }
+
+function TaskToolBoxForTrashBox(id) {
+    this.outOfTrashBoxBtn = $("#outOfTrashBoxBtn" + id);
+    this.deleteTaskBtn = $("#deleteTaskBtn" + id);
+}
+
+
+function getJsonTask(updateData) {
+    let task = {}
+    task.id = updateData.getId();
+    task.name = updateData.getName();
+    task.description = updateData.getDescription();
+
+    let date = new Date(updateData.getDeadline());
+    task.deadLine = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+
+    task.inBasket = updateData.isInBasket();
+    task.fixed = updateData.isFixed();
+
+    let jsonTask = JSON.stringify({task});
+    return jsonTask;
+}
+
+
+function sendTask(data, command, success) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "/?command=" + command,
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+
+        success: function (data) {
+            success(data);
+        },
+        error: function (data, status, er) {
+            alert("error: " + data + " status: " + status + " er:" + er);
+        }
+    });
+}
+

@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<c:import url="/WEB-INF/jsp/js/model/AuthenticateModel.js"/>
-<c:import url="/WEB-INF/jsp/js/model/LogOutModel.js"/>
+<c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>
 <c:import url="/WEB-INF/jsp/js/model/TaskModel.js"/>
 <c:import url="/WEB-INF/jsp/js/model/FileModel.js"/>
+<c:import url="/WEB-INF/jsp/js/controller/CreateTaskController.js"/>

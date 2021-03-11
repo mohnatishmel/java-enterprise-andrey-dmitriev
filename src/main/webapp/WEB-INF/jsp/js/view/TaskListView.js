@@ -5,12 +5,6 @@ taskView.append = function (task) {
     $("#viewList").append(($.parseHTML(task)));
 }
 
-taskView.publish = function (taskList) {
-    $.each(taskList, function (index, task) {
-        this.append(task)
-    })
-}
-
 taskView.clear = function () {
     $("#viewList").empty()
 }
@@ -73,4 +67,21 @@ function initTaskToolBoxStandard(id, fixed) {
 
     $newToolBox.removeClass("d-none");
     return $newToolBox.html();
+}
+
+function initTaskToolBoxForTrashBox(id) {
+
+    let $template = $("#taskToolBoxBoxForTrashBox");
+    let $newToolBox = $template.clone();
+    $newToolBox.attr("id", "taskToolBox" + id)
+
+    $newToolBox.find("#outOfTrashBoxBtn").attr("id", "outOfTrashBoxBtn" + id);
+    $newToolBox.find("#deleteTaskBtn").attr("id", "deleteTaskBtn" + id);
+
+    console.log("tool box for task_" + id + " initialized");
+
+    $newToolBox.removeClass("d-none");
+
+    let result = $newToolBox.html();
+    return result;
 }
