@@ -1,8 +1,8 @@
 package by.itacademy.exception.dao;
 
-public class DaoException extends Exception {
-    public DaoException() {
-    }
+import by.itacademy.exception.ApplicationBasedException;
+
+public class DaoException extends ApplicationBasedException {
 
     public DaoException(String message) {
         super(message);

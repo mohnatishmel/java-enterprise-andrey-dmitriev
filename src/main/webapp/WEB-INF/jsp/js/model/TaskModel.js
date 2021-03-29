@@ -102,10 +102,7 @@ function TaskToolBoxStandard(id) {
     this.updateToolboxBtn = $("#updateToolboxBtn" + id);
     this.uploadToolboxBtn = $("#uploadToolboxBtn" + id);
     this.downloadToolboxBtn = $("#downloadToolboxBtn" + id);
-    this.fixedToolboxToggleSwitch = function () {
-        return document.getElementById("fixedToolboxToggleSwitch" + id);
-    }
-
+    this.fixedToolboxToggleSwitch = $("#fixedToolboxToggleSwitch" + id);
 }
 
 function TaskToolBoxForTrashBox(id) {

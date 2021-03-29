@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: andrey
-  Date: 16/02/2021
-  Time: 20:03
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -30,101 +24,11 @@
 
 
         body {
-            background: #eee
-        }
-
-        /*------------------  LOGIN FORM  --------------------*/
-        .user-form {
-            max-width: 600px;
-            min-width: 600px;
-            margin: auto;
-            padding: 0;
-            padding: 1.5em;
-            background-color: white;
-            /*border: 1px solid #868e96;*/
-            /*border-radius: 5px;*/
-            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
-        }
-
-        .login-btn {
-
-        }
-
-        .input-group {
-            border: 2px solid #eee;
-            position: relative;
             background: #eee;
-            margin: 25px 0;
-            border-radius: 2px;
-            overflow: hidden;
-            padding: 10px;
-        }
-
-        .input-group input{
-            border: none;
-            background: transparent;
-            width: 100%;
-            outline: none;
-            font-weight: 500;
             font-family: "Open Sans", sans-serif;
-            font-size: 16px;
         }
 
-        .input-group label {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            padding-left: 10px;
-            font-weight: 500;
-            color: #aaa;
-        }
-
-        .user-form {
-
-        }
-
-        .modal-content,
-        .modal-dialog {
-            /*position: fixed;*/
-            background: #eee;
-            margin: auto;
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            border: 0;
-        }
-        .modal,
-        .modal-dialog {
-            max-width: none;
-            height: 100%;
-            width: 100%;
-        }
-
-        .card-footer input {
-            width: 100%;
-            padding: 25px;
-            font-size: 24px;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            background: #195f91;
-            border: none;
-            color: #fff;
-            box-shadow: none;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .action-change {
-            border-color: rgba(0,0,0,0);
-            margin: auto;
-        }
-
-        .btn-group {
-            display: inline-block;
-        }
-        /*------------------  LOGIN FORM  --------------------*/
-        /*------------------  TASK LIST  --------------------*/
+        /*------------------  VIEW LIST  --------------------*/
 
         .name {
             min-height: 0.75em;
@@ -143,17 +47,32 @@
             border: 1px solid #b5b3b3;
         }
 
-        .icons i {
+        .icons i,
+        .icon-btn {
+            display: inline-block;
+        }
+
+        /*.icon-btn {*/
+        /*    display:flex;*/
+        /*}*/
+
+        .icon-btn i {
+            margin: auto;
+        }
+
+        .icons .icon-btn {
+            height: 1.7rem;
+            width: 1.7rem;
             background-color: white;
             color: #b5b3b3;
             border: 1px solid #b5b3b3;
-            padding: 6px;
+            padding: 7px;
             margin-left: 4px;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .task-view {
+        .item-view {
             margin-left: 0.7em;
             cursor: pointer;
         }
@@ -169,7 +88,7 @@
 
         .action-change:hover,
         .clock,
-        .task-view:hover,
+        .item-view:hover,
         .tools i:hover,
         .active-btn,
         .active-btn i{
@@ -207,7 +126,15 @@
             cursor: pointer;
         }
 
-        /*------------------  TASK LIST  --------------------*/
+        .view-container {
+            min-height: 2.5em;
+        }
+
+        .view-container i {
+            margin-left: 0.5em;
+        }
+
+        /*------------------  VIEW LIST  --------------------*/
         /*------------------  SEARCH BUTTON  --------------------*/
 
         /*------------------  SEARCH BUTTON  --------------------*/
@@ -240,8 +167,8 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
+            -webkit-transition: .2s;
+            transition: .2s;
         }
 
         .slider:before {
@@ -252,12 +179,16 @@
             left: 3px;
             bottom: 3px;
             background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
+            -webkit-transition: .2s;
+            transition: .2s;
         }
 
         input:checked + .slider {
             background-color: #28a745;
+        }
+
+        .lockUserAccountToggleSwitch:checked + .slider {
+            background-color: rgba(220,50,47,1);
         }
 
         input:focus + .slider {
@@ -297,8 +228,10 @@
         .bg-white {
             background-color: white;
         }
+
+        .search-btn:hover,
         .tools i:hover,
-        .icons i:hover,
+        .icon-btn:hover,
         .task-list li,
         .smooth-shadowbox {
             color: #343a40;
@@ -318,20 +251,129 @@
             /*background-color: #bababa;*/
         }
 
-        .header {
-            border-bottom: 1px solid #495057;
+        .user-label {
+            padding: 0.3em;
+            border: 1px solid;
+            border-radius: 10px;
         }
+
+        .user-label,
+        .btn-outline-secondary {
+            border-color:  #c7c7c7;
+        }
+
+        .bg-header {
+            background-color: #f8f8f8;
+
+        }
+        .header {
+            /*border-bottom: 1px solid #868e96;*/
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
+        }
+
+        .search-btn {
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+            background-color: white;
+            color: #b5b3b3;
+            border-color: #b5b3b3;
+        }
+
+        .transparent {
+            color: rgba(0,0,0,0);
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+
+
+        /*.dropdown-item,*/
+        /*.navbar-collapse {*/
+        /*    text-align: center;*/
+        /*}*/
+
 
     </style>
 </head>
 <body>
 <header class="header">
+
     <c:import url="/WEB-INF/jsp/template/header_tmpl.jsp"/>
+
 </header>
 
 <div class="container">
-    <c:import url="/WEB-INF/jsp/template/task_viewer_tmpl.jsp"/>
+
+    <c:import url="/WEB-INF/jsp/template/task/task_edit_form_tmpl.jsp"/>
+
+    <c:import url="/WEB-INF/jsp/template/user/user_tmpl.jsp"/>
+
+    <c:import url="/WEB-INF/jsp/template/file_upload_form_tmpl.jsp"/>
+
+    <c:import url="/WEB-INF/jsp/template/task/task_tmpl.jsp"/>
+
+    <c:import url="/WEB-INF/jsp/template/viewer_tmpl.jsp"/>
+
 </div>
+
+<script>
+    let viewList;
+
+    let currentView = "TODAY";
+
+    let principal = null;
+
+    <%--var logged = <c:out value = "${requestScope.alreadyLogged}"/>--%>
+
+    jQuery(function () {
+
+
+        $(document).ready(function () {
+            $("#userForm").find(".alert").hide();
+            fillViewList();
+            showTime();
+            getPrincipal();
+            // if (principle === null) {
+            //     $("#userForm").modal("show");
+            // }
+        });
+
+        function clearBox(elementID) {
+            $("#" + elementID).empty();
+        }
+
+// ================================================================
+        function sortTasksByDateUP() {
+            viewList.sort((function (a, b) {
+                if (a.deadLine > b.deadLine) {
+                    return 1;
+                }
+                if (a.deadLine < b.deadLine) {
+                    return -1;
+                }
+                return 0;
+            }))
+        }
+
+        function sortTasksByDateDown() {
+            viewList.sort((function (a, b) {
+                if (a.deadLine > b.deadLine) {
+                    return -1;
+                }
+                if (a.deadLine < b.deadLine) {
+                    return 1;
+                }
+                return 0;
+            }))
+        }
+    })
+
+    <c:import url="/WEB-INF/jsp/js/view/view.jsp"/>
+    <c:import url="/WEB-INF/jsp/js/controller/Controller.jsp"/>
+    <c:import url="/WEB-INF/jsp/js/model/model.jsp"/>
+</script>
 
 </body>
 </html>

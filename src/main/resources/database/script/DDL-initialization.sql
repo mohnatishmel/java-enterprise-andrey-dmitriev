@@ -1,6 +1,26 @@
 -- --------------------------------------------------------
 --          "TO DO" application
 -- --------------------------------------------------------
+-- --------------------------------------------------------
+--          MESSAGES
+-- --------------------------------------------------------
+
+CREATE TABLE `unlock_request_messages` (
+    `message_id` int(11) NOT NULL,
+    `user_id` int(11) NOT NULL,
+    `user_name` varchar(255),
+    `message_body` varchar(600)
+);
+--
+-- Indexes for table `unlock_request_messages`
+--
+ALTER TABLE `unlock_request_messages`
+    ADD PRIMARY KEY (`message_id`);
+--
+-- AUTO_INCREMENT for table `unlock_request_messages`
+--
+ALTER TABLE `unlock_request_messages`
+ALTER COLUMN `message_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------
 --          USERS

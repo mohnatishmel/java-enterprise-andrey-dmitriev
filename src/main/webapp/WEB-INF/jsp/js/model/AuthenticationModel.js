@@ -46,3 +46,14 @@ function logout(success, error) {
         }
     });
 }
+
+function getCurrentUser() {
+    return $.getJSON("/?command=GetPrincipal");
+}
+
+function Principal(jsonPrinciple) {
+    this.id = jsonPrinciple.id;
+    this.login = jsonPrinciple.credential.login;
+    this.name = this.login;
+    this.roles = jsonPrinciple.roles;
+}

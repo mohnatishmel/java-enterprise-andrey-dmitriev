@@ -1,5 +1,6 @@
 package by.itacademy.front.command;
 
+import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.service.SecurityContext;
@@ -16,22 +17,9 @@ import java.util.List;
 
 public class LoadTaskListTrashBoxCommand extends LoadTaskListCommand {
 
-    private Service service;
-
-    {
-        service = Service.getInstance();
-    }
-
     @Override
-    public void process() throws ServletException, IOException {
-        List<Task> taskList = loadTskListForCurrentUser();
-        List<Task> trashBox = new ArrayList<>();
-
-        for (Task task : taskList) {
-            if (task.isInBasket()) {
-                trashBox.add(task);
-            }
-        }
-        returnTskList(trashBox);
+    public void process() throws ServletException, IOException, ApplicationBasedException {
+        List<Task> taskList = service.getTrashBoxTasksForUser(id);
+        returnTskList(taskList);
     }
 }

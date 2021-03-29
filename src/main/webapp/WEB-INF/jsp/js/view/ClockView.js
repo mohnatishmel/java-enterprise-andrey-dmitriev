@@ -20,8 +20,9 @@ function showTime(){
 
     var time = h + ":" + m + " " + session;
     // var time = h + ":" + m + ":" + s + " " + session;
-    document.getElementById("clock").innerText = time;
-    document.getElementById("clock").textContent = time;
+    $(".clock-container").text(time);
+    // document.getElementById("clock").innerText = time;
+    // document.getElementById("clock").textContent = time;
 
     setTimeout(showTime, 1000);
 

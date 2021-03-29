@@ -44,6 +44,6 @@ public class UploadFileCommand extends FrontCommand {
 
         service.uploadFileForTask(file);
 
-        response.getWriter().print("Sucessfully Java file upload.");
+        returnMessage(String.format("File_%s was successfully uploaded", file.getId()), 200);
     }
 }

@@ -20,7 +20,7 @@ public class TaskFileResultSetMapper extends AbstractResultSetMapper<File> {
 
             return new File(id, bytes, name);
         } catch (SQLException e) {
-            throw new DaoException("Error mapping resultSet to personal_information Object");
+            throw new DaoException("Error mapping resultSet to File Object");
         }
     }
 }

@@ -31,7 +31,6 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
         try (Connection connection = getConnector().getConnection()) {
             try {
                 taskList = findTaskByUserId(id, connection);
-                connection.commit();
 
             } catch (DaoException e) {
                 throw new DaoException(e);

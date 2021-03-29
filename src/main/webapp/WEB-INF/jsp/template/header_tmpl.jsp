@@ -13,27 +13,49 @@
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<%--<nav class="navbar navbar-expand-lg navbar-light bg-header">--%>
+<nav class="navbar navbar-light bg-header">
     <div class="container">
-        <div class="nav-item dropdown  navbar-brand">
-            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="userDropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="text-transform: capitalize"><c:out value = "${sessionScope.principle.credential.login}"/>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="userDropdownMenuButton">
-<%--                <a class="dropdown-item" href="?command=Logout">Personal Info</a>--%>
-                <span id="logOut" class="dropdown-item cursor-pointer">Logout</span>
-            </div>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                    <a class="nav-link" href="#">Tasks</a>
-                    <a class="nav-link" href="#">Users</a>
 
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="searchBtn" class="btn my-2 my-sm-0 search-btn" type="button"
+                    onmousedown="return false" onselectstart="return false">
+<%--                Search--%>
+                <i class="transparent" >|</i>
+                <i class="fa fa-search" ></i>
+                <i class="transparent" >|</i>
+            </button>
+        </form>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto">
+                <span id="taskViewBtn" class="nav-link cursor-pointer inactive">
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>  Tasks</span>
+                <span id="userViewBtn" class="nav-link cursor-pointer inactive">
+                    <i class="fa fa-users" aria-hidden="true"></i>  Users</span>
+                <span class="nav-link cursor-pointer inactive">
+                    <i class="fa fa-address-card-o" aria-hidden="true"></i>  Personal Info</span>
+                <span id="logOut"  class="nav-link cursor-pointer inactive">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</span>
             </div>
+<%--            <div class="navbar-nav ml-auto">--%>
+<%--                <div class="dropdown">--%>
+<%--                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdownMenuButton"--%>
+<%--                            data-toggle="dropdown"--%>
+<%--                            aria-haspopup="true" aria-expanded="false" style="text-transform: capitalize">--%>
+<%--                        <i class="fa fa-user-circle" aria-hidden="true"></i>--%>
+<%--                    </button>--%>
+<%--                    <div class="dropdown-menu" aria-labelledby="userDropdownMenuButton">--%>
+
+
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
     </div>
 

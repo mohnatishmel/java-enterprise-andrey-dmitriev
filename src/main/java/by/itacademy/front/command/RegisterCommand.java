@@ -41,6 +41,7 @@ public class RegisterCommand extends FrontCommand {
                     .credential(new Credential(token.getLogin(), token.getPassword()))
                     .personalInformation(new PersonalInformation(0, "", ""))
                     .roles(roleList)
+                    .accountNotLocked(true)
                     .build();
 
             user = service.registerUser(user);

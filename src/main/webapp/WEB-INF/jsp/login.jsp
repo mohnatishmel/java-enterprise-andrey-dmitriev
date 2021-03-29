@@ -1,14 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
-    <title>Login page..</title>
+    <title>main page</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -17,19 +19,23 @@
             crossorigin="anonymous"></script>
 
     <style>
+        /*------------------  LOGIN FORM  --------------------*/
 
         body {
-            background: #eee
+            background-color: #eee;
         }
 
-        .login-form {
+        .account-locked-form,
+        .user-form {
             max-width: 600px;
-            margin: 150px auto;
+            min-width: 600px;
+            margin: auto;
+            margin-top: 5em;
             padding: 0;
             padding: 1.5em;
             background-color: white;
             /*border: 1px solid #868e96;*/
-            border-radius: 5px;
+            /*border-radius: 5px;*/
             box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
         }
 
@@ -47,7 +53,8 @@
             padding: 10px;
         }
 
-        .input-group input{
+        .input-group textarea,
+        .input-group input {
             border: none;
             background: transparent;
             width: 100%;
@@ -66,50 +73,102 @@
             color: #aaa;
         }
 
-        input-form,
-        .card-footer {
-            margin: 0;
+        .user-form {
+        }
+
+        .account-locked-form-modal .modal-content,
+        .account-locked-form-modal .modal-dialog {
+            /*position: fixed;*/
+            background: #eee;
+            margin: auto;
+            height: 100%;
+            width: 100%;
             padding: 0;
+            border: 0;
+        }
+
+        .account-locked-form-modal .modal,
+        .account-locked-form-modal .modal-dialog {
+            max-width: none;
+            height: 100%;
             width: 100%;
         }
 
         .card-footer input {
-        width: 100%;
-        padding: 25px;
-        font-size: 24px;
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        font-weight: 600;
-        background: #195f91;
-        border: none;
-        color: #fff;
-        box-shadow: none;
-        outline: none;
-        cursor: pointer;
+            width: 100%;
+            padding: 25px;
+            font-size: 24px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            background: #195f91;
+            border: none;
+            color: #fff;
+            box-shadow: none;
+            outline: none;
+            cursor: pointer;
         }
+
+        .action-change {
+            border-color: rgba(0, 0, 0, 0);
+            margin: auto;
+        }
+
+        .btn-group {
+            display: inline-block;
+        }
+
+        /*------------------  LOGIN FORM  --------------------*/
+
+        #messageSendSuccess button {
+            margin: auto;
+            width: 3em;
+        }
+
+        #messageSendSuccess p {
+            margin: 1em auto 2em auto ;
+            display: block;
+        }
+
+
+
 
     </style>
 
-    <script>
+</head>
+<body>
+
+<c:import url="/WEB-INF/jsp/template/account_locked_mesage_tmpl.jsp"/>
+
+<c:import url="/WEB-INF/jsp/template/authentication_form_tmpl.jsp"/>
+</body>
+<script>
+
+    let principal = null;
+
+    jQuery(function () {
+
+        $(document).ready(function () {
+            userForm.hideAlert();
+        });
 
         // const $registrationForm = $("#registrationForm");
         // const $loginForm = $("#loginForm");
-        $(document).on("click","#action-change", function () {
+        $(document).on("click", "#action-change", function () {
             console.log("click")
             $("#userForm").fadeOut(100, function () {
                 $("#submit").value = "Register";
             })
         })
 
-    </script>
-</head>
-<body>
+        <c:import url="/WEB-INF/jsp/js/view/authentication/UserFormView.js"/>
+        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>
+        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>
+        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>
+        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>
+        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>
+        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>
 
-<div id="userForm" class="login-form">
-
-    <c:import url="/WEB-INF/jsp/template/login_form_tmpl.jsp"/>
-
-</div>
-
-</body>
+    })
+</script>
 </html>

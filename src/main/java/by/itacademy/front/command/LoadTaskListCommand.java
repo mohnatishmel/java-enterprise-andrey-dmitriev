@@ -1,5 +1,6 @@
 package by.itacademy.front.command;
 
+import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
 import by.itacademy.security.service.SecurityContext;
@@ -13,31 +14,16 @@ import java.util.List;
 
 @Log4j2
 
-public class LoadTaskListCommand extends FrontCommand {
+public abstract class LoadTaskListCommand extends FrontCommand {
 
-    private Service service;
+    protected int id;
 
-    {
-        service = Service.getInstance();
-    }
-
-    @Override
-    public void process() throws ServletException, IOException {
-        List<Task> taskList = loadTskListForCurrentUser();
-        returnTskList(taskList);
-    }
-
-    protected List<Task> loadTskListForCurrentUser() {
-        User user = (User) SecurityContext.getInstance().getPrincipal();
-        return service.getTasksForUser(user.getId());
+    public LoadTaskListCommand() {
+        this.id = ((User) SecurityContext.getInstance().getPrincipal()).getId();
     }
 
     protected void returnTskList(List<Task> taskList) throws IOException {
-
         String json = new Gson().toJson(taskList);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        returnResponse(json);
     }
 }

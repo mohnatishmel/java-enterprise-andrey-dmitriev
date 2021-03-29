@@ -45,8 +45,6 @@ public class DeleteTaskCommand extends FrontCommand {
 
         service.deleteTask(id);
 
-        FrontCommand command = new LoadTaskListCommand();
-        command.init(context, request, response);
-        command.process();
+        returnMessage(String.format("Task_%s successfully deleted", id), 200);
     }
 }

@@ -26,14 +26,12 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         String servletPath = ((HttpServletRequest) request).getServletPath();
 
-        HttpSession session = ((HttpServletRequest) request).getSession(false);
+        HttpSession session = ((HttpServletRequest) request).getSession();
 
-        if (session != null) {
             UserDetails principle = (UserDetails) session.getAttribute("principle");
+        if (principle != null) {
             SecurityContext.getInstance().setPrincipal(principle);
-            request.setAttribute("alreadyLogged", true);
         } else {
-            request.setAttribute("alreadyLogged", false);
             request.getServletContext()
                     .getRequestDispatcher("/")
                     .forward(request, response);

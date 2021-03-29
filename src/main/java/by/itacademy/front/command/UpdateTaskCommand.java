@@ -27,12 +27,9 @@ public class UpdateTaskCommand extends FrontCommand {
     public void process() throws ServletException, IOException, ApplicationBasedException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-
         Task task = JsonToJavaTaskMapper.map(request);
         service.updateTask(task);
 
-        FrontCommand command = new LoadTaskListCommand();
-        command.init(context, request, response);
-        command.process();
+        returnMessage(String.format("Task_%s was successfully updated", task.getId()), 200);
     }
 }
