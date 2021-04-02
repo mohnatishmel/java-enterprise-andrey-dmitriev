@@ -1,38 +1,33 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.security.authentication.AuthenticationException;
-import by.itacademy.front.command.mapper.JsonToJavaAuthenticateTokenMapper;
+import by.itacademy.front.mapper.impl.JsonToJavaAuthenticateTokenMapper;
 import by.itacademy.model.security.authentication.AuthenticationToken;
-import by.itacademy.model.security.user.UserDetails;
-import by.itacademy.model.task.Task;
 import by.itacademy.model.user.User;
-import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
 import by.itacademy.security.service.AuthenticationProvider;
 import by.itacademy.security.service.SecurityContext;
-import by.itacademy.service.Service;
+import by.itacademy.service.FacadeService;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 @Log4j2
 
 public class LoginCommand extends FrontCommand {
 
-    private Service service;
+    private FacadeService facadeService;
 
     {
-        service = Service.getInstance();
+        facadeService = FacadeService.getInstance();
     }
 
     @Override
     public void process() throws ServletException, IOException {
 
-        AuthenticationToken token = JsonToJavaAuthenticateTokenMapper.map(request);
+        AuthenticationToken token = new JsonToJavaAuthenticateTokenMapper().map(request);
         User user = null;
         try {
             user = (User) AuthenticationProvider.getInstance().authenticate(token);

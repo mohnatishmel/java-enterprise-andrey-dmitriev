@@ -62,6 +62,14 @@ function mapTasksFromJsonForCommonView(jsonTaskList) {
         if (jsonTask.fixed === true) {
             toolbox.fixedToolboxToggleSwitch.prop("checked", true);
         }
+
+        let today = new Date();
+        today.setHours(0,0,0,0)
+        let taskDeadLine = new Date(jsonTask.deadLine + " UTC");
+
+        if (taskDeadLine.getTime() < today.getTime()) {
+            newTask.expired();
+        }
     });
 }
 
@@ -80,12 +88,20 @@ function mapTasksFromJsonForTrashBoxView(jsonTaskList) {
         viewList.put(newTask);
 
         toolbox.deleteTaskBtn.on("click", function () {
-            deleteTask(id);
+            deleteTaskById(id);
         });
         toolbox.outOfTrashBoxBtn.click(function () {
             newTask.toggleInBasket();
-            updateTask(id);
+            updateTaskWithoutFetching(id);
         });
+
+        let today = new Date();
+        today.setHours(0,0,0,0)
+        let taskDeadLine = new Date(jsonTask.deadLine + " UTC");
+
+        if (taskDeadLine.getTime() < today.getTime()) {
+            newTask.expired();
+        }
 
     });
 }

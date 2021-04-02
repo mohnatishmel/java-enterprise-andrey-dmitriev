@@ -1,7 +1,8 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.service.Service;
+import by.itacademy.exception.security.authorization.AuthorizationException;
+import by.itacademy.service.FacadeService;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 
@@ -14,13 +15,13 @@ import java.io.IOException;
 
 public abstract class FrontCommand {
 
-    protected Service service;
+    protected FacadeService facadeService;
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
 
     {
-        service = Service.getInstance();
+        facadeService = FacadeService.getInstance();
     }
 
     public void init(
@@ -32,7 +33,7 @@ public abstract class FrontCommand {
         this.response = servletResponse;
     }
 
-    public abstract void process() throws ServletException, IOException, ApplicationBasedException;
+    public abstract void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException;
 
     protected void forward(String target) throws ServletException, IOException {
         target = String.format("/WEB-INF/jsp/%s.jsp", target);

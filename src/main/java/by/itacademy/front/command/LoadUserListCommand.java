@@ -1,7 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.model.task.Task;
+import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.model.user.User;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
@@ -15,13 +15,13 @@ import java.util.List;
 public abstract class LoadUserListCommand extends FrontCommand {
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
         List<User> userList = loadTskListForCurrentUser();
         returnUserList(userList);
     }
 
-    protected List<User> loadTskListForCurrentUser() throws ApplicationBasedException {
-        List<User> userList = service.getAllUsers();
+    protected List<User> loadTskListForCurrentUser() throws ApplicationBasedException, AuthorizationException {
+        List<User> userList = facadeService.getAllUsers();
         for (User user : userList) {
             user.eraseCredentials();
         }

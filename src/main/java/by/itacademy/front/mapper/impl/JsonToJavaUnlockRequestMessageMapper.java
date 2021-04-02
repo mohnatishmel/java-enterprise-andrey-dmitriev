@@ -1,7 +1,7 @@
-package by.itacademy.front.command.mapper;
+package by.itacademy.front.mapper.impl;
 
+import by.itacademy.front.mapper.Mapper;
 import by.itacademy.model.message.UnlockRequestMessage;
-import by.itacademy.model.user.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,9 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class JsonToJavaUnlockRequestMessageMapper {
+public class JsonToJavaUnlockRequestMessageMapper  implements Mapper<UnlockRequestMessage> {
 
-    public static UnlockRequestMessage map(HttpServletRequest request) throws IOException {
+    public UnlockRequestMessage map(HttpServletRequest request) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 

@@ -1,6 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
+import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.model.user.User;
 import by.itacademy.security.service.SecurityContext;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 public class LoadUsersUnlockedCommand extends LoadUserListCommand{
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
         List<User> userList = loadTskListForCurrentUser();
         List<User> resultLIst = userList.stream()
                 .filter(user -> user.isAccountNonLocked() == true)

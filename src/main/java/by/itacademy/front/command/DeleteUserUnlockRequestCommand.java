@@ -1,7 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.front.command.mapper.JsonToJavaUnlockRequestMessageMapper;
+import by.itacademy.front.mapper.impl.JsonToJavaUnlockRequestMessageMapper;
 import by.itacademy.model.message.UnlockRequestMessage;
 import com.google.gson.Gson;
 
@@ -12,9 +12,9 @@ public class DeleteUserUnlockRequestCommand extends FrontCommand{
 
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException {
-        UnlockRequestMessage unlockMessage = JsonToJavaUnlockRequestMessageMapper.map(request);
+        UnlockRequestMessage unlockMessage = new JsonToJavaUnlockRequestMessageMapper().map(request);
 
-        service.deleteUnlockUserRequest(unlockMessage);
+        facadeService.deleteUnlockUserRequest(unlockMessage);
 
         String messageBody = "Request was successfully deleted";
         Message message = new Message(messageBody);

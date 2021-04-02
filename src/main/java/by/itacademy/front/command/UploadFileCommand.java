@@ -1,8 +1,9 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
+import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.model.file.File;
-import by.itacademy.service.Service;
+import by.itacademy.service.FacadeService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -13,14 +14,14 @@ import java.io.*;
 
 public class UploadFileCommand extends FrontCommand {
 
-    private Service service;
+    private FacadeService facadeService;
 
     {
-        service = Service.getInstance();
+        facadeService = FacadeService.getInstance();
     }
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
         Part partFile = request.getPart("file");
         Part partFileName = request.getPart("name");
         InputStream isFile = partFile.getInputStream();
@@ -42,7 +43,7 @@ public class UploadFileCommand extends FrontCommand {
 
         File file = new File(id, bytes, fileName);
 
-        service.uploadFileForTask(file);
+        facadeService.uploadFileForTask(file);
 
         returnMessage(String.format("File_%s was successfully uploaded", file.getId()), 200);
     }

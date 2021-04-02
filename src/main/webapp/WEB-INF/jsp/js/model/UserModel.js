@@ -19,6 +19,12 @@ function UserList() {
         })
         return user;
     }
+
+    this.forEach = function (action) {
+        this.list.forEach(function (t) {
+            action(t);
+        })
+    }
 }
 
 function User(id) {
@@ -48,6 +54,11 @@ function User(id) {
     this.hide = function () {
         let $t = $("#headingUser" + id);
         fadeOut($t);
+    }
+
+    this.disappear = function () {
+        let $t = $("#headingUser" + id);
+        $t.fadeOut("fast");
     }
 
     this.toggleAccountNotLocked = function () {

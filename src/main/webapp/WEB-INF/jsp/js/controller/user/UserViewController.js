@@ -31,7 +31,7 @@ function mapUsersFromJson(jsonUserList) {
         });
 
         toolbox.deleteUserBtn.click(function () {
-            deleteUser(id);
+            deleteUserById(id);
         });
 
         if (jsonUser.accountNotLocked === false) {

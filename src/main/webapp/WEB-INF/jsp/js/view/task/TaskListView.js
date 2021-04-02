@@ -34,13 +34,15 @@ function initTask(jsonTask, toolbox) {
     $newTask.find("#taskName").attr("id", "taskName" + id).text(jsonTask.name);
     $newTask.find("#taskDescription").attr("id", "taskDescription" + id).text(jsonTask.description);
     $newTask.find("#taskDeadline").attr("id", "taskDeadline" + id).text(taskDeadline.toDateString());
-    $newTask.find("#daysLeft").text(daysLeft + " days");
+    $newTask.find("#daysLeft").attr("id", "daysLeft" + id).text(daysLeft + " days");
+
 
     $newTask.removeClass("d-none");
     $newTask.removeClass("task-template");
 
     if (jsonTask.fixed === true) {
         $newTask.find(".check-icon").removeClass("inactive");
+        $newTask.find(".check-icon").addClass("done");
     }
 
     console.log("task_" + id + " initialized")

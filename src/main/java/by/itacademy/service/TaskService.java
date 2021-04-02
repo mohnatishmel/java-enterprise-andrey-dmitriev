@@ -1,44 +1,25 @@
 package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.exception.dao.DaoException;
-import by.itacademy.model.file.File;
-import by.itacademy.model.message.UnlockRequestMessage;
 import by.itacademy.model.task.Task;
-import by.itacademy.model.user.PersonalInformation;
 import by.itacademy.model.user.User;
 import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
-import by.itacademy.persistance.jdbc.dao.message.UnlockRequestMessageJdbcDao;
-import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
-import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
 import by.itacademy.security.service.SecurityContext;
-import lombok.extern.log4j.Log4j2;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-@Log4j2
-
-public class Service {
-    private static Service instance;
-
-    private UserDao userDao;
+public class TaskService {
     private TaskDao taskDao;
-    private TaskFileJdbcDao taskFleJdbcDao;
-    private UnlockRequestMessageJdbcDao unlockRequestMessageJdbcDao;
 
-    {
-        userDao = UserJdbcDao.getInstance();
-        taskDao = TaskJdbcDao.getInstance();
-        taskFleJdbcDao = TaskFileJdbcDao.getInstance();
-        unlockRequestMessageJdbcDao = UnlockRequestMessageJdbcDao.getInstance();
+    public TaskService(TaskDao taskDao) {
+        this.taskDao = taskDao;
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = null;
-            taskList = taskDao.getByUserId(id);
-        return taskList;
+        return taskDao.getByUserId(id);
     }
 
     public List<Task> getTodayTasksForUser(int id) throws ApplicationBasedException {
@@ -60,7 +41,6 @@ public class Service {
 
         List<Task> todayTaskList = new ArrayList<>();
         for (Task task : taskList) {
-            long i = task.getDeadLine().getTime();
             System.out.println(task.getDeadLine());
             System.out.println(tomorrow - task.getDeadLine().getTime());
             if (task.getDeadLine().getTime() < tomorrow
@@ -152,9 +132,9 @@ public class Service {
     }
 
     public void createTask(Task task) throws ApplicationBasedException {
-        int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
+        int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
         task.setUserId(userId);
-            taskDao.create(task);
+        taskDao.create(task);
     }
 
     public void updateTask(Task task) throws ApplicationBasedException {
@@ -164,88 +144,6 @@ public class Service {
     }
 
     public void deleteTask(int id) throws ApplicationBasedException {
-            taskDao.delete(id);
-    }
-
-    public void uploadFileForTask(File file) throws ApplicationBasedException {
-        try {
-            taskFleJdbcDao.create(file);
-        } catch (DaoException e) {
-            log.debug(Arrays.toString(e.getStackTrace()));
-            try {
-                taskFleJdbcDao.update(file);
-            } catch (DaoException daoException) {
-                log.debug(Arrays.toString(e.getStackTrace()));
-                throw new ApplicationBasedException(e);
-            }
-        }
-    }
-
-    public File getFile(long id) throws ApplicationBasedException {
-        try {
-            return taskFleJdbcDao.getById((int) id);
-        } catch (DaoException e) {
-            log.debug(Arrays.toString(e.getStackTrace()));
-            throw new ApplicationBasedException(e);
-        }
-    }
-
-    public User registerUser(User user) throws ApplicationBasedException {
-        try {
-            user = userDao.create(user);
-        } catch (DaoException e) {
-            log.debug(Arrays.toString(e.getStackTrace()));
-            throw new ApplicationBasedException(e);
-        }
-        return user;
-    }
-
-    public List<User> getAllUsers() throws ApplicationBasedException{
-        return userDao.getAll();
-    }
-
-    public void updateUser(User updateUser) throws ApplicationBasedException {
-        User user = userDao.getById(updateUser.getId());
-
-        PersonalInformation pi = updateUser.getPersonalInformation();
-        boolean accountNotLocked = updateUser.isAccountNotLocked();
-
-        if (pi != null) {
-            user.setPersonalInformation(pi);
-        }
-         user.setAccountNotLocked(accountNotLocked);
-
-        userDao.update(user);
-    }
-
-    public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
-        return unlockRequestMessageJdbcDao.getAll();
-    }
-
-    public void createUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.create(request);
-    }
-
-    public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.delete(request.getId());
-    }
-
-    public void resolveUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        User user = userDao.getById(request.getUserId());
-        user.setAccountNotLocked(true);
-        userDao.update(user);
-
-        unlockRequestMessageJdbcDao.delete(request.getId());
-    }
-
-    public void deleteUser(User user) throws ApplicationBasedException {
-        userDao.delete(user.getId());
-    }
-
-    public static Service getInstance() {
-        if (instance == null) {
-            instance = new Service();
-        }
-        return instance;
+        taskDao.delete(id);
     }
 }

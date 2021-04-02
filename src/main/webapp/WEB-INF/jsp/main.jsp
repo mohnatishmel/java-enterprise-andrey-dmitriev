@@ -30,6 +30,11 @@
 
         /*------------------  VIEW LIST  --------------------*/
 
+        .btn-group {
+            margin: 0;
+            padding: 0;
+        }
+
         .name {
             min-height: 0.75em;
         }
@@ -81,10 +86,17 @@
             font-size: 19px;
             color: forestgreen;
         }
-
          .inactive {
              color: #868e96;
          }
+
+        .expired {
+            color: #dc322f;
+        }
+
+        .done {
+            color: forestgreen;
+        }
 
         .action-change:hover,
         .clock,
@@ -329,15 +341,12 @@
 
     jQuery(function () {
 
-
         $(document).ready(function () {
             $("#userForm").find(".alert").hide();
             fillViewList();
             showTime();
             getPrincipal();
-            // if (principle === null) {
-            //     $("#userForm").modal("show");
-            // }
+            viewerNav.taskNav();
         });
 
         function clearBox(elementID) {

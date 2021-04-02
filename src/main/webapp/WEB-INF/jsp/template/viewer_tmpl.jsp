@@ -5,8 +5,9 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-12">
-                    <c:import url="/WEB-INF/jsp/template/task/task_view_nav_tmpl.jsp"/>
-                    <c:import url="/WEB-INF/jsp/template/user/user_view_nav_tmpl.jsp"/>
+<%--                    <c:import url="/WEB-INF/jsp/template/task/task_view_nav_tmpl.jsp"/>--%>
+<%--                    <c:import url="/WEB-INF/jsp/template/user/user_view_nav_tmpl.jsp"/>--%>
+                    <c:import url="/WEB-INF/jsp/template/viewer_nav_tmpl.jsp"/>
                     <div class="mt-3">
                         <div class="collapse" id="createTaskForm">
                             <div class="card card-body">

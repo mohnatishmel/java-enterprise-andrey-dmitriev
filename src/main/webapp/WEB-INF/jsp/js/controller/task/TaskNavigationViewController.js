@@ -1,34 +1,53 @@
-taskNav.todayViewBtn.on("click", function () {
+viewerNav.todayViewBtn.on("click", function () {
     currentView = "TODAY";
-    taskNav.todayView();
+    viewerNav.todayView();
     showTaskListCommonView("LoadTaskListToday");
     console.log("current view: " + currentView);
 });
 
-taskNav.tomorrowViewBtn.on("click", function () {
+viewerNav.tomorrowViewBtn.on("click", function () {
     currentView = "TOMORROW";
-    taskNav.tomorrowView();
+    viewerNav.tomorrowView();
     showTaskListCommonView("LoadTaskListTomorrow");
     console.log("current view: " + currentView);
 });
 
-taskNav.somedayViewBtn.on("click", function () {
+viewerNav.somedayViewBtn.on("click", function () {
     currentView = "SOMEDAY";
-    taskNav.somedayView();
+    viewerNav.somedayView();
     showTaskListCommonView("LoadTaskListSomeday");
     console.log("current view: " + currentView);
 });
 
-taskNav.fixedViewBtn.on("click", function () {
+viewerNav.fixedViewBtn.on("click", function () {
     currentView = "FIXED";
-    taskNav.fixedView();
+    viewerNav.fixedView();
     showTaskListCommonView("LoadTaskListFixed");
     console.log("current view: " + currentView);
 });
 
-taskNav.trashBoxViewBtn.on("click", function () {
+viewerNav.trashBoxViewBtn.on("click", function () {
     currentView = "TRASH_BOX";
-    taskNav.trashBoxView();
+    viewerNav.trashBoxView();
     showTaskListTrashBoxView("LoadTaskListTrashBox");
     console.log("current view: " + currentView);
 });
+
+viewerNav.emptyTaskTrashBoxBtn.on("click", function () {
+    deleteAllTasksFromViewList();
+    viewerNav.trashBoxView();
+});
+
+
+viewerNav.restoreAllTasksBtn.on("click", function () {
+    restoreAllTasksFromTrashBox()
+    updateAllTasksFromViewList();
+    viewList = {};
+});
+
+viewerNav.clearFixedTasksBtn.on("click", function () {
+    deleteAllTasksFromViewList();
+    viewList = {};
+});
+
+

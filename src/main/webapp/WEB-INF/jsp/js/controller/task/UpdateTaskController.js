@@ -51,6 +51,31 @@ function updateTaskWithoutFetching(id) {
     });
 }
 
+function restoreAllTasksFromTrashBox() {
+
+    viewList.forEach(function (task) {
+
+        task.setInBasket(false);
+
+    })
+}
+
+function updateAllTasksFromViewList() {
+
+    viewList.forEach(function (task) {
+
+        task.disappear();
+
+        let jsonTask = getJsonTask(task);
+        console.log(jsonTask);
+
+        sendTask(jsonTask, "UpdateTask", function success(data) {
+            console.log(data.message);
+        });
+
+    })
+}
+
 // function taskInBasketUpdate(id, inBasket) {
 //     console.log("taskInBasketUpdate Called")
 //     let $li = $("#headingTask" + id);

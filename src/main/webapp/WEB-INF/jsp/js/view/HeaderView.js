@@ -8,14 +8,10 @@ header.setUserName = function (name) {
     this.userName.text(name);
 };
 header.switchToTaskView = function () {
-    taskNav.show();
-    userNav.hide()
     header.taskViewBtn.addClass("active-btn");
     header.userViewBtn.removeClass("active-btn");
 };
 header.switchToUserView = function () {
-    taskNav.hide();
-    userNav.show();
     header.taskViewBtn.removeClass("active-btn");
     header.userViewBtn.addClass("active-btn");
 };

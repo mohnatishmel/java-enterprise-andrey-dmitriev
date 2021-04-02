@@ -1,7 +1,7 @@
-package by.itacademy.front.command.mapper;
+package by.itacademy.front.mapper.impl;
 
+import by.itacademy.front.mapper.Mapper;
 import by.itacademy.model.task.Task;
-import by.itacademy.service.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
-public class JsonToJavaTaskMapper {
+public class JsonToJavaTaskMapper implements Mapper<Task> {
 
-    public static Task map(HttpServletRequest request) throws IOException {
+    public Task map(HttpServletRequest request) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 

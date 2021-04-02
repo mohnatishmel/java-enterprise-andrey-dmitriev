@@ -149,7 +149,9 @@
     jQuery(function () {
 
         $(document).ready(function () {
-            userForm.hideAlert();
+            loginForm.hideAlert();
+            registerForm.hideAlert();
+            $("#registerForm").hide();
         });
 
         // const $registrationForm = $("#registrationForm");
@@ -161,7 +163,8 @@
             })
         })
 
-        <c:import url="/WEB-INF/jsp/js/view/authentication/UserFormView.js"/>
+        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>
+        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>
         <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>
         <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>
         <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>

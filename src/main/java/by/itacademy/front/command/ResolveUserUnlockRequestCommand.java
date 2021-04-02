@@ -1,7 +1,8 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.front.command.mapper.JsonToJavaUnlockRequestMessageMapper;
+import by.itacademy.exception.security.authorization.AuthorizationException;
+import by.itacademy.front.mapper.impl.JsonToJavaUnlockRequestMessageMapper;
 import by.itacademy.model.message.UnlockRequestMessage;
 import com.google.gson.Gson;
 
@@ -11,10 +12,10 @@ import java.io.IOException;
 public class ResolveUserUnlockRequestCommand extends FrontCommand{
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
-        UnlockRequestMessage unlockMessage = JsonToJavaUnlockRequestMessageMapper.map(request);
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
+        UnlockRequestMessage unlockMessage = new JsonToJavaUnlockRequestMessageMapper().map(request);
 
-        service.resolveUnlockUserRequest(unlockMessage);
+        facadeService.resolveUnlockUserRequest(unlockMessage);
 
         String messageBody = "Request was successfully resolved";
         Message message = new Message(messageBody);

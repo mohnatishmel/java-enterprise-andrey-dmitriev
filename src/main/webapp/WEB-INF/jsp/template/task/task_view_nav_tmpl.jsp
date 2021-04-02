@@ -4,7 +4,7 @@
 
 <div id="task-view-nav" class="d-flex justify-content-between align-items-center activity">
     <div class="task-view-nav">
-        <span class="clock">
+        <span class="clock" data-toggle="tooltip" data-placement="top" title="Current Time">
             <i class="fa fa-clock-o"></i><span class="ml-2 clock-container"></span>
         </span>
         <span class="item-view cursor-pointer inactive active-btn" id="todayViewBtn" data-toggle="tooltip" data-placement="top" title="Today Tasks">Today</span>
@@ -29,7 +29,7 @@
 
         </span>
 <%--        <i class="fa fa-search" ></i>--%>
-        <span class="icon-btn">
+        <span class="icon-btn"  data-toggle="tooltip" data-placement="top" title="More actions">
         <i class="fa fa-ellipsis-h"></i>
             </span>
     </div>

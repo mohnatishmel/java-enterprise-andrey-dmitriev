@@ -2,9 +2,9 @@ package by.itacademy.front.command;
 
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.front.command.mapper.JsonToJavaTaskMapper;
+import by.itacademy.exception.security.authorization.AuthorizationException;
+import by.itacademy.front.mapper.impl.JsonToJavaTaskMapper;
 import by.itacademy.model.task.Task;
-import by.itacademy.service.Service;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 
@@ -18,10 +18,10 @@ import java.io.IOException;
 public class CreateTaskCommand extends FrontCommand {
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
 
-        Task task = JsonToJavaTaskMapper.map(request);
-        service.createTask(task);
+        Task task = new JsonToJavaTaskMapper().map(request);
+        facadeService.createTask(task);
 
         String messageBody = "The task was successfully created";
         Message message = new Message(messageBody);

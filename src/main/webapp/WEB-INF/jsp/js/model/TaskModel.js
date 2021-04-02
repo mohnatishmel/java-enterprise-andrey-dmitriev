@@ -21,6 +21,12 @@ function TaskList() {
         })
         return task;
     }
+
+    this.forEach = function (action) {
+        this.list.forEach(function (t) {
+            action(t);
+        })
+    }
 }
 
 function Task(id) {
@@ -67,6 +73,11 @@ function Task(id) {
         fadeOut($t);
     }
 
+    this.disappear = function () {
+        let $t = $("#headingTask" + id);
+        $t.fadeOut("fast");
+    }
+
     this.toggleFixed = function () {
         let $li = $("#headingTask" + id)
         let f = this.isFixed();
@@ -94,6 +105,10 @@ function Task(id) {
         }
     }
 
+    this.expired = function () {
+        $("#headingTask" + id).find(".check-icon").addClass("expired");
+        $("#daysLeft" + id).addClass("expired");
+    }
 }
 
 function TaskToolBoxStandard(id) {

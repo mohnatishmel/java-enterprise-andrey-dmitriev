@@ -2,28 +2,28 @@
 function fillViewList() {
     switch (currentView) {
         case "UNLOCKED_USERS":
-            userNav.unlockedUsersViewBtn.click();
+            viewerNav.unlockedUsersViewBtn.click();
             break;
         case "LOCKED_USERS":
-            taskNav.lockedUsersViewBtn.click();
+            viewerNav.lockedUsersViewBtn.click();
             break;
         case "INCOME_MESSAGES":
-            taskNav.incomeMessagesBtn.click();
+            viewerNav.incomeMessagesBtn.click();
             break;
         case "TODAY":
-            taskNav.todayViewBtn.click();
+            viewerNav.todayViewBtn.click();
             break;
         case "TOMORROW":
-            taskNav.tomorrowViewBtn.click();
+            viewerNav.tomorrowViewBtn.click();
             break;
         case "TRASH_BOX":
-            taskNav.trashBoxViewBtn.click();
+            viewerNav.trashBoxViewBtn.click();
             break;
         case "FIXED":
-            taskNav.fixedViewBtn.click();
+            viewerNav.fixedViewBtn.click();
             break;
         default:
-            taskNav.somedayViewBtn.click();
+            viewerNav.somedayViewBtn.click();
     }
 }
 

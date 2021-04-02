@@ -4,9 +4,9 @@
 
 <div id="user-view-nav" class="d-flex justify-content-between align-items-center activity">
     <div class="user-view-nav d-none">
-                                <span class="clock">
-                                    <i class="fa fa-clock-o"></i><span class="clock-container ml-2"></span>
-                                </span>
+        <span class="clock" data-toggle="tooltip" data-placement="top" title="Current Time">
+            <i class="fa fa-clock-o"></i><span class="clock-container ml-2"></span>
+        </span>
         <span class="item-view cursor-pointer inactive active-btn" id="unlockedUsersViewBtn" data-toggle="tooltip"
               data-placement="top" title="Active Users">Active</span>
 
@@ -22,7 +22,7 @@
 
     <div class="icons d-none">
 <%--        <i class="fa fa-search"></i>--%>
-    <span class="icon-btn">
+    <span class="icon-btn" data-toggle="tooltip" data-placement="top" title="More actions">
         <i class="fa fa-ellipsis-h"></i>
             </span>
     </div>

@@ -15,7 +15,8 @@
                             <div><i class="fa fa-calendar-o"></i>
                                 <span class="ml-2" id="taskDeadline"></span>
                             </div>
-                            <div class="ml-3"><i class="fa fa-clock-o"></i>
+                            <div class="ml-3">
+                                <i class="fa fa-clock-o"></i>
                                 <span id="daysLeft" class="ml-2"></span>
                             </div>
                         </div>
@@ -26,7 +27,7 @@
                 <div class="text-box card-body">
                     <p id="taskDescription">
                     </p>
-                </div>
+                 </div>
             </div>
         </div>
         <input type="hidden" id="inBasket">
@@ -43,17 +44,17 @@
                 <span class="slider round"></span>
             </label>
         </div>
-        <div class="float-right">
+        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Edit task">
             <i class="fa fa-pencil-square-o inactive" id="updateToolboxBtn" aria-hidden="true"
                data-toggle="modal" data-target="#editTaskModalCenter"></i>
         </div>
-        <div class="float-right">
+        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Put task into trash box">
             <i class="fa fa-trash-o inactive" aria-hidden="true" id="toTrashBoxToolboxBtn"></i>
         </div>
-        <div class="float-right">
+        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Download file">
             <i class="fa fa-download inactive" id="downloadToolboxBtn" aria-hidden="true"></i>
         </div>
-        <div class="float-right">
+        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Upload file">
             <i class="fa fa-upload inactive" aria-hidden="true" id="uploadToolBoxBtn" data-toggle="modal"
                data-target="#uploadFileModal"></i>
         </div>
@@ -62,10 +63,10 @@
 
 <div id="taskToolBoxBoxForTrashBox" class="d-none">
     <div class="tools task-trash-tool-box-template">
-        <div id="outOfTrashBoxBtn" class=" outOfTrashBoxBtn float-right">
+        <div id="outOfTrashBoxBtn" class=" outOfTrashBoxBtn float-right" data-toggle="tooltip" data-placement="top" title="Restore task from trash box">
             <i class="fa fa-trash-o inactive" aria-hidden="true"><span class="fa fa-arrow-right" aria-hidden="true"></span></i>
         </div>
-        <div id="deleteTaskBtn" class="float-right deleteBtn">
+        <div id="deleteTaskBtn" class="float-right deleteBtn" data-toggle="tooltip" data-placement="top" title="Delete task">
             <i class="fa fa-minus-circle" aria-hidden="true"></i>
         </div>
     </div>

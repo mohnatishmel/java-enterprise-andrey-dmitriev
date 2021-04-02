@@ -1,7 +1,8 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.service.Service;
+import by.itacademy.exception.security.authorization.AuthorizationException;
+import by.itacademy.service.FacadeService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,14 +17,14 @@ import java.io.InputStreamReader;
 
 public class DeleteTaskCommand extends FrontCommand {
 
-    private Service service;
+    private FacadeService facadeService;
 
     {
-        service = Service.getInstance();
+        facadeService = FacadeService.getInstance();
     }
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
@@ -43,7 +44,7 @@ public class DeleteTaskCommand extends FrontCommand {
             }
         }
 
-        service.deleteTask(id);
+        facadeService.deleteTask(id);
 
         returnMessage(String.format("Task_%s successfully deleted", id), 200);
     }

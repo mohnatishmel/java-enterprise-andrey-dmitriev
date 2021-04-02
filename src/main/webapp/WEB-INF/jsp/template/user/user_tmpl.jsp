@@ -22,7 +22,7 @@
 </div>
 
 <div id="userToolBox" class="d-none">
-    <div class="tools user-tool-box-template d-flex align-items-center">
+    <div class="tools user-tool-box-template d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Delete User">
         <div id="deleteUserBtn" class="deleteBtn">
             <i class="fa fa-user-times" aria-hidden="true"></i>
         </div>

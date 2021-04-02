@@ -1,6 +1,6 @@
-package by.itacademy.front.command.mapper;
+package by.itacademy.front.mapper.impl;
 
-import by.itacademy.model.user.Credential;
+import by.itacademy.front.mapper.Mapper;
 import by.itacademy.model.user.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,9 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class JsonToJavaUserMapper {
+public class JsonToJavaUserMapper implements Mapper<User> {
 
-    public static User map(HttpServletRequest request) throws IOException {
+    public User map(HttpServletRequest request) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 

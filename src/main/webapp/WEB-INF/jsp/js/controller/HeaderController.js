@@ -1,11 +1,13 @@
 header.taskViewBtn.on("click", function () {
     header.switchToTaskView();
-    taskNav.todayViewBtn.click();
+    viewerNav.todayViewBtn.click();
+    viewerNav.taskNav();
 })
 
 header.userViewBtn.on("click", function () {
     header.switchToUserView();
-    userNav.unlockedUsersViewBtn.click();
+    viewerNav.unlockedUsersViewBtn.click();
+    viewerNav.userNav();
 })
 
 header.disableAdministratorFunctionality();

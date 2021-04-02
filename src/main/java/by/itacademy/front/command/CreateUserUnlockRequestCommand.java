@@ -1,7 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.front.command.mapper.JsonToJavaUnlockRequestMessageMapper;
+import by.itacademy.front.mapper.impl.JsonToJavaUnlockRequestMessageMapper;
 import by.itacademy.model.message.UnlockRequestMessage;
 import com.google.gson.Gson;
 
@@ -12,9 +12,9 @@ public class CreateUserUnlockRequestCommand extends FrontCommand{
 
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException {
-        UnlockRequestMessage unlockMessage = JsonToJavaUnlockRequestMessageMapper.map(request);
+        UnlockRequestMessage unlockMessage = new JsonToJavaUnlockRequestMessageMapper().map(request);
 
-        service.createUnlockUserRequest(unlockMessage);
+        facadeService.createUnlockUserRequest(unlockMessage);
 
         String messageBody = "Request was successfully created";
         Message message = new Message(messageBody);

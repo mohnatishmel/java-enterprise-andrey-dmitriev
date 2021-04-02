@@ -1,7 +1,7 @@
-package by.itacademy.front.command.mapper;
+package by.itacademy.front.mapper.impl;
 
+import by.itacademy.front.mapper.Mapper;
 import by.itacademy.model.security.authentication.AuthenticationToken;
-import by.itacademy.model.task.Task;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
 
-public class JsonToJavaAuthenticateTokenMapper {
+public class JsonToJavaAuthenticateTokenMapper  implements Mapper<AuthenticationToken> {
 
-    public static AuthenticationToken map(HttpServletRequest request) throws IOException {
+    public AuthenticationToken map(HttpServletRequest request) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 

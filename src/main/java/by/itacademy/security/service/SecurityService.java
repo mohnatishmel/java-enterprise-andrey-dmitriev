@@ -2,7 +2,6 @@ package by.itacademy.security.service;
 
 
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.exception.security.authorization.UrlPatternNotFoundException;
 import by.itacademy.model.security.user.GrantedAuthority;
 import by.itacademy.model.security.user.UserDetails;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
@@ -13,6 +12,16 @@ import java.util.List;
 public class SecurityService {
 
     private static SecurityService instance;
+
+    public boolean authorizeForCurrentUser(int id) {
+        boolean result = false;
+        int principalId = SecurityContext.getInstance().getPrincipal().getId();
+
+        if (principalId == id) {
+            result = true;
+        }
+        return result;
+    }
 
     public boolean authorize(GrantedAuthority ... authoritiesNeeded) throws AuthorizationException {
         return authorize(Arrays.asList(authoritiesNeeded));
