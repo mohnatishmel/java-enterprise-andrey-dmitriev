@@ -38,7 +38,7 @@ function createTask() {
     var jsonTask = JSON.stringify({task});
     console.log(jsonTask);
 
-    sendTask(jsonTask, "CreateTask",function (data) {
+    sendJson(jsonTask, "CreateTask",function (data) {
         fillViewList();
     });
 }

@@ -1,9 +1,9 @@
 function downloadFile(id) {
     $.getJSON('/?command=DownloadFile&id=' + id, function (result) {
 
-        var name = result.name;
+        let name = result.name;
 
-        var b64Data = result.base64;
+        let b64Data = result.base64;
         const byteCharacters = atob(b64Data);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -12,8 +12,8 @@ function downloadFile(id) {
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray]);
 
-        var a = document.createElement('a');
-        var url = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        let url = window.URL.createObjectURL(blob);
         a.href = url;
         a.download = name.toString();
         document.body.append(a);
@@ -49,7 +49,4 @@ function uploadFile() {
     });
     console.log(document.getElementById("uploadFileInput").files[0].name + "is uploaded")
 
-    // $(document).ready(function() {
-    //   $("#uploadFileInput").on("change", uploadFile);// await fetch('/?command=UploadFile', {
-    // });
 }

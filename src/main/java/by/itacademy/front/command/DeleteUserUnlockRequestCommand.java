@@ -1,6 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
+import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.front.mapper.impl.JsonToJavaUnlockRequestMessageMapper;
 import by.itacademy.model.message.UnlockRequestMessage;
 import com.google.gson.Gson;
@@ -11,7 +12,7 @@ import java.io.IOException;
 public class DeleteUserUnlockRequestCommand extends FrontCommand{
 
     @Override
-    public void process() throws ServletException, IOException, ApplicationBasedException {
+    public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
         UnlockRequestMessage unlockMessage = new JsonToJavaUnlockRequestMessageMapper().map(request);
 
         facadeService.deleteUnlockUserRequest(unlockMessage);

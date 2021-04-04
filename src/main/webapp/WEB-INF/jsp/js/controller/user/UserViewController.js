@@ -27,7 +27,7 @@ function mapUsersFromJson(jsonUserList) {
 
         toolbox.lockUserAccountToggleSwitch.on("click", function () {
             newUser.toggleAccountNotLocked();
-            updateUser(id);
+            updateUserIsLocked(id);
         });
 
         toolbox.deleteUserBtn.click(function () {

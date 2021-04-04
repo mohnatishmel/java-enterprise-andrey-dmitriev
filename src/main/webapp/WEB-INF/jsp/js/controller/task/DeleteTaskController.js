@@ -24,7 +24,7 @@ function deleteAllTasksFromViewList() {
 }
 
 function deleteTask(jsonTask) {
-    sendTask(jsonTask, "DeleteTask", function success(data) {
+    sendJson(jsonTask, "DeleteTask", function success(data) {
         console.log(data.message)
     });
 }

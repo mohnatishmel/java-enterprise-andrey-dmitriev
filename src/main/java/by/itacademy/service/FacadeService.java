@@ -28,10 +28,10 @@ public class FacadeService {
     private SecurityService securityService;
     private FileService fileService;
     private UserService userService;
+    private UnlockRequestMessageService unlockRequestMessageService;
 
     private TaskDao taskDao;
     private TaskFileJdbcDao taskFleJdbcDao;
-    private UnlockRequestMessageJdbcDao unlockRequestMessageJdbcDao;
 
     private TaskService taskService;
 
@@ -39,10 +39,10 @@ public class FacadeService {
         securityService = SecurityService.getInstance();
         fileService = FileService.getInstance();
         userService = UserService.getInstance();
+        unlockRequestMessageService= UnlockRequestMessageService.getInstance();
 
         taskDao = TaskJdbcDao.getInstance();
         taskFleJdbcDao = TaskFileJdbcDao.getInstance();
-        unlockRequestMessageJdbcDao = UnlockRequestMessageJdbcDao.getInstance();
         taskService = new TaskService(taskDao);
     }
 
@@ -160,10 +160,6 @@ public class FacadeService {
         }
     }
 
-    public void updateUser(User updateUser) throws ApplicationBasedException, AuthorizationException {
-        userService.updateUser(updateUser);
-    }
-
     public void updateUserIsLocked(User updateUser) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
             userService.updateUser(updateUser);
@@ -189,25 +185,38 @@ public class FacadeService {
         }
     }
 
-    public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
-        return unlockRequestMessageJdbcDao.getAll();
-    }
-
-    public void createUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.create(request);
-    }
-
-    public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.delete(request.getId());
-    }
-
-    public void resolveUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException, AuthorizationException {
+    public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
-            User user = userService.getById(request.getUserId());
+            return unlockRequestMessageService.getUnlockRequestMessages();
+        } else {
+            throw new AuthorizationException("You are not authorized for this action");
+        }
+    }
+
+    public void createUnlockUserRequest(UnlockRequestMessage requestMessage) throws ApplicationBasedException, AuthorizationException {
+        if (securityService.authorizeForCurrentUser(requestMessage.getUserId())
+                & securityService.authorize(new Role("USER_ROLE"))) {
+            unlockRequestMessageService.createUnlockUserRequest(requestMessage);
+        } else {
+            throw new AuthorizationException("You are not authorized for this action");
+        }
+    }
+
+    public void deleteUnlockUserRequest(UnlockRequestMessage requestMessage) throws ApplicationBasedException, AuthorizationException {
+        if (securityService.authorize(new Role("ADMIN_ROLE"))) {
+            unlockRequestMessageService.deleteUnlockUserRequest(requestMessage);
+        } else {
+            throw new AuthorizationException("You are not authorized for this action");
+        }
+    }
+
+    public void resolveUnlockUserRequest(UnlockRequestMessage requestMessage) throws ApplicationBasedException, AuthorizationException {
+        if (securityService.authorize(new Role("ADMIN_ROLE"))) {
+            User user = userService.getById(requestMessage.getUserId());
             user.setAccountNotLocked(true);
             updateUserIsLocked(user);
 
-            unlockRequestMessageJdbcDao.delete(request.getId());
+            unlockRequestMessageService.deleteUnlockUserRequest(requestMessage);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }

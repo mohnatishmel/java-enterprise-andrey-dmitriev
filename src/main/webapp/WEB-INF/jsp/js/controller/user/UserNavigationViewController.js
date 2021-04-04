@@ -21,7 +21,6 @@ viewerNav.incomeMessagesBtn.on("click", function () {
 
 viewerNav.enableAllLockedUsersBtn.on("click", function () {
     unlockAllUserFromLockedView();
-    updateAllUsersFromViewList();
     viewList = {};
 });
 
