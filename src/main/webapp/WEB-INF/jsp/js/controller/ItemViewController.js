@@ -27,10 +27,10 @@ function fillViewList() {
     }
 }
 
-function switchToTaskView() {
-
-}
-
-function switchToUserView() {
-
-}
+// function switchToTaskView() {
+//
+// }
+//
+// function switchToUserView() {
+//
+// }

@@ -5,7 +5,7 @@ function authenticate(token, command, successFunk, errorFunk) {
         }
     });
 
-    var jsonToken = JSON.stringify({token});
+    let jsonToken = JSON.stringify({token});
 
     $.ajax({
         url: "/?command="+ command,
@@ -17,7 +17,7 @@ function authenticate(token, command, successFunk, errorFunk) {
         success: function (data) {
             successFunk(data)
         },
-        error: function (data, status, er) {
+        error: function (data) {
             errorFunk(data)
         }
     });
@@ -41,7 +41,7 @@ function logout(success, error) {
         success: function (data) {
             success(data)
         },
-        error: function (data, status, er) {
+        error: function (data) {
             error(data)
         }
     });

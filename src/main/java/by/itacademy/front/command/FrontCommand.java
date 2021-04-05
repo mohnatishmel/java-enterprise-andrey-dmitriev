@@ -56,6 +56,6 @@ public abstract class FrontCommand {
 
     @AllArgsConstructor
     protected class Message {
-        private String message;
+        private final String message;
     }
 }

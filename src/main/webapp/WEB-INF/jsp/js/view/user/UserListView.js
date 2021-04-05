@@ -1,5 +1,5 @@
 
-var userView = {}
+let userView = {}
 userView.append = function (user) {
     $("#viewList").append($($.parseHTML(user)).hide().fadeIn(200));
 }
@@ -16,15 +16,14 @@ userView.append = function (user) {
 
         $newUser.find("#headingUser").attr("id", "headingUser" + id);
         $newUser.find("#headingUser" + id).append(toolbox);
-        $newUser.find("#accountNotLocked").attr("id", "accountNotLocked" + id).val(jsonUser.accountNotLocked);;
+        $newUser.find("#accountNotLocked").attr("id", "accountNotLocked" + id).val(jsonUser.accountNotLocked);
         $newUser.find("#userName").attr("id", "userName" + id).text(jsonUser.credential.login);
 
         $newUser.removeClass("d-none");
         $newUser.removeClass("user-template");
 
         console.log("user_" + id + " initialized")
-        let result = $newUser.html();
-        return result;
+        return $newUser.html();
     }
 
     function initUserToolBox(id) {
@@ -40,6 +39,5 @@ userView.append = function (user) {
 
         $newToolBox.removeClass("d-none");
 
-        let result = $newToolBox.html();
-        return result;
+        return $newToolBox.html();
     }

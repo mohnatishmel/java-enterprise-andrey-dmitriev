@@ -17,10 +17,8 @@ public class JsonToJavaUserMapper implements Mapper<User> {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        String json = "";
+        String json;
         User user = null;
-
-        if (br != null) {
 
             json = br.readLine();
             JsonParser parser = new JsonParser();
@@ -36,7 +34,6 @@ public class JsonToJavaUserMapper implements Mapper<User> {
                         .id(id)
                         .accountNotLocked(accountNotLocked)
                         .build();
-            }
         }
         return user;
     }

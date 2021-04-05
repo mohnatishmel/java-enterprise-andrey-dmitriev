@@ -1,7 +1,6 @@
 package by.itacademy.front.security;
 
 import by.itacademy.model.security.user.UserDetails;
-import by.itacademy.security.SecurityConfigurer;
 import by.itacademy.security.service.SecurityContext;
 import lombok.extern.log4j.Log4j2;
 
@@ -16,7 +15,7 @@ import java.io.IOException;
 
 @WebFilter(value = "/*")
 public class AuthenticationFilter implements Filter {
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
     }
 
     public void destroy() {
@@ -24,7 +23,6 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        String servletPath = ((HttpServletRequest) request).getServletPath();
 
         HttpSession session = ((HttpServletRequest) request).getSession();
 

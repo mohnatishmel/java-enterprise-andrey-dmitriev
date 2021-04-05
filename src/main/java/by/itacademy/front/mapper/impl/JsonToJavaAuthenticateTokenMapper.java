@@ -17,10 +17,8 @@ public class JsonToJavaAuthenticateTokenMapper  implements Mapper<Authentication
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        String json = "";
+        String json;
         AuthenticationToken token = null;
-
-        if (br != null) {
 
             json = br.readLine();
             JsonParser parser = new JsonParser();
@@ -33,7 +31,6 @@ public class JsonToJavaAuthenticateTokenMapper  implements Mapper<Authentication
                 String pass = jsonObject.get("password").getAsString();
 
                 token = new AuthenticationToken(login, pass);
-            }
         }
         return token;
     }

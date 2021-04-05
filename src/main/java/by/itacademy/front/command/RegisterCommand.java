@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Log4j2
@@ -56,7 +55,7 @@ public class RegisterCommand extends FrontCommand {
                 String json = new Gson().toJson(user);
                 returnResponse(json);
             } catch (ApplicationBasedException | AuthorizationException e) {
-                log.debug("Can't register user", Arrays.toString(e.getStackTrace()));
+                log.debug("Can't register user",e);
                 String error = "Username already exists";
                 returnMessage(error, 401);
             }

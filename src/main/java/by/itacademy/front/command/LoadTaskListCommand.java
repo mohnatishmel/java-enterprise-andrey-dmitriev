@@ -16,7 +16,7 @@ public abstract class LoadTaskListCommand extends FrontCommand {
     protected int id;
 
     public LoadTaskListCommand() {
-        this.id = ((User) SecurityContext.getInstance().getPrincipal()).getId();
+        this.id = SecurityContext.getInstance().getPrincipal().getId();
     }
 
     protected void returnTskList(List<Task> taskList) throws IOException {

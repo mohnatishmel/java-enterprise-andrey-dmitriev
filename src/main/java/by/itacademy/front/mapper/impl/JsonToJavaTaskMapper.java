@@ -18,10 +18,8 @@ public class JsonToJavaTaskMapper implements Mapper<Task> {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        String json = "";
+        String json;
         Task task = null;
-
-        if (br != null) {
 
             json = br.readLine();
             JsonParser parser = new JsonParser();
@@ -46,7 +44,6 @@ public class JsonToJavaTaskMapper implements Mapper<Task> {
                         .fixed(fixed)
                         .inBasket(inBasket)
                         .build();
-            }
         }
         return task;
     }

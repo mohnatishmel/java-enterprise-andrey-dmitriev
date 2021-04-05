@@ -1,4 +1,4 @@
-var fileUploadForm = {}
+let fileUploadForm = {}
 
 fileUploadForm.getTaskId = function () {
     return document.getElementById("uploadFileTaskId").value;

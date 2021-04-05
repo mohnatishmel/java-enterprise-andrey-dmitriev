@@ -1,4 +1,4 @@
-var createTaskForm = {}
+let createTaskForm = {}
 
 createTaskForm.getTaskName = function () {
     return document.getElementById("createTaskName").value;

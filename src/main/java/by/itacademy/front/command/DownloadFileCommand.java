@@ -3,7 +3,6 @@ package by.itacademy.front.command;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.model.file.File;
-import by.itacademy.service.FacadeService;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,12 +14,6 @@ import java.util.Base64;
 @Log4j2
 
 public class DownloadFileCommand extends FrontCommand {
-
-    private FacadeService facadeService;
-
-    {
-        facadeService = FacadeService.getInstance();
-    }
 
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
@@ -40,7 +33,7 @@ public class DownloadFileCommand extends FrontCommand {
 
     @AllArgsConstructor
     private class JsonFile {
-        private String name;
-        private String base64;
+        private final String name;
+        private final String base64;
     }
 }

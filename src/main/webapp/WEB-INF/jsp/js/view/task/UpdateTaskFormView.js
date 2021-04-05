@@ -1,4 +1,4 @@
-var updateTaskForm = {}
+let updateTaskForm = {}
 
 updateTaskForm.setId = function (val) {
     document.getElementById('updateTaskId').value = val;

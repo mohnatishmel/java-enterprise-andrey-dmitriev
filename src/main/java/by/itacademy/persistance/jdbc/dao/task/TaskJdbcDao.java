@@ -51,7 +51,6 @@ public class TaskJdbcDao extends AbstractBasicCrudJdbcDao<Task> implements TaskD
             try {
                 PreparedStatement statement = connection.prepareStatement(getSqlHolder().getDeleteByUserIdSql());
                 statement.setInt(1, userId);
-                int i = statement.executeUpdate();
 
             } catch (SQLException e) {
                 e.printStackTrace();

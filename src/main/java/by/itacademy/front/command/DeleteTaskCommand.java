@@ -2,7 +2,6 @@ package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.service.FacadeService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -17,21 +16,13 @@ import java.io.InputStreamReader;
 
 public class DeleteTaskCommand extends FrontCommand {
 
-    private FacadeService facadeService;
-
-    {
-        facadeService = FacadeService.getInstance();
-    }
-
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        String json = "";
+        String json;
         int id = 0;
-
-        if (br != null) {
 
             json = br.readLine();
             JsonParser parser = new JsonParser();
@@ -41,7 +32,6 @@ public class DeleteTaskCommand extends FrontCommand {
                 jsonObject = jsonObject.getAsJsonObject("task");
 
                 id = jsonObject.get("id").getAsInt();
-            }
         }
 
         facadeService.deleteTask(id);

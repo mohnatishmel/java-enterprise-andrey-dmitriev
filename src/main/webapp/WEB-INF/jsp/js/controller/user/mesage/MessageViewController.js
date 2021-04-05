@@ -38,7 +38,7 @@ function resolveUnlockUserRequest(id) {
     let message = viewList.getMessage(id);
     message.hide();
     message = convertUnlockRequestMessageToJson(message);
-    sendJson(message, "ResolveUserUnlockRequest", function () {
+    sendJson(message, "ResolveUserUnlockRequest", function (data) {
         console.log(data.message);
     })
 }
@@ -47,7 +47,7 @@ function deleteMessage(id) {
     let message = viewList.getMessage(id);
     message.hide();
     message = convertUnlockRequestMessageToJson(message);
-    sendJson(message, "DeleteUserUnlockRequest", function () {
+    sendJson(message, "DeleteUserUnlockRequest", function (data) {
         console.log(data.message);
     })
 }

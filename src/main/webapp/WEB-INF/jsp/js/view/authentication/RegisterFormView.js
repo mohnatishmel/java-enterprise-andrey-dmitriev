@@ -1,4 +1,4 @@
-var registerForm = {}
+let registerForm = {}
 
 registerForm.alert = $("#registerForm").find(".alert");
 registerForm.loginInput = $("#registerFormLoginInput");

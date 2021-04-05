@@ -1,6 +1,6 @@
 
 
-var taskView = {}
+let taskView = {}
 taskView.append = function (task) {
     $("#viewList").append($($.parseHTML(task)).hide().fadeIn(200));
 }

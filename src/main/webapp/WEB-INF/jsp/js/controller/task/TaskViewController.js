@@ -111,7 +111,7 @@ function getDaysLeft(deadLine) {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    var daysLeft = deadLine.getTime() - today;
+    let daysLeft = deadLine.getTime() - today;
     daysLeft = Math.floor(daysLeft / (1000 * 3600 * 24));
 
     return daysLeft;

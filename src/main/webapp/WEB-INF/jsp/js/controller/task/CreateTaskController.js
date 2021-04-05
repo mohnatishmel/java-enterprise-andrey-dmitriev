@@ -12,7 +12,7 @@ function initCreateTaskForm() {
             date.setHours(0, 0, 0, 0);
             break;
         default:
-            date.setHours(0, 0, 0, 0);;
+            date.setHours(0, 0, 0, 0);
     }
 
     let deadlineString;
@@ -24,7 +24,7 @@ function initCreateTaskForm() {
 }
 
 function createTask() {
-    var task = {};
+    let task = {};
     task.id = 0;
     task.name = createTaskForm.getTaskName();
     task.description =  createTaskForm.getTaskDescription();
@@ -35,10 +35,10 @@ function createTask() {
     task.fixed = false;
     task.inBasket = false;
 
-    var jsonTask = JSON.stringify({task});
+    let jsonTask = JSON.stringify({task});
     console.log(jsonTask);
 
-    sendJson(jsonTask, "CreateTask",function (data) {
+    sendJson(jsonTask, "CreateTask",function () {
         fillViewList();
     });
 }

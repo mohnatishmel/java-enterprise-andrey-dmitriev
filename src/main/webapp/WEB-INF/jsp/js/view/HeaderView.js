@@ -1,4 +1,4 @@
-var header = {}
+let header = {}
 
 header.taskViewBtn = $("#taskViewBtn");
 header.userViewBtn = $("#userViewBtn");

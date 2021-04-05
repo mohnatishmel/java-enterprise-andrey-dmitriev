@@ -17,10 +17,8 @@ public class JsonToJavaUnlockRequestMessageMapper  implements Mapper<UnlockReque
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 
-        String json = "";
+        String json;
         UnlockRequestMessage message = null;
-
-        if (br != null) {
 
             json = br.readLine();
             JsonParser parser = new JsonParser();
@@ -40,7 +38,6 @@ public class JsonToJavaUnlockRequestMessageMapper  implements Mapper<UnlockReque
                         .userName(userName)
                         .messageBody(messageBody)
                         .build();
-            }
         }
         return message;
     }

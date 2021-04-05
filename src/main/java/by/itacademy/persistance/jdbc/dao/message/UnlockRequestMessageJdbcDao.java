@@ -2,7 +2,6 @@ package by.itacademy.persistance.jdbc.dao.message;
 
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.model.message.UnlockRequestMessage;
-import by.itacademy.model.task.Task;
 import by.itacademy.persistance.jdbc.AbstractCrudJdbcDao;
 import by.itacademy.persistance.jdbc.connector.Connector;
 import by.itacademy.persistance.jdbc.mapper.ResultSetMapper;

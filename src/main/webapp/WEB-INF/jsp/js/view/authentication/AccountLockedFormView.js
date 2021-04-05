@@ -1,4 +1,4 @@
-var accountLockedForm = {}
+let accountLockedForm = {}
 
 accountLockedForm.messageBody = function () {
     return $("#messageToAdministrator").val();

@@ -9,7 +9,7 @@ function logOutSuccess(data) {
 }
 
 function logOutError(data) {
-    let message = data.responseJSON.message;
+    let message = data.message;
     console.log("Authentication error: " + message);
     alert(message);
 }

@@ -9,22 +9,17 @@ import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
 
 @Log4j2
 
-public class UpdateUserCommand extends FrontCommand {
+public class UpdateUserIsLockedCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-
         User user = new JsonToJavaUserMapper().map(request);
-        facadeService.updateUser(user);
+        facadeService.updateUserIsLocked(user);
 
         Message message = new Message("User successfully updated");
 

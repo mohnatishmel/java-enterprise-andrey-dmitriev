@@ -21,7 +21,7 @@ function downloadFile(id) {
         a.remove();
         window.URL.revokeObjectURL(url);
     });
-};
+}
 
 function uploadFile() {
     console.log("uploadFile")

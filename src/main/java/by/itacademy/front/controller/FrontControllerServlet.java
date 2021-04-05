@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,7 +68,7 @@ public class FrontControllerServlet extends HttpServlet {
         }
     }
 
-    private FrontCommand getCommand(String commandName) throws ServletException, IOException {
+    private FrontCommand getCommand(String commandName) {
         try {
             Class type = Class.forName(String.format(
                     "by.itacademy.front.command.%sCommand",

@@ -21,7 +21,7 @@ function mapUsersFromJson(jsonUserList) {
 
         userView.append(newUser);
 
-        toolbox = new userToolBox(id);
+        toolbox = new UserToolBox(id);
         newUser = new User(id);
         viewList.put(newUser);
 

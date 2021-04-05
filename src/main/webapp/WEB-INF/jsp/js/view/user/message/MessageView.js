@@ -1,5 +1,5 @@
 
-var messageView = {}
+let messageView = {}
 messageView.append = function (user) {
     $("#viewList").append($($.parseHTML(user)).hide().fadeIn(200));
 }
@@ -31,8 +31,7 @@ function initMessage(jsonMessage, toolbox) {
     $newMessage.removeClass("message-template");
 
     console.log("message_" + id + " initialized")
-    let result = $newMessage.html();
-    return result;
+    return $newMessage.html();
 }
 
 function initMessageToolBox(id) {
@@ -48,6 +47,5 @@ function initMessageToolBox(id) {
 
     $newToolBox.removeClass("d-none");
 
-    let result = $newToolBox.html();
-    return result;
+    return $newToolBox.html();
 }

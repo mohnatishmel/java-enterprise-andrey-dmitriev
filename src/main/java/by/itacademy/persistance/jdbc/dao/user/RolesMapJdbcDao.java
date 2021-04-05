@@ -103,22 +103,15 @@ public class RolesMapJdbcDao extends BaseAbstractJdbcDao {
 
     private List<Role> processResultSetMapping(ResultSet rs) throws DaoException {
         List<Role> roleList = new ArrayList<>();
-        try (Connection connection = getConnector().getConnection()) {
-            try {
-                while (rs.next()) {
-                    Role role = roleJdbcDao.getById(rs.getInt("role_id"));
-                    roleList.add(role);
-                }
-                return roleList;
-
-            } catch (SQLException e) {
-                throw new DaoException("Error mapping resultSet to Role Object");
+        try {
+            while (rs.next()) {
+                Role role = roleJdbcDao.getById(rs.getInt("role_id"));
+                roleList.add(role);
             }
+            return roleList;
 
         } catch (SQLException e) {
-            String message = "Error process getById entity method: ";
-            log.debug(message, Arrays.toString(e.getStackTrace()));
-            throw new DaoException(message + e.getMessage(), e);
+            throw new DaoException("Error mapping resultSet to Role Object");
         }
     }
 }

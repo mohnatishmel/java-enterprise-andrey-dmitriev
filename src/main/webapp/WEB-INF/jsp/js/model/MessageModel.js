@@ -1,7 +1,7 @@
 
 function convertUnlockRequestMessageToJson(message) {
-    let jsonMessage = JSON.stringify({message});
-    return jsonMessage;
+    return JSON.stringify({message});
+
 }
 
 function MessageList() {
@@ -10,12 +10,12 @@ function MessageList() {
         this.list.push(message)
     }
     this.getMessage = function (id) {
-        let message;
+        let message = null;
         let referenceId = id;
         let targetId;
-        this.list.forEach(function (t, index) {
+        this.list.forEach(function (t) {
             targetId = t.id;
-            if (referenceId == targetId) {
+            if (referenceId === targetId) {
                 message =  t;
             }
         })

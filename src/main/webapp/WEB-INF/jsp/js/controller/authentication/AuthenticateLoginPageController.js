@@ -23,25 +23,25 @@ registerForm.switchBtn.on("click", function () {
 
 
 loginForm.loginInput.keypress(function(e) {
-    if (e.which == 13) {
+    if (e.which === 13) {
         login();
     }
 });
 
 loginForm.passwordInput.keypress(function(e) {
-    if (e.which == 13) {
+    if (e.which === 13) {
        login();
     }
 });
 
 registerForm.loginInput.keypress(function(e) {
-    if (e.which == 13) {
+    if (e.which === 13) {
         register();
     }
 });
 
 registerForm.passwordInput.keypress(function(e) {
-    if (e.which == 13) {
+    if (e.which === 13) {
         register();
     }
 });
@@ -68,13 +68,13 @@ function authenticateSuccess(jsonPrinciple) {
 }
 
 function loginError(data) {
-    const message = data.responseJSON.message;
+    const message = data.message;
     console.log("Authentication error: " + message);
     loginForm.showAlert(message);
 }
 
 function registrationError(data) {
-    const message = data.responseJSON.message;
+    const message = data.message;
     console.log("Authentication error: " + message);
     registerForm.showAlert(message);
 }
