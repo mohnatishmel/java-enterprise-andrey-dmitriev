@@ -122,6 +122,8 @@ viewerNav.userNav = function () {
     this.somedayViewBtn.hide();
     this.trashBoxViewBtn.hide();
     this.fixedViewBtn.hide();
+
+    this.openCreateTaskFormBtn.hide();
 };
 
 viewerNav.taskNav = function () {

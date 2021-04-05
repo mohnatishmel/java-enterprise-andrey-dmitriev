@@ -95,7 +95,7 @@ public class ApplicationListener implements ServletContextListener {
         user = userDao.update(user);
         System.out.println(user.toString());
 
-        userDao.delete(user.getId());
+//        userDao.delete(user.getId());
 
         List<Task> taskList = taskDao.getByUserId(1);
         System.out.println(taskList.toString());

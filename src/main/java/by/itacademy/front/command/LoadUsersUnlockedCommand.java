@@ -16,7 +16,7 @@ public class LoadUsersUnlockedCommand extends LoadUserListCommand{
     public void process() throws ServletException, IOException, ApplicationBasedException, AuthorizationException {
         List<User> userList = loadTskListForCurrentUser();
         List<User> resultLIst = userList.stream()
-                .filter(User::isAccountNonLocked)
+                .filter(user -> user.isAccountNonLocked())
                 .filter(user -> ! user.equals(SecurityContext.getInstance().getPrincipal()))
                 .collect(Collectors.toList());
         returnUserList(resultLIst);

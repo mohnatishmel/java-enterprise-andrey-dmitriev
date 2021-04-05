@@ -74,7 +74,7 @@ function User(id) {
     }
 }
 
-function userToolBox(id) {
+function UserToolBox(id) {
     this.lockUserAccountToggleSwitch = $("#lockUserAccountToggleSwitch" + id);
     this.deleteUserBtn = $("#deleteUserBtn" + id);
 }
