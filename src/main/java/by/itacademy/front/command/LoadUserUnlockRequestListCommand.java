@@ -2,7 +2,7 @@ package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.model.message.UnlockRequestMessage;
+import by.itacademy.entities.message.UnlockRequestMessage;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 

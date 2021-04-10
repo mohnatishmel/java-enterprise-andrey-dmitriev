@@ -1,6 +1,6 @@
 package by.itacademy.security.service;
 
-import by.itacademy.model.security.user.UserDetails;
+import by.itacademy.security.model.user.UserDetails;
 
 public class SecurityContext {
 

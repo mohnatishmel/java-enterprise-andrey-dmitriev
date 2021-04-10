@@ -1,7 +1,7 @@
 package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.user.User;
 import by.itacademy.security.service.SecurityContext;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;

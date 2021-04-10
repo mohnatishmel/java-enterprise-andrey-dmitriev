@@ -1,7 +1,7 @@
 package by.itacademy.persistance;
 
 import by.itacademy.exception.dao.DaoException;
-import by.itacademy.model.task.Task;
+import by.itacademy.entities.task.Task;
 
 import java.util.List;
 

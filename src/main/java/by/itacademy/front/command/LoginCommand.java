@@ -1,9 +1,11 @@
 package by.itacademy.front.command;
 
+import by.itacademy.entities.front.FrontUser;
 import by.itacademy.exception.security.authentication.AuthenticationException;
+import by.itacademy.front.converter.impl.UserToFrontUserConverter;
 import by.itacademy.front.mapper.impl.JsonToJavaAuthenticateTokenMapper;
-import by.itacademy.model.security.authentication.AuthenticationToken;
-import by.itacademy.model.user.User;
+import by.itacademy.security.model.authentication.AuthenticationToken;
+import by.itacademy.entities.user.User;
 import by.itacademy.security.service.AuthenticationProvider;
 import by.itacademy.security.service.SecurityContext;
 import com.google.gson.Gson;
@@ -24,11 +26,12 @@ public class LoginCommand extends FrontCommand {
         try {
             user = (User) AuthenticationProvider.getInstance().authenticate(token);
             user.eraseCredentials();
+            FrontUser frontUser = new UserToFrontUserConverter().convert(user);
 
             SecurityContext.getInstance().setPrincipal(user);
             request.getSession().setAttribute("principle", user);
 
-            String json = new Gson().toJson(user);
+            String json = new Gson().toJson(frontUser);
             returnResponse(json);
 
         } catch (AuthenticationException e) {

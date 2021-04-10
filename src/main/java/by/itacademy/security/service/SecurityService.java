@@ -2,8 +2,8 @@ package by.itacademy.security.service;
 
 
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.model.security.user.GrantedAuthority;
-import by.itacademy.model.security.user.UserDetails;
+import by.itacademy.security.model.user.GrantedAuthority;
+import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
 
 import java.util.Arrays;

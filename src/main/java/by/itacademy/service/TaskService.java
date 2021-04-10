@@ -1,9 +1,10 @@
 package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.model.task.Task;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.task.Task;
+import by.itacademy.entities.user.User;
 import by.itacademy.persistance.TaskDao;
+import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
 import by.itacademy.security.service.SecurityContext;
 
 import java.util.ArrayList;
@@ -12,10 +13,16 @@ import java.util.Date;
 import java.util.List;
 
 public class TaskService {
+
+    private static TaskService instance;
+
     private TaskDao taskDao;
 
-    public TaskService(TaskDao taskDao) {
-        this.taskDao = taskDao;
+    private TaskService() {
+    }
+
+    {
+        taskDao = TaskJpaDao.getInstance();
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
@@ -145,5 +152,12 @@ public class TaskService {
 
     public void deleteTask(int id) throws ApplicationBasedException {
         taskDao.delete(id);
+    }
+
+    public static TaskService getInstance() {
+        if (instance == null) {
+            instance = new TaskService();
+        }
+        return instance;
     }
 }

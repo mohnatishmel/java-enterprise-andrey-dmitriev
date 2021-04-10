@@ -1,8 +1,8 @@
 package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.model.message.UnlockRequestMessage;
-import by.itacademy.persistance.jdbc.dao.message.UnlockRequestMessageJdbcDao;
+import by.itacademy.entities.message.UnlockRequestMessage;
+import by.itacademy.persistance.jpa.dao.impl.UnlockRequestMessageJpaDao;
 
 import java.util.List;
 
@@ -10,25 +10,25 @@ public class UnlockRequestMessageService {
 
     private static UnlockRequestMessageService instance;
 
-    private UnlockRequestMessageJdbcDao unlockRequestMessageJdbcDao;
+    private UnlockRequestMessageJpaDao unlockRequestMessageJpaDao;
 
     {
-        unlockRequestMessageJdbcDao = UnlockRequestMessageJdbcDao.getInstance();
+        unlockRequestMessageJpaDao = UnlockRequestMessageJpaDao.getInstance();
     }
 
     private UnlockRequestMessageService() {
     }
 
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
-        return unlockRequestMessageJdbcDao.getAll();
+        return unlockRequestMessageJpaDao.getAll();
     }
 
     public void createUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.create(request);
+        unlockRequestMessageJpaDao.create(request);
     }
 
     public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJdbcDao.delete(request.getId());
+        unlockRequestMessageJpaDao.delete(request.getId());
     }
 
     public static UnlockRequestMessageService getInstance() {

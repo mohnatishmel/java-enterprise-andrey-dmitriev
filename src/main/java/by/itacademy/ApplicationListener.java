@@ -1,32 +1,24 @@
 package by.itacademy;
 
-import by.itacademy.constant.ApplicationConstant;
+
+import by.itacademy.entities.task.Task;
+import by.itacademy.entities.user.User;
 import by.itacademy.persistance.TaskDao;
 import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jdbc.connector.Connector;
-import by.itacademy.persistance.jdbc.connector.impl.HikariCPConnector;
-import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
-import by.itacademy.persistance.jdbc.dao.message.UnlockRequestMessageJdbcDao;
-import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
-import by.itacademy.persistance.jdbc.dao.user.*;
-import by.itacademy.model.task.Task;
-import by.itacademy.model.user.User;
-import by.itacademy.security.SecurityConfigurer;
+import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
+import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.io.FileReader;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.sql.Connection;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+
 
 @Log4j2
 
@@ -36,7 +28,7 @@ public class ApplicationListener implements ServletContextListener {
     // for connect with UI tool to database use url - jdbc:h2:tcp://localhost/mem:jdbc
 
     private static Server SERVER;
-    private static Connector DATABASE_CONNECTOR;
+//    private static Connector DATABASE_CONNECTOR;
 
     @SneakyThrows
     public void contextInitialized(ServletContextEvent event) {
@@ -52,37 +44,9 @@ public class ApplicationListener implements ServletContextListener {
             log.debug("Error starting H2 Server", Arrays.toString(e.getStackTrace()));
         }
 
-        DATABASE_CONNECTOR = HikariCPConnector.getInstance();
-//        DATABASE_CONNECTOR = C3P0Connector.getInstance();
 
-        try (Connection connection = DATABASE_CONNECTOR.getConnection()) {
-
-            URL ddlSql = ApplicationListener.class.getResource(ApplicationConstant.DDL_INITIALIZATION_SCRIPT_PATH);
-            URL dmlSql = ApplicationListener.class.getResource(ApplicationConstant.DML_INITIALIZATION_SCRIPT_PATH);
-
-            RunScript.execute(connection, new FileReader(Paths.get(ddlSql.toURI()).toFile()));
-            RunScript.execute(connection, new FileReader(Paths.get(dmlSql.toURI()).toFile()));
-            connection.commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            String message = "Error initialization in-memory database: ";
-            log.debug(message, Arrays.toString(e.getStackTrace()));
-            System.err.println(message + e.getMessage());
-        }
-
-
-        TaskDao taskDao = new TaskJdbcDao(DATABASE_CONNECTOR);
-
-        PersonalInformationJdbcDao personalInformationDao = new PersonalInformationJdbcDao(DATABASE_CONNECTOR);
-        CredentialsJdbcDao credentialsDao = new CredentialsJdbcDao(DATABASE_CONNECTOR);
-        RoleJdbcDao roleDao = new RoleJdbcDao(DATABASE_CONNECTOR);
-        RolesMapJdbcDao rolesMapDao = new RolesMapJdbcDao(DATABASE_CONNECTOR, roleDao);
-        UserDao userDao = new UserJdbcDao(DATABASE_CONNECTOR, credentialsDao, rolesMapDao, personalInformationDao, taskDao);
-        TaskFileJdbcDao taskFileJdbcDao = new TaskFileJdbcDao(DATABASE_CONNECTOR);
-        UnlockRequestMessageJdbcDao unlockRequestMessageJdbcDao = new UnlockRequestMessageJdbcDao(DATABASE_CONNECTOR);
-
-        SecurityConfigurer.init();
+        TaskDao taskDao = TaskJpaDao.getInstance();
+        UserDao userDao = UserJpaDao.getInstance();
 
 
         User user = (User) userDao.getByName("user1");
@@ -95,7 +59,7 @@ public class ApplicationListener implements ServletContextListener {
         user = userDao.update(user);
         System.out.println(user.toString());
 
-//        userDao.delete(user.getId());
+        userDao.delete(user.getId());
 
         List<Task> taskList = taskDao.getByUserId(1);
         System.out.println(taskList.toString());

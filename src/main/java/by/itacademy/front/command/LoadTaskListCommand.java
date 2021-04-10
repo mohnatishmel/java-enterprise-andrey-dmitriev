@@ -1,7 +1,6 @@
 package by.itacademy.front.command;
 
-import by.itacademy.model.task.Task;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.task.Task;
 import by.itacademy.security.service.SecurityContext;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;

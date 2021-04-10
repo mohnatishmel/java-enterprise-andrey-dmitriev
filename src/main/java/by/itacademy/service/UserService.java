@@ -2,10 +2,10 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.dao.DaoException;
-import by.itacademy.model.user.PersonalInformation;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.user.PersonalInformation;
+import by.itacademy.entities.user.User;
 import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
+import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class UserService {
     private UserDao userDao;
 
     {
-        userDao = UserJdbcDao.getInstance();
+        userDao = UserJpaDao.getInstance();
     }
 
     public User getById(int id) throws ApplicationBasedException {

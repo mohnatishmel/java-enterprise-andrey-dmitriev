@@ -4,7 +4,7 @@ package by.itacademy.front.command;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.front.mapper.impl.JsonToJavaTaskMapper;
-import by.itacademy.model.task.Task;
+import by.itacademy.entities.task.Task;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 

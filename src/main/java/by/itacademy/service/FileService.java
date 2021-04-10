@@ -2,8 +2,8 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.dao.DaoException;
-import by.itacademy.model.file.File;
-import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
+import by.itacademy.entities.file.File;
+import by.itacademy.persistance.jpa.dao.impl.TaskFileJpaDao;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
@@ -14,16 +14,16 @@ public class FileService {
 
     private static FileService instance;
 
-    private TaskFileJdbcDao taskFleJdbcDao;
+    private TaskFileJpaDao taskFleJdbcDao;
 
     {
-        taskFleJdbcDao = TaskFileJdbcDao.getInstance();
+        taskFleJdbcDao = TaskFileJpaDao.getInstance();
     }
 
     public void uploadFileForTask(File file) throws ApplicationBasedException {
         try {
             taskFleJdbcDao.create(file);
-        } catch (DaoException e) {
+        } catch (Exception e) {
             log.debug(Arrays.toString(e.getStackTrace()));
             try {
                 taskFleJdbcDao.update(file);

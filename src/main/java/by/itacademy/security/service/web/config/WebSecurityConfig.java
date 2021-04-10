@@ -1,8 +1,8 @@
 package by.itacademy.security.service.web.config;
 
-import by.itacademy.model.user.Role;
+import by.itacademy.entities.user.Role;
 import by.itacademy.exception.security.authorization.UrlPatternNotFoundException;
-import by.itacademy.model.security.user.GrantedAuthority;
+import by.itacademy.security.model.user.GrantedAuthority;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;

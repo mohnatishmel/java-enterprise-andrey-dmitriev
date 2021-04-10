@@ -1,7 +1,7 @@
 package by.itacademy.front.validator.impl;
 
 import by.itacademy.front.validator.Validator;
-import by.itacademy.model.security.authentication.AuthenticationToken;
+import by.itacademy.security.model.authentication.AuthenticationToken;
 
 public class AuthenticationTokenValidator implements Validator<AuthenticationToken> {
 

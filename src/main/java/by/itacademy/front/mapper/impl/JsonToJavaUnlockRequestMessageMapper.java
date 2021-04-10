@@ -1,7 +1,7 @@
 package by.itacademy.front.mapper.impl;
 
 import by.itacademy.front.mapper.Mapper;
-import by.itacademy.model.message.UnlockRequestMessage;
+import by.itacademy.entities.message.UnlockRequestMessage;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

@@ -2,7 +2,7 @@ package by.itacademy.front.command;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.model.file.File;
+import by.itacademy.entities.file.File;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;

@@ -1,20 +1,14 @@
 package by.itacademy.service;
 
-import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.exception.dao.DaoException;
+import by.itacademy.exception.ApplicationBasedException;;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.model.file.File;
-import by.itacademy.model.message.UnlockRequestMessage;
-import by.itacademy.model.task.Task;
-import by.itacademy.model.user.PersonalInformation;
-import by.itacademy.model.user.Role;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.file.File;
+import by.itacademy.entities.message.UnlockRequestMessage;
+import by.itacademy.entities.task.Task;
+import by.itacademy.entities.user.Role;
+import by.itacademy.entities.user.User;
 import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jdbc.dao.file.TaskFileJdbcDao;
-import by.itacademy.persistance.jdbc.dao.message.UnlockRequestMessageJdbcDao;
-import by.itacademy.persistance.jdbc.dao.task.TaskJdbcDao;
-import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
+import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
 import by.itacademy.security.service.SecurityService;
 import lombok.extern.log4j.Log4j2;
 
@@ -29,21 +23,18 @@ public class FacadeService {
     private FileService fileService;
     private UserService userService;
     private UnlockRequestMessageService unlockRequestMessageService;
+    private TaskService taskService;
 
     private TaskDao taskDao;
-    private TaskFileJdbcDao taskFleJdbcDao;
-
-    private TaskService taskService;
 
     {
         securityService = SecurityService.getInstance();
         fileService = FileService.getInstance();
         userService = UserService.getInstance();
         unlockRequestMessageService= UnlockRequestMessageService.getInstance();
+        taskService = TaskService.getInstance();
 
-        taskDao = TaskJdbcDao.getInstance();
-        taskFleJdbcDao = TaskFileJdbcDao.getInstance();
-        taskService = new TaskService(taskDao);
+        taskDao = TaskJpaDao.getInstance();
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException, AuthorizationException{

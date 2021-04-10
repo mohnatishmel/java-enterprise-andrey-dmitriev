@@ -7,6 +7,18 @@
   <groupId>by.itacademy</groupId>
   <artifactId>java-enterprise-andrey-dmitriev</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>9</source>
+          <target>9</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <packaging>war</packaging>
 
   <name>java-enterprise-andrey-dmitriev</name>
@@ -18,31 +30,26 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
 
-    <c3p0.version>0.9.1.2</c3p0.version>
+    <lombok.version>1.18.16</lombok.version>
+
+    <javax.servlet.jsp-api.version>2.3.0</javax.servlet.jsp-api.version>
+    <jstl.version>1.2</jstl.version>
     <gson.version>2.8.6</gson.version>
-    <commons-fileupload.version>1</commons-fileupload.version>
-    <commons-io.version>2.6</commons-io.version>
+
+    <c3p0.version>0.9.1.2</c3p0.version>
+<!--    <HikariCP.version>4.0.1</HikariCP.version>-->
+    <h2.version>1.4.200</h2.version>
+    <hibernate.version>5.4.24.Final</hibernate.version>
+
+    <log4j.version>2.4.1</log4j.version>
+
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.16</version>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>3.7.7</version>
-      <scope>test</scope>
+      <version>${lombok.version}</version>
     </dependency>
 
     <dependency>
@@ -52,73 +59,68 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>${commons-fileupload.version}.4</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-        <version>${commons-io.version}</version>
-    </dependency>
-
-
     <dependency>
       <groupId>c3p0</groupId>
       <artifactId>c3p0</artifactId>
       <version>${c3p0.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>4.0.1</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.zaxxer</groupId>-->
+<!--      <artifactId>HikariCP</artifactId>-->
+<!--      <version>${HikariCP.version}</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>1.4.200</version>
+      <version>${h2.version}</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.apache.logging.log4j</groupId>-->
-<!--      <artifactId>log4j-slf4j-impl</artifactId>-->
-<!--      <version>2.14.0</version>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-hikaricp</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.4.1</version>
+      <version>${log4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.4.1</version>
+      <version>${log4j.version}</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-web</artifactId>
+      <version>${log4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>javax.servlet.jsp-api</artifactId>
-      <version>2.3.0</version>
+      <version>${javax.servlet.jsp-api.version}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-      <version>1.2</version>
+      <version>${jstl.version}</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
@@ -127,52 +129,4 @@
 
 
   </dependencies>
-
-  <build>
-    <finalName>java-enterprise-andrey-dmitriev</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                  <source>9</source>
-                  <target>9</target>
-              </configuration>
-          </plugin>
-      </plugins>
-  </build>
-
 </project>

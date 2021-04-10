@@ -4,7 +4,7 @@ package by.itacademy.front.command;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.front.mapper.impl.JsonToJavaUserMapper;
-import by.itacademy.model.user.User;
+import by.itacademy.entities.user.User;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;

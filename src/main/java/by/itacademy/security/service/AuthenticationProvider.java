@@ -1,11 +1,11 @@
 package by.itacademy.security.service;
 
 import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jdbc.dao.user.UserJdbcDao;
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authentication.BadCredentialsException;
-import by.itacademy.model.security.user.UserDetails;
-import by.itacademy.model.security.authentication.AuthenticationToken;
+import by.itacademy.security.model.user.UserDetails;
+import by.itacademy.security.model.authentication.AuthenticationToken;
+import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -19,7 +19,7 @@ public class AuthenticationProvider {
     private static UserDao userDetailService;
 
     {
-        userDetailService = UserJdbcDao.getInstance();
+        userDetailService = UserJpaDao.getInstance();
     }
 
     public UserDetails authenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
