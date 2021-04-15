@@ -28,9 +28,11 @@ public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
         try {
             entityManager = entityManagerFactory.createEntityManager();
             user = entityManager.createQuery("select u from User u " +
-                    "JOIN FETCH u.roles" +
-                    "JOIN FETCH u.personalInformation" +
-                    "JOIN JOIN u.credential c ON c.login = :login ", clazz)
+                    "JOIN FETCH u.roles " +
+                    "JOIN FETCH u.personalInformation " +
+                    "JOIN FETCH u.credential " +
+//                    "JOIN FETCH u.tasks " +
+                    "JOIN u.credential c ON c.login = :login ", clazz)
                     .setParameter("login", name)
                     .getSingleResult();
 

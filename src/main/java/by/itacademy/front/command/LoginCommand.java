@@ -25,6 +25,7 @@ public class LoginCommand extends FrontCommand {
         User user;
         try {
             user = (User) AuthenticationProvider.getInstance().authenticate(token);
+            SecurityContext.getInstance().setPrincipal(user);
             user.eraseCredentials();
             FrontUser frontUser = new UserToFrontUserConverter().convert(user);
 

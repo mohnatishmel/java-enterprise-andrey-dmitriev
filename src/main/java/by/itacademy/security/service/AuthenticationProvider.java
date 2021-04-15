@@ -9,9 +9,8 @@ import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+
 @Log4j2
-
-
 @NoArgsConstructor
 public class AuthenticationProvider {
 

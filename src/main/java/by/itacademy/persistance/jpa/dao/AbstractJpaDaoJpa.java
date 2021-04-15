@@ -5,10 +5,7 @@ import by.itacademy.persistance.jpa.JpaEntityManagerFactoryUtil;
 import by.itacademy.persistance.jpa.query.holder.JpaJpqlQueryHolder;
 import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -52,12 +49,16 @@ public abstract class AbstractJpaDaoJpa<T> {
         return t;
     }
 
-    public T create(T t) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(t);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+    public T create(T t) throws DaoException {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(t);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (PersistenceException e) {
+            throw new DaoException("Error creating entity", e);
+        }
         return t;
     }
 
@@ -73,6 +74,7 @@ public abstract class AbstractJpaDaoJpa<T> {
             String queryString = getJpqlHolder().updateJpql();
             Query query = entityManager.createQuery(queryString);
             getQueryInitializer().processUpdateQuery(query, t);
+            query.executeUpdate();
             txn.commit();
 
         } catch (Exception e) {

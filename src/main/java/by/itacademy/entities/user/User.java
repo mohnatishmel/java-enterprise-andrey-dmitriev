@@ -27,28 +27,36 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(name = "USER_ID")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "credentials_id", referencedColumnName = "credentials_id")
-    private Credential credential;
+    private  Credential credential;
 
-    @OneToOne(fetch = FetchType.EAGER,
+    @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "personal_information_id", referencedColumnName = "personal_information_id")
     private PersonalInformation personalInformation;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "roles_map",
             joinColumns =@JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")    )
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
     @Column(name = "PROFILE_ENABLE")
     private boolean accountNotLocked;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-    cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Task> tasks;
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(Task task) {
+        tasks.remove(task);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,5 +82,6 @@ public class User implements UserDetails, CredentialsContainer {
     public void eraseCredentials() {
         credential.setPassword(null);
     }
+
 
 }

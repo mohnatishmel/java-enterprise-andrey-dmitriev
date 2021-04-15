@@ -11,7 +11,7 @@ public class TaskQueryInitializer implements QueryInitializer<Task> {
     @Override
     public void processUpdateQuery(Query query, Task task) {
 
-        query.setParameter("userId", task.getUserId());
+        query.setParameter("id", task.getId());
         query.setParameter("name", task.getName());
         query.setParameter("description", task.getDescription());
         query.setParameter("deadLine", new java.sql.Date(task.getDeadLine().getTime()));

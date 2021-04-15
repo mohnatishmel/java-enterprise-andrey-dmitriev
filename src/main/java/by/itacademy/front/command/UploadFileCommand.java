@@ -32,7 +32,7 @@ public class UploadFileCommand extends FrontCommand {
         String fileName = sb.toString();
         byte[] bytes = isFile.readAllBytes();
 
-        long id = Long.parseLong(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
 
         File file = new File(id, bytes, fileName);
 

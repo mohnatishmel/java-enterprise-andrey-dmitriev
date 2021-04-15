@@ -2,16 +2,12 @@ package by.itacademy.security.filter;
 
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.service.SecurityContext;
-import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-
-@Log4j2
 
 @WebFilter(value = "/*")
 public class AuthenticationFilter implements Filter {

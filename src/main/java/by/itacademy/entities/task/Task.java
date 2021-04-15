@@ -25,17 +25,16 @@ public class Task {
     private int userId;
     @Column(name = "TASK_NAME")
     private String name;
+//    @Column(name = "description")
     private String description;
-    @Column(name = "DEADLINE")
+//    @Column(name = "DEADLINE")
+    @Temporal(TemporalType.DATE)
     private Date deadLine;
+//    @Column(name = "fixed")
     private boolean fixed;
     @Column(name = "IN_BASKET")
     private boolean inBasket;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
-
-    public static TaskBuilder builder() {
-        return new TaskBuilder();
-    }
 }

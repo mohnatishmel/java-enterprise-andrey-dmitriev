@@ -18,7 +18,7 @@ public class File implements Unique {
 
     @Id
     @Column(name = "task_file_id")
-    private long id;
+    private int id;
     @Column(name = "file")
     private byte[] bytes;
     @Column(name = "file_name")

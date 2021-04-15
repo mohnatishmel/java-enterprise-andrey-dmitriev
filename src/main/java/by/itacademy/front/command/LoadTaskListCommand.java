@@ -1,6 +1,8 @@
 package by.itacademy.front.command;
 
+import by.itacademy.entities.front.FrontTask;
 import by.itacademy.entities.task.Task;
+import by.itacademy.front.converter.impl.TaskListToFrontTaskListConverter;
 import by.itacademy.security.service.SecurityContext;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +14,8 @@ import java.util.List;
 
 public abstract class LoadTaskListCommand extends FrontCommand {
 
+    private TaskListToFrontTaskListConverter converter = new TaskListToFrontTaskListConverter();
+
     protected int id;
 
     public LoadTaskListCommand() {
@@ -19,7 +23,12 @@ public abstract class LoadTaskListCommand extends FrontCommand {
     }
 
     protected void returnTskList(List<Task> taskList) throws IOException {
-        String json = new Gson().toJson(taskList);
+        List<FrontTask> frontTasks = converter.convert(taskList);
+        String json = new Gson().toJson(frontTasks);
         returnResponse(json);
+    }
+
+    protected List<FrontTask> convert(List<Task> tasks) {
+        return converter.convert(tasks);
     }
 }
