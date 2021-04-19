@@ -12,6 +12,8 @@ import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
 import by.itacademy.persistance.jpa.query.initializer.impl.UserQueryInitializer;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
 
@@ -49,6 +51,32 @@ public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
     }
 
     @Override
+    public List<User> getAll() throws DaoException {
+        EntityManager entityManager = null;
+        List<User> users = null;
+
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+            users = entityManager.createQuery("select distinct u from User u " +
+                    "JOIN FETCH u.roles " +
+                    "JOIN FETCH u.personalInformation " +
+                    "JOIN FETCH u.credential " +
+                    "JOIN FETCH u.credential", clazz)
+                    .getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error process find by id for " + clazz.getSimpleName() + " - " + e.getMessage());
+        } finally {
+            if (entityManager != null && entityManager.isOpen()) {
+                entityManager.close();
+            }
+        }
+
+        return users;
+    }
+
+    @Override
     public User update(User user) throws DaoException {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
@@ -60,12 +88,44 @@ public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
 
     @Override
     public void delete(int id) throws DaoException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        User user = entityManager.find(clazz, id);
-        entityManager.getTransaction().begin();
-        entityManager.remove(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        User user = getById(id);
+
+        Query q = em.createNativeQuery("DELETE FROM tasks WHERE user_id = :id");
+        q.setParameter("id", id);
+        q.executeUpdate();
+
+        q = em.createNativeQuery("DELETE FROM unlock_request_messages WHERE user_id = :id");
+        q.setParameter("id", id);
+        q.executeUpdate();
+
+        q = em.createNativeQuery("DELETE FROM roles_map WHERE user_id = :id");
+        q.setParameter("id", id);
+        q.executeUpdate();
+
+        q = em.createNativeQuery("DELETE FROM users WHERE user_id = :id");
+        q.setParameter("id", id);
+        q.executeUpdate();
+
+        q = em.createNativeQuery("DELETE FROM personal_information WHERE personal_information_id = :personalInformationId");
+        q.setParameter("personalInformationId", user.getPersonalInformation().getId());
+        q.executeUpdate();
+
+        q = em.createNativeQuery("DELETE FROM credentials WHERE credentials_id = :credentialsId");
+        q.setParameter("credentialsId", user.getCredential().getId());
+        q.executeUpdate();
+
+        em.getTransaction().commit();
+        em.close();
+
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        User user = entityManager.find(clazz, id);
+//        entityManager.getTransaction().begin();
+//        entityManager.remove(user);
+//        entityManager.getTransaction().commit();
+//        entityManager.close();
     }
 
     @Override

@@ -47,7 +47,8 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(name = "PROFILE_ENABLE")
     private boolean accountNotLocked;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+    cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Task> tasks;
 
     public void addTask(Task task) {
