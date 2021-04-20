@@ -1,17 +1,19 @@
-package by.itacademy.persistance.jpa.dao;
+package by.itacademy.persistence.jpa.dao;
 
 import by.itacademy.exception.dao.DaoException;
-import by.itacademy.persistance.jpa.JpaEntityManagerFactoryUtil;
-import by.itacademy.persistance.jpa.query.holder.JpaJpqlQueryHolder;
-import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
+import by.itacademy.persistence.jpa.query.holder.JpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.initializer.QueryInitializer;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@Component
 public abstract class AbstractJpaDaoJpa<T> {
 
-    protected final EntityManagerFactory entityManagerFactory = JpaEntityManagerFactoryUtil.getEntityManagerFactory();
+    @PersistenceUnit
+    protected EntityManagerFactory entityManagerFactory;
 
     protected final Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 

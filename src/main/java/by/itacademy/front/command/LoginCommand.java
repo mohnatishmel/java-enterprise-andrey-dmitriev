@@ -1,5 +1,6 @@
 package by.itacademy.front.command;
 
+import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.entities.front.FrontUser;
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.front.converter.impl.UserToFrontUserConverter;
@@ -15,8 +16,13 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 @Log4j2
-
 public class LoginCommand extends FrontCommand {
+
+    private AuthenticationProvider authenticationProvider;
+
+    {
+        authenticationProvider = ApplicationConstant.APPLICATION_CONTEXT.getBean(AuthenticationProvider.class);
+    }
 
     @Override
     public void process() throws ServletException, IOException {
@@ -24,7 +30,7 @@ public class LoginCommand extends FrontCommand {
         AuthenticationToken token = new JsonToJavaAuthenticateTokenMapper().map(request);
         User user;
         try {
-            user = (User) AuthenticationProvider.getInstance().authenticate(token);
+            user = (User) authenticationProvider.authenticate(token);
             SecurityContext.getInstance().setPrincipal(user);
             user.eraseCredentials();
             FrontUser frontUser = new UserToFrontUserConverter().convert(user);

@@ -1,15 +1,14 @@
 package by.itacademy;
 
 
-import by.itacademy.entities.task.Task;
+import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.entities.user.User;
-import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
-import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
-import by.itacademy.security.service.SecurityContext;
+import by.itacademy.exception.security.authentication.UsernameNotFoundException;
+import by.itacademy.persistence.TaskDao;
+import by.itacademy.persistence.UserDao;
+import by.itacademy.persistence.jpa.dao.impl.TaskJpaDao;
+import by.itacademy.persistence.jpa.dao.impl.UserJpaDao;
 import by.itacademy.service.FacadeService;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.h2.tools.Server;
 
@@ -18,7 +17,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 @Log4j2
 
@@ -26,11 +24,11 @@ import java.util.Date;
 public class ApplicationListener implements ServletContextListener {
 
     // for connect with UI tool to database use url - jdbc:h2:tcp://localhost/mem:jdbc
-
     private static Server SERVER;
+
+
 //    private static Connector DATABASE_CONNECTOR;
 
-    @SneakyThrows
     public void contextInitialized(ServletContextEvent event) {
 
         System.setProperty("log4j.configurationFile", "logger/log4j2.xml");
@@ -45,12 +43,19 @@ public class ApplicationListener implements ServletContextListener {
         }
 
 
-        TaskDao taskDao = TaskJpaDao.getInstance();
-//        UserDao userDao = UserJpaDao.getInstance();
-//        FacadeService facadeService = FacadeService.getInstance();
+
+
+//        TaskDao taskDao = ApplicationConstant.APPLICATION_CONTEXT.getBean(TaskJpaDao.class);
+//        FacadeService facadeService = ApplicationConstant.APPLICATION_CONTEXT.getBean(FacadeService.class);
+//        UserDao userDao = ApplicationConstant.APPLICATION_CONTEXT.getBean(UserJpaDao.class);
 //
 //
-//        User user = (User) userDao.getByName("user1");
+//        User user = null;
+//        try {
+//            user = (User) userDao.getByName("user1");
+//        } catch (UsernameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 //        System.out.println(user.toString());
 
 //        user = userDao.getById(1);

@@ -7,34 +7,35 @@ import by.itacademy.entities.message.UnlockRequestMessage;
 import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
-import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
+import by.itacademy.persistence.TaskDao;
 import by.itacademy.security.service.SecurityService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Log4j2
-
+@Service
 public class FacadeService {
-    private static FacadeService instance;
 
     private SecurityService securityService;
     private FileService fileService;
     private UserService userService;
     private UnlockRequestMessageService unlockRequestMessageService;
     private TaskService taskService;
-
     private TaskDao taskDao;
 
-    {
-        securityService = SecurityService.getInstance();
-        fileService = FileService.getInstance();
-        userService = UserService.getInstance();
-        unlockRequestMessageService= UnlockRequestMessageService.getInstance();
-        taskService = TaskService.getInstance();
-
-        taskDao = TaskJpaDao.getInstance();
+    @Autowired
+    public FacadeService(SecurityService securityService, FileService fileService,
+                         UserService userService, UnlockRequestMessageService unlockRequestMessageService,
+                         TaskService taskService, TaskDao taskDao) {
+        this.securityService = securityService;
+        this.fileService = fileService;
+        this.userService = userService;
+        this.unlockRequestMessageService = unlockRequestMessageService;
+        this.taskService = taskService;
+        this.taskDao = taskDao;
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException, AuthorizationException{
@@ -211,12 +212,5 @@ public class FacadeService {
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }
-    }
-
-    public static FacadeService getInstance() {
-        if (instance == null) {
-            instance = new FacadeService();
-        }
-        return instance;
     }
 }

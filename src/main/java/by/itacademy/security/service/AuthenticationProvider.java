@@ -1,24 +1,25 @@
 package by.itacademy.security.service;
 
-import by.itacademy.persistance.UserDao;
+import by.itacademy.persistence.UserDao;
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authentication.BadCredentialsException;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.model.authentication.AuthenticationToken;
-import by.itacademy.persistance.jpa.dao.impl.UserJpaDao;
-import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 @Log4j2
-@NoArgsConstructor
+
+@Service
 public class AuthenticationProvider {
 
-    private static AuthenticationProvider instance;
-    private static UserDao userDetailService;
+    private UserDao userDetailService;
 
-    {
-        userDetailService = UserJpaDao.getInstance();
+    @Autowired
+    public AuthenticationProvider(UserDao userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
     public UserDetails authenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
@@ -36,12 +37,5 @@ public class AuthenticationProvider {
         }
 
         return user;
-    }
-
-    public static AuthenticationProvider getInstance() {
-        if (instance == null) {
-            instance = new AuthenticationProvider();
-        }
-        return instance;
     }
 }

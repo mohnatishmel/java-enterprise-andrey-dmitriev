@@ -1,5 +1,6 @@
 package by.itacademy.front.command;
 
+import by.itacademy.constant.ApplicationConstant;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.service.FacadeService;
@@ -21,7 +22,7 @@ public abstract class FrontCommand {
     protected HttpServletResponse response;
 
     {
-        facadeService = FacadeService.getInstance();
+        facadeService = ApplicationConstant.APPLICATION_CONTEXT.getBean(FacadeService.class);
     }
 
     public void init(

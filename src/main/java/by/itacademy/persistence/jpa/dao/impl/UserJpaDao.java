@@ -1,26 +1,23 @@
-package by.itacademy.persistance.jpa.dao.impl;
+package by.itacademy.persistence.jpa.dao.impl;
 
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.exception.security.authentication.UsernameNotFoundException;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.entities.user.User;
-import by.itacademy.persistance.UserDao;
-import by.itacademy.persistance.jpa.dao.AbstractJpaDaoJpa;
-import by.itacademy.persistance.jpa.query.holder.JpaJpqlQueryHolder;
-import by.itacademy.persistance.jpa.query.holder.impl.UserJpaJpqlQueryHolder;
-import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
-import by.itacademy.persistance.jpa.query.initializer.impl.UserQueryInitializer;
+import by.itacademy.persistence.UserDao;
+import by.itacademy.persistence.jpa.dao.AbstractJpaDaoJpa;
+import by.itacademy.persistence.jpa.query.holder.JpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.holder.impl.UserJpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.initializer.QueryInitializer;
+import by.itacademy.persistence.jpa.query.initializer.impl.UserQueryInitializer;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+@Repository
 public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
-
-    private static UserJpaDao instance;
-
-    private UserJpaDao() {
-    }
 
     @Override
     public UserDetails getByName(String name) throws UsernameNotFoundException {
@@ -120,12 +117,6 @@ public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
         em.getTransaction().commit();
         em.close();
 
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        User user = entityManager.find(clazz, id);
-//        entityManager.getTransaction().begin();
-//        entityManager.remove(user);
-//        entityManager.getTransaction().commit();
-//        entityManager.close();
     }
 
     @Override
@@ -136,12 +127,5 @@ public class UserJpaDao extends AbstractJpaDaoJpa<User> implements UserDao {
     @Override
     protected QueryInitializer<User> getQueryInitializer() {
         return new UserQueryInitializer();
-    }
-
-    public static UserJpaDao getInstance() {
-        if (instance == null) {
-            instance = new UserJpaDao();
-        }
-        return instance;
     }
 }

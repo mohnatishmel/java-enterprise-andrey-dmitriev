@@ -1,7 +1,7 @@
-package by.itacademy.persistance.jpa.query.initializer.impl;
+package by.itacademy.persistence.jpa.query.initializer.impl;
 
 import by.itacademy.entities.file.File;
-import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
+import by.itacademy.persistence.jpa.query.initializer.QueryInitializer;
 import lombok.extern.log4j.Log4j2;
 
 import javax.persistence.Query;

@@ -2,22 +2,21 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.message.UnlockRequestMessage;
-import by.itacademy.persistance.jpa.dao.impl.UnlockRequestMessageJpaDao;
+import by.itacademy.persistence.jpa.dao.impl.UnlockRequestMessageJpaDao;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UnlockRequestMessageService {
-
-    private static UnlockRequestMessageService instance;
+    @Autowired
+    public UnlockRequestMessageService(UnlockRequestMessageJpaDao unlockRequestMessageJpaDao) {
+        this.unlockRequestMessageJpaDao = unlockRequestMessageJpaDao;
+    }
 
     private UnlockRequestMessageJpaDao unlockRequestMessageJpaDao;
-
-    {
-        unlockRequestMessageJpaDao = UnlockRequestMessageJpaDao.getInstance();
-    }
-
-    private UnlockRequestMessageService() {
-    }
 
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
         return unlockRequestMessageJpaDao.getAll();
@@ -29,12 +28,5 @@ public class UnlockRequestMessageService {
 
     public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
         unlockRequestMessageJpaDao.delete(request.getId());
-    }
-
-    public static UnlockRequestMessageService getInstance() {
-        if (instance == null) {
-            instance = new UnlockRequestMessageService();
-        }
-        return instance;
     }
 }

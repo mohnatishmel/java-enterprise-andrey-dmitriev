@@ -3,26 +3,25 @@ package by.itacademy.service;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.User;
-import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.jpa.dao.impl.TaskJpaDao;
+import by.itacademy.persistence.TaskDao;
+import by.itacademy.persistence.jpa.dao.impl.TaskJpaDao;
 import by.itacademy.security.service.SecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class TaskService {
-
-    private static TaskService instance;
 
     private TaskDao taskDao;
 
-    private TaskService() {
-    }
-
-    {
-        taskDao = TaskJpaDao.getInstance();
+    @Autowired
+    public TaskService(TaskDao taskDao) {
+        this.taskDao = taskDao;
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
@@ -152,12 +151,5 @@ public class TaskService {
 
     public void deleteTask(int id) throws ApplicationBasedException {
         taskDao.delete(id);
-    }
-
-    public static TaskService getInstance() {
-        if (instance == null) {
-            instance = new TaskService();
-        }
-        return instance;
     }
 }

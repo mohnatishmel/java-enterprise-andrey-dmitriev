@@ -4,12 +4,13 @@ import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.entities.user.User;
 import by.itacademy.security.service.SecurityContext;
+import by.itacademy.service.FacadeService;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 public class LoadUsersLockedCommand extends LoadUserListCommand{
 
     @Override

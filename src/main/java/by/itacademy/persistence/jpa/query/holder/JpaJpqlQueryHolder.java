@@ -1,4 +1,4 @@
-package by.itacademy.persistance.jpa.query.holder;
+package by.itacademy.persistence.jpa.query.holder;
 
 public interface JpaJpqlQueryHolder {
     String getByIdJpql();

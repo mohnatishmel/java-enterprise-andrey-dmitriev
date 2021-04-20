@@ -1,6 +1,6 @@
-package by.itacademy.persistance.jpa.query.holder.impl;
+package by.itacademy.persistence.jpa.query.holder.impl;
 
-import by.itacademy.persistance.jpa.query.holder.JpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.holder.JpaJpqlQueryHolder;
 
 public class TaskJpaJpqlQueryHolder implements JpaJpqlQueryHolder {
 

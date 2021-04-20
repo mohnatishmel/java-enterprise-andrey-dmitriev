@@ -1,4 +1,4 @@
-package by.itacademy.persistance;
+package by.itacademy.persistence;
 
 
 import by.itacademy.exception.dao.DaoException;

@@ -3,14 +3,15 @@ package by.itacademy.front.command;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.entities.file.File;
+import by.itacademy.service.FacadeService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.*;
 
 @Log4j2
-
 public class UploadFileCommand extends FrontCommand {
 
     @Override

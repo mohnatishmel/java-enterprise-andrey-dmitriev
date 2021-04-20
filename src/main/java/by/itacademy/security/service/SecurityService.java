@@ -5,13 +5,13 @@ import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.security.model.user.GrantedAuthority;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class SecurityService {
-
-    private static SecurityService instance;
 
     public boolean authorizeForCurrentUser(int id) {
         boolean result = false;
@@ -49,12 +49,5 @@ public class SecurityService {
             }
         }
         return result;
-    }
-
-    public static SecurityService getInstance() {
-        if (instance == null) {
-            instance = new SecurityService();
-        }
-        return instance;
     }
 }

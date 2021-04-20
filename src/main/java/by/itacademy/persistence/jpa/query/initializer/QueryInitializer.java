@@ -1,4 +1,4 @@
-package by.itacademy.persistance.jpa.query.initializer;
+package by.itacademy.persistence.jpa.query.initializer;
 
 import javax.persistence.Query;
 

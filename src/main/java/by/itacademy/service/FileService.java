@@ -3,21 +3,23 @@ package by.itacademy.service;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.entities.file.File;
-import by.itacademy.persistance.jpa.dao.impl.TaskFileJpaDao;
+import by.itacademy.persistence.jpa.dao.impl.TaskFileJpaDao;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Log4j2
 
+@Service
 public class FileService {
-
-    private static FileService instance;
 
     private TaskFileJpaDao taskFleJdbcDao;
 
-    {
-        taskFleJdbcDao = TaskFileJpaDao.getInstance();
+    @Autowired
+    public FileService(TaskFileJpaDao taskFleJdbcDao) {
+        this.taskFleJdbcDao = taskFleJdbcDao;
     }
 
     public void uploadFileForTask(File file) throws ApplicationBasedException {
@@ -41,12 +43,5 @@ public class FileService {
             log.debug(Arrays.toString(e.getStackTrace()));
             throw new ApplicationBasedException(e);
         }
-    }
-
-    public static FileService getInstance() {
-        if (instance == null) {
-            instance = new FileService();
-        }
-        return instance;
     }
 }

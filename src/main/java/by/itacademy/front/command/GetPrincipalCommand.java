@@ -6,15 +6,17 @@ import by.itacademy.entities.user.User;
 import by.itacademy.front.converter.Converter;
 import by.itacademy.front.converter.impl.UserToFrontUserConverter;
 import by.itacademy.security.service.SecurityContext;
+import by.itacademy.service.FacadeService;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 
 @Log4j2
-
 public class GetPrincipalCommand extends FrontCommand{
+
     @Override
     public void process() throws ServletException, IOException, ApplicationBasedException {
         User principal = (User) SecurityContext.getInstance().getPrincipal();

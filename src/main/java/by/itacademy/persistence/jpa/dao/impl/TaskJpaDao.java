@@ -1,14 +1,15 @@
-package by.itacademy.persistance.jpa.dao.impl;
+package by.itacademy.persistence.jpa.dao.impl;
 
 import by.itacademy.exception.dao.DaoException;
 import by.itacademy.entities.task.Task;
-import by.itacademy.persistance.TaskDao;
-import by.itacademy.persistance.jpa.dao.AbstractJpaDaoJpa;
-import by.itacademy.persistance.jpa.query.holder.JpaJpqlQueryHolder;
-import by.itacademy.persistance.jpa.query.holder.impl.TaskJpaJpqlQueryHolder;
-import by.itacademy.persistance.jpa.query.initializer.QueryInitializer;
-import by.itacademy.persistance.jpa.query.initializer.impl.TaskQueryInitializer;
+import by.itacademy.persistence.TaskDao;
+import by.itacademy.persistence.jpa.dao.AbstractJpaDaoJpa;
+import by.itacademy.persistence.jpa.query.holder.JpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.holder.impl.TaskJpaJpqlQueryHolder;
+import by.itacademy.persistence.jpa.query.initializer.QueryInitializer;
+import by.itacademy.persistence.jpa.query.initializer.impl.TaskQueryInitializer;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -17,12 +18,8 @@ import java.util.List;
 
 @Log4j2
 
+@Repository
 public class TaskJpaDao extends AbstractJpaDaoJpa<Task> implements TaskDao {
-
-    private static TaskJpaDao instance;
-
-    private TaskJpaDao() {
-    }
 
     @Override
     protected JpaJpqlQueryHolder getJpqlHolder() {
@@ -103,12 +100,4 @@ public class TaskJpaDao extends AbstractJpaDaoJpa<Task> implements TaskDao {
         }
 
     }
-
-    public static TaskJpaDao getInstance() {
-        if (instance == null) {
-            instance = new TaskJpaDao();
-        }
-        return instance;
-    }
-
 }

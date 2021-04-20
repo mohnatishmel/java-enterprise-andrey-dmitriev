@@ -12,8 +12,10 @@ import by.itacademy.entities.user.Credential;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
 import by.itacademy.security.service.SecurityContext;
+import by.itacademy.service.FacadeService;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -22,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-
 public class RegisterCommand extends FrontCommand {
 
     @Override
