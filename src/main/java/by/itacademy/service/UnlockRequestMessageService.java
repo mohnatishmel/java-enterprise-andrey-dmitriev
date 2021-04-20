@@ -2,8 +2,7 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.message.UnlockRequestMessage;
-import by.itacademy.persistence.jpa.dao.impl.UnlockRequestMessageJpaDao;
-import lombok.AllArgsConstructor;
+import by.itacademy.persistence.UnlockRequestMessageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +10,29 @@ import java.util.List;
 
 @Service
 public class UnlockRequestMessageService {
+
+    private UnlockRequestMessageDao unlockRequestMessageDao;
+
     @Autowired
-    public UnlockRequestMessageService(UnlockRequestMessageJpaDao unlockRequestMessageJpaDao) {
-        this.unlockRequestMessageJpaDao = unlockRequestMessageJpaDao;
+    public UnlockRequestMessageService(UnlockRequestMessageDao unlockRequestMessageDao) {
+        this.unlockRequestMessageDao = unlockRequestMessageDao;
     }
 
-    private UnlockRequestMessageJpaDao unlockRequestMessageJpaDao;
+
 
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
-        return unlockRequestMessageJpaDao.getAll();
+        return (List<UnlockRequestMessage>) unlockRequestMessageDao.findAll();
     }
 
     public void createUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJpaDao.create(request);
+        unlockRequestMessageDao.save(request);
     }
 
     public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageJpaDao.delete(request.getId());
+        unlockRequestMessageDao.deleteById(request.getId());
+    }
+
+    public void deleteByUserId(int id) throws ApplicationBasedException {
+        unlockRequestMessageDao.deleteByUserId(id);
     }
 }

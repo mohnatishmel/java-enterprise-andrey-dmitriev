@@ -1,6 +1,5 @@
 package by.itacademy.config;
 
-import by.itacademy.persistence.jpa.dao.impl.TaskJpaDao;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.SneakyThrows;
@@ -11,11 +10,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -24,6 +25,8 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("by.itacademy.persistence")
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "by.itacademy.persistence")
 public class PersistenceConfig {
 
     private Environment environment;
@@ -94,10 +97,5 @@ public class PersistenceConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    @Bean
-    public TaskJpaDao taskJpaDao() {
-        return new TaskJpaDao();
     }
 }

@@ -4,7 +4,6 @@ import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.User;
 import by.itacademy.persistence.TaskDao;
-import by.itacademy.persistence.jpa.dao.impl.TaskJpaDao;
 import by.itacademy.security.service.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -140,16 +139,25 @@ public class TaskService {
     public void createTask(Task task) throws ApplicationBasedException {
         int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
         task.setUserId(userId);
-        taskDao.create(task);
+        taskDao.create(task.getUserId(),
+                task.getName(),
+                task.getDescription(),
+                new java.sql.Date(task.getDeadLine().getTime()),
+                task.isFixed(),
+                task.isInBasket());
     }
 
     public void updateTask(Task task) throws ApplicationBasedException {
         int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
         task.setUserId(userId);
-        taskDao.update(task);
+        taskDao.save(task);
     }
 
     public void deleteTask(int id) throws ApplicationBasedException {
-        taskDao.delete(id);
+        taskDao.deleteById(id);
+    }
+
+    public void deleteByUserId(int id) throws ApplicationBasedException {
+        taskDao.deleteByUserId(id);
     }
 }

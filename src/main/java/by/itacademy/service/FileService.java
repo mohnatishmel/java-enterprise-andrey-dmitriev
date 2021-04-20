@@ -1,35 +1,35 @@
 package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
-import by.itacademy.exception.dao.DaoException;
 import by.itacademy.entities.file.File;
-import by.itacademy.persistence.jpa.dao.impl.TaskFileJpaDao;
+import by.itacademy.persistence.TaskFileDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Log4j2
 
 @Service
 public class FileService {
 
-    private TaskFileJpaDao taskFleJdbcDao;
+    private TaskFileDao taskFileDao;
 
     @Autowired
-    public FileService(TaskFileJpaDao taskFleJdbcDao) {
-        this.taskFleJdbcDao = taskFleJdbcDao;
+    public FileService(TaskFileDao taskFileDao) {
+        this.taskFileDao = taskFileDao;
     }
 
     public void uploadFileForTask(File file) throws ApplicationBasedException {
         try {
-            taskFleJdbcDao.create(file);
+            taskFileDao.save(file);
         } catch (Exception e) {
             log.debug(Arrays.toString(e.getStackTrace()));
             try {
-                taskFleJdbcDao.update(file);
-            } catch (DaoException daoException) {
+                taskFileDao.save(file);
+            } catch (Exception daoException) {
                 log.debug(Arrays.toString(e.getStackTrace()));
                 throw new ApplicationBasedException(e);
             }
@@ -37,11 +37,11 @@ public class FileService {
     }
 
     public File getFile(long id) throws ApplicationBasedException {
-        try {
-            return taskFleJdbcDao.getById((int) id);
-        } catch (DaoException e) {
-            log.debug(Arrays.toString(e.getStackTrace()));
-            throw new ApplicationBasedException(e);
-        }
+            Optional<File> optionalFile = taskFileDao.findById((int) id);
+            if (optionalFile.isPresent()) {
+                return optionalFile.get();
+            }
+            throw new ApplicationBasedException("file not found");
+
     }
 }

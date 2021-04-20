@@ -3,6 +3,7 @@ package by.itacademy.security.service;
 import by.itacademy.persistence.UserDao;
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authentication.BadCredentialsException;
+import by.itacademy.security.model.authentication.UserDetailService;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.model.authentication.AuthenticationToken;
 import lombok.extern.log4j.Log4j2;
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationProvider {
 
-    private UserDao userDetailService;
+    private UserDetailService userDetailService;
 
     @Autowired
-    public AuthenticationProvider(UserDao userDetailService) {
+    public AuthenticationProvider(UserDetailService userDetailService) {
         this.userDetailService = userDetailService;
     }
 
