@@ -26,12 +26,15 @@ public class AuthenticationFilter implements Filter {
         if (principle != null) {
             SecurityContext.getInstance().setPrincipal(principle);
         } else {
-            request.getServletContext()
-                    .getRequestDispatcher("/")
-                    .forward(request, response);
+            try {
+                request.getServletContext()
+                        .getRequestDispatcher("/")
+                        .forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
             return;
         }
-
         chain.doFilter(request, response);
     }
 }

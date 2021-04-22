@@ -150,7 +150,12 @@ public class TaskService {
     public void updateTask(Task task) throws ApplicationBasedException {
         int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
         task.setUserId(userId);
-        taskDao.save(task);
+        taskDao.update(task.getId(),
+                task.getName(),
+                task.getDescription(),
+                new java.sql.Date(task.getDeadLine().getTime()),
+                task.isFixed(),
+                task.isInBasket());
     }
 
     public void deleteTask(int id) throws ApplicationBasedException {

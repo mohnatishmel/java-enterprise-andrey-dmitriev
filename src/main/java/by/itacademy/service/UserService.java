@@ -73,6 +73,7 @@ public class UserService {
 
     public void deleteUser(User user) throws ApplicationBasedException {
         int userId = user.getId();
+        user = userDao.getById(userId);
         taskService.deleteByUserId(userId);
         unlockRequestMessageService.deleteByUserId(userId);
         roleDao.deleteByUserId(userId);

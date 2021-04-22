@@ -19,15 +19,10 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO tasks " +
-            "user_id = :userId, " +
-            "task_name = :name, " +
-            "description = :description, " +
-            "deadline = :deadline, " +
-            "fixed = :fixed, " +
-            "in_basket = :inBasket",
+    @Query(value = "INSERT INTO tasks(user_id, task_name, description, deadline, fixed, in_basket) " +
+            "VALUES(:userId,:name,:description,:deadline,:fixed,:inBasket);",
             nativeQuery = true)
-    Task create(@Param("userId") int userId,
+    void create(@Param("userId") int userId,
                 @Param("name") String name,
                 @Param("description") String description,
                 @Param("deadline") Date deadline,
@@ -43,4 +38,20 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
             nativeQuery = true)
     void deleteByUserId(@Param("userId") int userId) throws DaoException;
 
+    @Modifying
+    @Transactional
+    @Query("update Task t set " +
+            "t.name = :name, " +
+            "t.description = :description, " +
+            "t.deadLine = :deadLine, " +
+            "t.fixed = :fixed, " +
+            "t.inBasket = :inBasket " +
+            "where t.id = :id")
+
+    void update(@Param("id") int id,
+                @Param("name") String name,
+                @Param("description") String description,
+                @Param("deadLine") Date deadLine,
+                @Param("fixed") boolean fixed,
+                @Param("inBasket") boolean inBasket) throws DaoException;
 }
