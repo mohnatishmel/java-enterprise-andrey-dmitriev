@@ -11,6 +11,8 @@ import by.itacademy.persistence.TaskDao;
 import by.itacademy.security.service.SecurityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -47,46 +49,46 @@ public class FacadeService {
         }
     }
 
-    public List<Task> getTodayTasksForUser(int id) throws ApplicationBasedException, AuthorizationException {
+    public Page<Task> getTodayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getTodayTasksForUser(id);
+            return taskService.getTodayTasksForUser(id, pageable);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }
     }
 
-    public List<Task> getTomorrowTasksForUser(int id) throws ApplicationBasedException, AuthorizationException {
+    public Page<Task> getTomorrowTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getTomorrowTasksForUser(id);
+            return taskService.getTomorrowTasksForUser(id, pageable);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }
     }
 
-    public List<Task> getSomedayTasksForUser(int id) throws ApplicationBasedException, AuthorizationException {
+    public Page<Task> getSomedayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getSomedayTasksForUser(id);
+            return taskService.getSomedayTasksForUser(id, pageable);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }
     }
 
-    public List<Task> getTrashBoxTasksForUser(int id) throws ApplicationBasedException, AuthorizationException {
+    public Page<Task> getTrashBoxTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getTrashBoxTasksForUser(id);
+            return taskService.getTrashBoxTasksForUser(id, pageable);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }
     }
 
-    public List<Task> getFixedTasksForUser(int id) throws ApplicationBasedException, AuthorizationException {
+    public Page<Task> getFixedTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getFixedTasksForUser(id);
+            return taskService.getFixedTasksForUser(id, pageable);
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }

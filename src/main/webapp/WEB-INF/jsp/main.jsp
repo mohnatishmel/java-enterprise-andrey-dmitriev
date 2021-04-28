@@ -146,6 +146,10 @@
             margin-left: 0.5em;
         }
 
+        .viewList {
+            height: 75%;
+        }
+
         /*------------------  VIEW LIST  --------------------*/
         /*------------------  SEARCH BUTTON  --------------------*/
 
@@ -328,6 +332,7 @@
 
     <c:import url="/WEB-INF/jsp/template/viewer_tmpl.jsp"/>
 
+    <c:import url="/WEB-INF/jsp/template/pagination_tmpl.jsp"/>
 </div>
 
 <script>
@@ -336,6 +341,8 @@
     let currentView = "TODAY";
 
     let principal = null;
+
+    let pageCapacity = 6;
 
     <%--var logged = <c:out value = "${requestScope.alreadyLogged}"/>--%>
 

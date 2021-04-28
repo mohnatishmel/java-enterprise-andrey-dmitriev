@@ -4,6 +4,7 @@ import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.message.UnlockRequestMessage;
 import by.itacademy.persistence.UnlockRequestMessageDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +20,29 @@ public class UnlockRequestMessageService {
     }
 
 
-
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
-        return (List<UnlockRequestMessage>) unlockRequestMessageDao.findAll();
+        try {
+            return (List<UnlockRequestMessage>) unlockRequestMessageDao.findAll();
+
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void createUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageDao.save(request);
+        try {
+            unlockRequestMessageDao.save(request);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void deleteUnlockUserRequest(UnlockRequestMessage request) throws ApplicationBasedException {
-        unlockRequestMessageDao.deleteById(request.getId());
+        try {
+            unlockRequestMessageDao.deleteById(request.getId());
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void deleteByUserId(int id) throws ApplicationBasedException {

@@ -5,13 +5,17 @@ import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.User;
 import by.itacademy.persistence.TaskDao;
 import by.itacademy.security.service.SecurityContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import static by.itacademy.util.UtilDate.getDayStartAndDayEndInMilliseconds;
+
 
 @Service
 public class TaskService {
@@ -24,145 +28,103 @@ public class TaskService {
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
-        return taskDao.getByUserId(id);
+        try {
+            return taskDao.getByUserId(id);
+        } catch (
+                DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
-    public List<Task> getTodayTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = getTasksForUser(id);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        long today = calendar.getTimeInMillis();
-        System.out.println(new Date(today));
-
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
-
-        long tomorrow = calendar.getTimeInMillis();
-        System.out.println(new Date(tomorrow));
-
-        List<Task> todayTaskList = new ArrayList<>();
-        for (Task task : taskList) {
-            System.out.println(task.getDeadLine());
-            System.out.println(tomorrow - task.getDeadLine().getTime());
-            if (task.getDeadLine().getTime() < tomorrow
-                    && !task.isInBasket()
-                    && !task.isFixed()) {
-                todayTaskList.add(task);
-            }
+    public Page<Task> getTodayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
+        try {
+            long[] timeRange = getDayStartAndDayEndInMilliseconds(0);
+            return taskDao.getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse
+                    (new java.sql.Date(timeRange[0]), new java.sql.Date(timeRange[1]), id, pageable);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
         }
-        return todayTaskList;
     }
 
-    public List<Task> getTomorrowTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = getTasksForUser(id);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
-
-        long tomorrow = calendar.getTimeInMillis();
-
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
-
-        long dayAfterTomorrow = calendar.getTimeInMillis();
-
-        List<Task> tomorrowTaskList = new ArrayList<>();
-        for (Task task : taskList) {
-            if (task.getDeadLine().getTime() >= tomorrow
-                    && task.getDeadLine().getTime() < dayAfterTomorrow
-                    && !task.isInBasket()
-                    && !task.isFixed()) {
-                tomorrowTaskList.add(task);
-            }
+    public Page<Task> getTomorrowTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
+        try {
+            long[] timeRange = getDayStartAndDayEndInMilliseconds(1);
+            return taskDao.getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse
+                    (new java.sql.Date(timeRange[0]), new java.sql.Date(timeRange[1]), id, pageable);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
         }
-
-        return tomorrowTaskList;
     }
 
-    public List<Task> getSomedayTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = getTasksForUser(id);
-
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 2);
-
-        long dayAfterTomorrow = calendar.getTimeInMillis();
-
-        List<Task> somedayTaskList = new ArrayList<>();
-        for (Task task : taskList) {
-            if (task.getDeadLine().getTime() >= dayAfterTomorrow
-                    && !task.isInBasket()
-                    && !task.isFixed()) {
-                somedayTaskList.add(task);
-            }
+    public Page<Task> getSomedayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
+        try {
+            long[] timeRange = getDayStartAndDayEndInMilliseconds(2);
+            return taskDao.getByDeadLineIsGreaterThanAndUserIdAndFixedIsFalseAndInBasketIsFalse
+                    (new java.sql.Date(timeRange[0]), id, pageable);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
         }
-
-        return somedayTaskList;
     }
 
-    public List<Task> getTrashBoxTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = getTasksForUser(id);
-        List<Task> trashBox = new ArrayList<>();
-
-        for (Task task : taskList) {
-            if (task.isInBasket()) {
-                trashBox.add(task);
-            }
+    public Page<Task> getTrashBoxTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
+        try {
+            return taskDao.getByInBasketIsTrueAndUserId(id, pageable);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
         }
-        return trashBox;
     }
 
-    public List<Task> getFixedTasksForUser(int id) throws ApplicationBasedException {
-        List<Task> taskList = getTasksForUser(id);
-        List<Task> fixed = new ArrayList<>();
-
-        for (Task task : taskList) {
-            if (task.isFixed()) {
-                fixed.add(task);
-            }
+    public Page<Task> getFixedTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
+        try {
+            return taskDao.getByFixedIsTrueAndUserId(id, pageable);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
         }
-        return fixed;
     }
 
     public void createTask(Task task) throws ApplicationBasedException {
-        int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
-        task.setUserId(userId);
-        taskDao.create(task.getUserId(),
-                task.getName(),
-                task.getDescription(),
-                new java.sql.Date(task.getDeadLine().getTime()),
-                task.isFixed(),
-                task.isInBasket());
+        try {
+            int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
+            task.setUserId(userId);
+            taskDao.create(task.getUserId(),
+                    task.getName(),
+                    task.getDescription(),
+                    new java.sql.Date(task.getDeadLine().getTime()),
+                    task.isFixed(),
+                    task.isInBasket());
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void updateTask(Task task) throws ApplicationBasedException {
-        int userId = ((User)SecurityContext.getInstance().getPrincipal()).getId();
-        task.setUserId(userId);
-        taskDao.update(task.getId(),
-                task.getName(),
-                task.getDescription(),
-                new java.sql.Date(task.getDeadLine().getTime()),
-                task.isFixed(),
-                task.isInBasket());
+        try {
+            int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
+            task.setUserId(userId);
+            taskDao.update(task.getId(),
+                    task.getName(),
+                    task.getDescription(),
+                    new java.sql.Date(task.getDeadLine().getTime()),
+                    task.isFixed(),
+                    task.isInBasket());
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void deleteTask(int id) throws ApplicationBasedException {
-        taskDao.deleteById(id);
+        try {
+            taskDao.deleteById(id);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 
     public void deleteByUserId(int id) throws ApplicationBasedException {
-        taskDao.deleteByUserId(id);
+        try {
+            taskDao.deleteByUserId(id);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 }

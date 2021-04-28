@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </div>
-                        <ul class="list list-inline accordion task-list" id="viewList">
+                        <ul class="viewList list list-inline accordion task-list" id="viewList">
                         </ul>
                     </div>
                 </div>

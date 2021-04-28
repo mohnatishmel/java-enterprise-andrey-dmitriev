@@ -1,5 +1,5 @@
 
-function showTaskListCommonView(command) {
+function showTaskListCommonView(command, page) {
 
     initCreateTaskForm();
 
@@ -7,13 +7,18 @@ function showTaskListCommonView(command) {
 
     viewList = new TaskList();
 
-    $.when(getTasks(command)).then(function (jsonTaskList) {
-        mapTasksFromJsonForCommonView(jsonTaskList);
+    $.when(getJsonPage(command, page, pageCapacity)).then(function (page) {
+        mapTasksFromJsonForCommonView(page.content);
         console.log("showTaskListCommonView");
+        initPagination(page ,page.total, function (page) {
+            showTaskListCommonView(command, page);
+        })
     })
+
+
 }
 
-function showTaskListTrashBoxView(command) {
+function showTaskListTrashBoxView(command, page) {
 
     initCreateTaskForm();
 
@@ -21,9 +26,12 @@ function showTaskListTrashBoxView(command) {
 
     viewList = new TaskList();
 
-    $.when(getTasks(command)).then(function (jsonTaskList) {
-        mapTasksFromJsonForTrashBoxView(jsonTaskList);
+    $.when(getJsonPage(command, page, pageCapacity)).then(function (page) {
+        mapTasksFromJsonForTrashBoxView(page.content);
         console.log("showTaskListCommonView");
+        initPagination(page.total, function (page) {
+            showTaskListCommonView(command, page);
+        })
     })
 }
 

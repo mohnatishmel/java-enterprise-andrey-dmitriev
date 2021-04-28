@@ -1,8 +1,4 @@
 
-$("#logOut").on("click", function () {
-    logout(logOutSuccess, logOutError);
-})
-
 function logOutSuccess(data) {
     window.location.href = "/?command=LoginPage";
     console.log(data.message);

@@ -38,7 +38,7 @@
                     <i class="fa fa-list-ul" aria-hidden="true"></i>  Tasks</span>
                 <span id="userViewBtn" class="nav-link cursor-pointer inactive">
                     <i class="fa fa-users" aria-hidden="true"></i>  Users</span>
-                <span class="nav-link cursor-pointer inactive">
+                <span id="personalInfoBtn" class="nav-link cursor-pointer inactive">
                     <i class="fa fa-address-card-o" aria-hidden="true"></i>  Personal Info</span>
                 <span id="logOut"  class="nav-link cursor-pointer inactive">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</span>

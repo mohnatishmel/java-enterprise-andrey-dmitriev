@@ -2,6 +2,8 @@ let header = {}
 
 header.taskViewBtn = $("#taskViewBtn");
 header.userViewBtn = $("#userViewBtn");
+header.logOutBtn = $("#logOut");
+header.personalInfoBtn = $("#personalInfoBtn");
 
 header.userName = $("#userDropdownMenuButton");
 header.setUserName = function (name) {
@@ -24,4 +26,8 @@ header.enableAdministratorFunctionality = function () {
 header.disableAdministratorFunctionality = function () {
     this.taskViewBtn.hide();
     this.userViewBtn.hide();
+}
+
+header.collapse = function () {
+    $("#navbarNavAltMarkup").collapse('hide');
 }

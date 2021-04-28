@@ -1,8 +1,6 @@
 package by.itacademy.persistence;
 
 
-import by.itacademy.exception.dao.DaoException;
-import by.itacademy.exception.security.authentication.UsernameNotFoundException;
 import by.itacademy.security.model.authentication.UserDetailService;
 import by.itacademy.entities.user.User;
 import by.itacademy.security.model.user.UserDetails;
@@ -24,35 +22,26 @@ public interface UserDao extends PagingAndSortingRepository<User, Integer>, User
             "JOIN FETCH u.personalInformation " +
             "JOIN FETCH u.credential " +
             "JOIN u.credential c ON c.login = :login")
-    UserDetails getByName(@Param("login") String login) throws UsernameNotFoundException;
+    UserDetails getByName(@Param("login") String login) ;
 
     @Query("select distinct u from User u " +
             "JOIN FETCH u.roles " +
             "JOIN FETCH u.personalInformation " +
             "JOIN FETCH u.credential " +
             "JOIN FETCH u.credential")
-    List<User> getAll() throws DaoException;
+    List<User> getAll();
 
     @Query("select u from User u " +
             "JOIN FETCH u.roles " +
             "JOIN FETCH u.personalInformation " +
             "JOIN FETCH u.credential " +
             "where u.id = :id")
-    User getById(@Param("id") int id) throws DaoException;
-
-//    @Modifying
-//    @Transactional
-//    @Query("")
-//    User create(User user) throws DaoException;
-
-//    @Modifying
-//    @Transactional
-//    User (User user) throws DaoException;
+    User getById(@Param("id") int id);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM users WHERE user_id = :id",
             nativeQuery = true)
-    void delete(@Param("id") int id) throws DaoException;
+    void delete(@Param("id") int id);
 
 }

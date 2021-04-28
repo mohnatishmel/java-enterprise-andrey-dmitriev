@@ -1,7 +1,8 @@
 package by.itacademy.persistence;
 
-import by.itacademy.exception.dao.DaoException;
 import by.itacademy.entities.task.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 @Repository
 public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
 
-    Task getById(int id) throws DaoException;
+    Task getById(int id);
 
     @Modifying
     @Transactional
@@ -27,16 +28,16 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
                 @Param("description") String description,
                 @Param("deadline") Date deadline,
                 @Param("fixed") boolean fixed,
-                @Param("inBasket") boolean inBasket) throws DaoException;
+                @Param("inBasket") boolean inBasket);
 
     @Query("from Task t where t.userId = :userId")
-    List<Task> getByUserId(@Param("userId") int userId) throws DaoException;
+    List<Task> getByUserId(@Param("userId") int userId);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM tasks WHERE user_id = :userId",
             nativeQuery = true)
-    void deleteByUserId(@Param("userId") int userId) throws DaoException;
+    void deleteByUserId(@Param("userId") int userId);
 
     @Modifying
     @Transactional
@@ -53,5 +54,10 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
                 @Param("description") String description,
                 @Param("deadLine") Date deadLine,
                 @Param("fixed") boolean fixed,
-                @Param("inBasket") boolean inBasket) throws DaoException;
+                @Param("inBasket") boolean inBasket);
+
+    Page<Task> getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date dateStart, Date dateEnd, int id, Pageable pageable);
+    Page<Task> getByDeadLineIsGreaterThanAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date data, int id, Pageable pageable);
+    Page<Task> getByFixedIsTrueAndUserId(int id, Pageable pageable);
+    Page<Task> getByInBasketIsTrueAndUserId(int id, Pageable pageable);
 }

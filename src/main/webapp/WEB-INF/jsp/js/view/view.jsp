@@ -11,3 +11,4 @@
 <c:import url="/WEB-INF/jsp/js/view/user/UserListView.js"/>
 <c:import url="/WEB-INF/jsp/js/view/ViewerNavigationView.js"/>
 <c:import url="/WEB-INF/jsp/js/view/user/message/MessageView.js"/>
+<c:import url="/WEB-INF/jsp/js/view/PaginationView.js"/>

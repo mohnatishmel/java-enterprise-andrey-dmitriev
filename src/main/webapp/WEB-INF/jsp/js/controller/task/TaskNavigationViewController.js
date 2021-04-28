@@ -1,35 +1,35 @@
 viewerNav.todayViewBtn.on("click", function () {
     currentView = "TODAY";
     viewerNav.todayView();
-    showTaskListCommonView("LoadTaskListToday");
+    showTaskListCommonView("LoadTaskListToday", 0);
     console.log("current view: " + currentView);
 });
 
 viewerNav.tomorrowViewBtn.on("click", function () {
     currentView = "TOMORROW";
     viewerNav.tomorrowView();
-    showTaskListCommonView("LoadTaskListTomorrow");
+    showTaskListCommonView("LoadTaskListTomorrow", 0);
     console.log("current view: " + currentView);
 });
 
 viewerNav.somedayViewBtn.on("click", function () {
     currentView = "SOMEDAY";
     viewerNav.somedayView();
-    showTaskListCommonView("LoadTaskListSomeday");
+    showTaskListCommonView("LoadTaskListSomeday", 0);
     console.log("current view: " + currentView);
 });
 
 viewerNav.fixedViewBtn.on("click", function () {
     currentView = "FIXED";
     viewerNav.fixedView();
-    showTaskListCommonView("LoadTaskListFixed");
+    showTaskListCommonView("LoadTaskListFixed", 0);
     console.log("current view: " + currentView);
 });
 
 viewerNav.trashBoxViewBtn.on("click", function () {
     currentView = "TRASH_BOX";
     viewerNav.trashBoxView();
-    showTaskListTrashBoxView("LoadTaskListTrashBox");
+    showTaskListTrashBoxView("LoadTaskListTrashBox", 0);
     console.log("current view: " + currentView);
 });
 

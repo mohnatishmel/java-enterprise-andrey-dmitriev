@@ -66,7 +66,7 @@ public class FrontControllerServlet extends HttpServlet {
         } catch (java.lang.IllegalStateException e) {
             e.printStackTrace();
         }
-    }
+        }
 
     private FrontCommand getCommand(String commandName) {
         try {

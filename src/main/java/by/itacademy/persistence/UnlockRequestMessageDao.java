@@ -1,7 +1,6 @@
 package by.itacademy.persistence;
 
 import by.itacademy.entities.message.UnlockRequestMessage;
-import by.itacademy.exception.dao.DaoException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,7 +15,7 @@ public interface UnlockRequestMessageDao extends CrudRepository<UnlockRequestMes
     @Transactional
     @Query(value = "DELETE FROM unlock_request_messages WHERE user_id = :userId",
             nativeQuery = true)
-    void deleteByUserId(@Param("userId") int userId) throws DaoException;
+    void deleteByUserId(@Param("userId") int userId);
 
 
 }

@@ -2,6 +2,9 @@ function getJson(command) {
     return $.getJSON("/?command=" + command);
 }
 
+function getJsonPage(command, page, size) {
+    return getJson(command + "&page=" + page + "&size=" +size);
+}
 
 function sendJson(data, command, success) {
 

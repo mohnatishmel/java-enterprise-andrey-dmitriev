@@ -14,3 +14,4 @@
 <c:import url="/WEB-INF/jsp/js/controller/ItemViewController.js"/>
 <c:import url="/WEB-INF/jsp/js/controller/HeaderController.js"/>
 <c:import url="/WEB-INF/jsp/js/controller/user/mesage/MessageViewController.js"/>
+<c:import url="/WEB-INF/jsp/js/controller/PaginationController.js"/>
