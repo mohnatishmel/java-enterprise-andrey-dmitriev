@@ -3,7 +3,9 @@ package by.itacademy.front.converter.impl;
 import by.itacademy.entities.front.FrontTask;
 import by.itacademy.entities.task.Task;
 import by.itacademy.front.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TaskToFrontTaskConverter implements Converter<Task, FrontTask> {
 
     @Override

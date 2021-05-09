@@ -142,7 +142,7 @@ public class FacadeService {
         }
     }
 
-    public User registerUser(User user) throws ApplicationBasedException, AuthorizationException {
+    public User registerUser(User user) throws AuthorizationException {
         return userService.registerUser(user);
     }
 

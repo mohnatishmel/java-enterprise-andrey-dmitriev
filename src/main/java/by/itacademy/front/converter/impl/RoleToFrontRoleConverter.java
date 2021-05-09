@@ -3,10 +3,12 @@ package by.itacademy.front.converter.impl;
 import by.itacademy.entities.front.FrontRole;
 import by.itacademy.entities.user.Role;
 import by.itacademy.front.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
 
+@Component
 public class RoleToFrontRoleConverter implements Converter<Collection<Role>, Collection<FrontRole>> {
 
     @Override

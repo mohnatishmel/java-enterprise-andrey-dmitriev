@@ -22,9 +22,12 @@ public class TaskService {
 
     private TaskDao taskDao;
 
+    private SecurityContext securityContext;
+
     @Autowired
-    public TaskService(TaskDao taskDao) {
+    public TaskService(TaskDao taskDao, SecurityContext securityContext) {
         this.taskDao = taskDao;
+        this.securityContext = securityContext;
     }
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
@@ -84,7 +87,7 @@ public class TaskService {
 
     public void createTask(Task task) throws ApplicationBasedException {
         try {
-            int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
+            int userId = ((User) securityContext.getPrincipal()).getId();
             task.setUserId(userId);
             taskDao.create(task.getUserId(),
                     task.getName(),
@@ -99,7 +102,7 @@ public class TaskService {
 
     public void updateTask(Task task) throws ApplicationBasedException {
         try {
-            int userId = ((User) SecurityContext.getInstance().getPrincipal()).getId();
+            int userId = ((User) securityContext.getPrincipal()).getId();
             task.setUserId(userId);
             taskDao.update(task.getId(),
                     task.getName(),

@@ -7,9 +7,11 @@ import by.itacademy.entities.front.FrontUser;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
 import by.itacademy.front.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+@Component
 public class UserToFrontUserConverter implements Converter<User, FrontUser> {
 
     @Override

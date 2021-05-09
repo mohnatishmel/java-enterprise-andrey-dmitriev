@@ -4,7 +4,7 @@ import by.itacademy.security.model.user.GrantedAuthority;
 import lombok.*;
 
 @AllArgsConstructor
-
+@Getter
 
 public class FrontRole implements GrantedAuthority {
 

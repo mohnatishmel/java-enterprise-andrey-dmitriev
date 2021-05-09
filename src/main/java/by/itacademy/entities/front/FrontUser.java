@@ -6,10 +6,10 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @Builder
+@Getter
 
 public class FrontUser {
 
-    @Getter
     private final int id;
     private final FrontCredential credential;
     private final FrontPersonalInformation personalInformation;

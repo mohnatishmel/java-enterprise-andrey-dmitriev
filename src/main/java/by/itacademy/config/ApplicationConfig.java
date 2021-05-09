@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@Import(PersistenceConfig.class)
+@Import({PersistenceConfig.class, WebConfig.class})
 @PropertySource("classpath:application.properties")
 @ComponentScan({"by.itacademy.service", "by.itacademy.security", "by.itacademy.front"})
 public class ApplicationConfig {

@@ -1,14 +1,18 @@
 package by.itacademy.service;
 
+import by.itacademy.entities.user.Role;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.user.PersonalInformation;
 import by.itacademy.entities.user.User;
+import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.persistence.*;
+import by.itacademy.security.model.user.GrantedAuthority;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -43,11 +47,19 @@ public class UserService {
         }
     }
 
-    public User registerUser(User user) throws ApplicationBasedException {
+    public User registerUser(User user) throws AuthorizationException {
         if (userDao.getByName(user.getLogin()) == null) {
+            List<Role> roles = new ArrayList<>();
+            for (GrantedAuthority role : user.getAuthorities()) {
+                role =  roleDao.getRoleByRoleName(role.getAuthority());
+                role.getAuthority();
+                ((Role)role).addUser(user);
+                roles.add((Role) role);
+            }
+            user.setRoles(roles);
             user = userDao.save(user);
         } else {
-            throw new ApplicationBasedException("user already exist");
+            throw new AuthorizationException("User name already exist");
         }
         return user;
     }

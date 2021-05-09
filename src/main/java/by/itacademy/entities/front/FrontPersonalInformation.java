@@ -2,10 +2,11 @@ package by.itacademy.entities.front;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@Data
+@Getter
 
 public class FrontPersonalInformation {
 

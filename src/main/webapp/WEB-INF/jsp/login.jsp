@@ -17,7 +17,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
     <style>
         /*------------------  LOGIN FORM  --------------------*/
 
@@ -163,15 +162,23 @@
             })
         })
 
-        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>
-        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>
-        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>
-        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>
-        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>
-        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>
-        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>
-        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>
+<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>--%>
+<%--        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>--%>
 
     })
 </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/LoginFormView.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/RegisterFormView.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/AccountLockedFormView.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/controller/authentication/AuthenticateLoginPageController.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/controller/authentication/AccountLockedFormController.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/AuthenticationModel.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>
 </html>

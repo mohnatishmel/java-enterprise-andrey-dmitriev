@@ -6,6 +6,7 @@ import java.util.Date;
 
 @AllArgsConstructor
 @Builder
+@Getter
 
 public class FrontTask {
 

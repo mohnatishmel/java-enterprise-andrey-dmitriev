@@ -334,7 +334,7 @@
 
     <c:import url="/WEB-INF/jsp/template/pagination_tmpl.jsp"/>
 </div>
-
+</body>
 <script>
     let viewList;
 
@@ -386,10 +386,10 @@
         }
     })
 
-    <c:import url="/WEB-INF/jsp/js/view/view.jsp"/>
-    <c:import url="/WEB-INF/jsp/js/controller/Controller.jsp"/>
-    <c:import url="/WEB-INF/jsp/js/model/model.jsp"/>
-</script>
 
-</body>
+
+    <c:import url="/static/js/view/view.jsp"/>
+    <c:import url="/static/js/controller/Controller.jsp"/>
+    <c:import url="/static/js/model/model.jsp"/>
+</script>
 </html>

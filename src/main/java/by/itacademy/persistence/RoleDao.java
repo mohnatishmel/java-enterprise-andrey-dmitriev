@@ -11,9 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface RoleDao extends CrudRepository<Role, Integer> {
 
+    @Query("select r from Role r " +
+            "JOIN FETCH r.users " +
+            "WHERE r.roleName = :roleName")
+    Role getRoleByRoleName(@Param("roleName")String roleName);
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM roles_map WHERE user_id = :userId",
             nativeQuery = true)
     void deleteByUserId(@Param("userId") int userId);
+
 }

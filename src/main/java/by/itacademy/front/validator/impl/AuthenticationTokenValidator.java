@@ -2,7 +2,9 @@ package by.itacademy.front.validator.impl;
 
 import by.itacademy.front.validator.Validator;
 import by.itacademy.security.model.authentication.AuthenticationToken;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AuthenticationTokenValidator implements Validator<AuthenticationToken> {
 
     @Override
