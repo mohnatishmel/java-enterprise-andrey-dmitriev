@@ -25,8 +25,8 @@ function sendJson(data, url, method, success) {
         success: function (data) {
             success(data);
         },
-        error: function (data, status, er) {
-            alert("error: " + data + " status: " + status + " er:" + er);
+        error: function (data) {
+            alert(data.message);
         }
     });
 }

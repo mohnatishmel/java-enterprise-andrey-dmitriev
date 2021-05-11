@@ -69,6 +69,7 @@ function authenticateSuccess(jsonPrinciple) {
 
 function loginError(data) {
     const message = data.message;
+    alert(message);
     console.log("Authentication error: " + message);
     loginForm.showAlert(message);
 }
