@@ -1,11 +1,11 @@
 
-function showMessageList(command) {
+function showMessageList(url) {
 
     messageView.clear();
 
     viewList = new MessageList();
 
-    $.when(getJson(command)).then(function (jsonMessageList) {
+    $.when(getJson(url)).then(function (jsonMessageList) {
         mapMessageFromJson(jsonMessageList);
     })
 }
@@ -38,7 +38,7 @@ function resolveUnlockUserRequest(id) {
     let message = viewList.getMessage(id);
     message.hide();
     message = convertUnlockRequestMessageToJson(message);
-    sendJson(message, "ResolveUserUnlockRequest", function (data) {
+    sendJson(message, "/rest/unlock/requests/messages", "PUT" ,function (data) {
         console.log(data.message);
     })
 }
@@ -47,7 +47,7 @@ function deleteMessage(id) {
     let message = viewList.getMessage(id);
     message.hide();
     message = convertUnlockRequestMessageToJson(message);
-    sendJson(message, "DeleteUserUnlockRequest", function (data) {
+    sendJson(message, "/rest/unlock/requests/messages", "DELETE", function (data) {
         console.log(data.message);
     })
 }

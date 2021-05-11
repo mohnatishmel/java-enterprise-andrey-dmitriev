@@ -38,7 +38,7 @@ function createTask() {
     let jsonTask = JSON.stringify(task);
     console.log(jsonTask);
 
-    sendJson(jsonTask, "/tasks", "POST",function () {
+    sendJson(jsonTask, "/rest/tasks", "POST",function () {
         fillViewList();
     });
 }

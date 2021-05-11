@@ -1,6 +1,3 @@
-function getUsers(command) {
-    return $.getJSON("/?command=" + command);
-}
 
 function UserList() {
     this.list = [];
@@ -85,7 +82,7 @@ function getJsonUser(updateData) {
     user.name = updateData.getName();
     user.accountNotLocked = updateData.isAccountNotLocked();
 
-    let jsonTask = JSON.stringify({user});
+    let jsonTask = JSON.stringify(user);
     return jsonTask;
 }
 

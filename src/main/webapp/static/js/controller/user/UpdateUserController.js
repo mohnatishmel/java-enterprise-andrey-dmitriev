@@ -1,15 +1,15 @@
 
-function updateUser(id, command) {
+function updateUser(id, command, method) {
     let user = viewList.getUser(id);
     let jsonUser = getJsonUser(user);
 
-    sendJson(jsonUser, command, function success(data) {
+    sendJson(jsonUser, command, method, function success(data) {
         console.log(data.message);
     });
 }
 
 function updateUserIsLocked(id) {
-    updateUser(id, "UpdateUserIsLocked");
+    updateUser(id, "/rest/users/locked", "PUT");
 }
 
 function unlockAllUserFromLockedView() {
@@ -18,7 +18,7 @@ function unlockAllUserFromLockedView() {
         user.setAccountNotLocked(true);
         user.hide();
         let jsonUser = getJsonUser(user);
-        sendJson(jsonUser, "UpdateUserIsLocked", function success(data) {
+        sendJson(jsonUser, "/rest/users/locked", "PUT", function success(data) {
             console.log(data.message);
         });
     })

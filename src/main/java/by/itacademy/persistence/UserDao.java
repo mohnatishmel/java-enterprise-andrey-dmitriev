@@ -44,4 +44,11 @@ public interface UserDao extends PagingAndSortingRepository<User, Integer>, User
             nativeQuery = true)
     void delete(@Param("id") int id);
 
+    @Query("select u from User u " +
+            "JOIN FETCH u.roles " +
+            "JOIN FETCH u.personalInformation " +
+            "JOIN FETCH u.credential " +
+            "where u.accountNotLocked = :accountNotLocked " +
+            "and u.id <> :id")
+    List<User> getByAccountNonLocked(@Param("accountNotLocked") boolean accountNotLocked,@Param("id") int excludeId);
 }

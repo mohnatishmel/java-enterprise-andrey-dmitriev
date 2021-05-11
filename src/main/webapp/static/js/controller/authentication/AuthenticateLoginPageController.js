@@ -86,11 +86,3 @@ function switchToAuthenticationForm() {
 $("#accountLockedFormSwitchToLoginBtn").on("click", function () {
     switchToAuthenticationForm();
 })
-
-function getPrincipal() {
-    $.when(getCurrentUser()).then(function (jsonPrincipal) {
-        principal = new Principal(jsonPrincipal);
-        // header.setUserName(jsonPrincipal.credential.login);
-        console.log("User " + jsonPrincipal.credential.login + " authenticated");
-    })
-}

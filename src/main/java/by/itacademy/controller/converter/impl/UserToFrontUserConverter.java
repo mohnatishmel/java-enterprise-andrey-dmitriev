@@ -1,4 +1,4 @@
-package by.itacademy.front.converter.impl;
+package by.itacademy.controller.converter.impl;
 
 import by.itacademy.entities.front.FrontCredential;
 import by.itacademy.entities.front.FrontPersonalInformation;
@@ -6,7 +6,7 @@ import by.itacademy.entities.front.FrontRole;
 import by.itacademy.entities.front.FrontUser;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
-import by.itacademy.front.converter.Converter;
+import by.itacademy.controller.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

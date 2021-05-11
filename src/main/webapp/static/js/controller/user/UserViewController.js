@@ -5,7 +5,7 @@ function showUserList(command) {
 
     viewList = new UserList();
 
-    $.when(getUsers(command)).then(function (jsonUserList) {
+    $.when(getJson(command)).then(function (jsonUserList) {
         mapUsersFromJson(jsonUserList);
         console.log("userView");
     })

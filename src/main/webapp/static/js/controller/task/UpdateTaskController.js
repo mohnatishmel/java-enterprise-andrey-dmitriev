@@ -35,7 +35,7 @@ function updateTask(id) {
     let jsonTask = getJsonTask(task);
     console.log(jsonTask);
 
-    sendJson(jsonTask, "/tasks", "PUT", function success(data) {
+    sendJson(jsonTask, "/rest/tasks", "PUT", function success(data) {
         console.log(data.message);
         fillViewList();
     });
@@ -46,7 +46,7 @@ function updateTaskWithoutFetching(id) {
     let jsonTask = getJsonTask(task);
     console.log(jsonTask);
 
-    sendJson(jsonTask, "/tasks", "PUT",function success(data) {
+    sendJson(jsonTask, "/rest/tasks", "PUT",function success(data) {
         console.log(data.message);
     });
 }
@@ -69,7 +69,7 @@ function updateAllTasksFromViewList() {
         let jsonTask = getJsonTask(task);
         console.log(jsonTask);
 
-        sendJson(jsonTask, "/tasks", "PUT",function success(data) {
+        sendJson(jsonTask, "/rest/tasks", "PUT",function success(data) {
             console.log(data.message);
         });
 

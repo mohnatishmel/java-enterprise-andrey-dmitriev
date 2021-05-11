@@ -1,11 +1,10 @@
-package by.itacademy.front.converter.impl;
+package by.itacademy.controller.converter.impl;
 
 import by.itacademy.entities.file.File;
 import by.itacademy.entities.front.FrontFile;
-import by.itacademy.front.converter.Converter;
+import by.itacademy.controller.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import java.util.Base64;
 
 @Component

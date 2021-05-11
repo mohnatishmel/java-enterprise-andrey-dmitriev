@@ -2,14 +2,13 @@ package by.itacademy.controller;
 
 import by.itacademy.entities.front.FrontPage;
 import by.itacademy.entities.front.FrontTask;
+import by.itacademy.entities.front.Message;
 import by.itacademy.entities.task.Task;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.front.converter.Converter;
+import by.itacademy.controller.converter.Converter;
 import by.itacademy.security.service.SecurityContext;
 import by.itacademy.service.FacadeService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,20 +17,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/rest/")
 public class TaskRestController {
 
     private final FacadeService facadeService;
     private final SecurityContext securityContext;
     private final Converter<List<Task>, List<FrontTask>> taskConverter;
-    private final ObjectMapper objectMapper;
 
     @GetMapping("tasks/today")
     public ResponseEntity<FrontPage<List<FrontTask>>> getTodayTasks(@RequestParam int size, @RequestParam int pageNumber) 
@@ -100,14 +96,5 @@ public class TaskRestController {
         List<FrontTask> frontTasks = taskConverter.convert(page.getContent());
         FrontPage<List<FrontTask>> frontPage = new FrontPage(frontTasks, page.getTotalElements());
         return new ResponseEntity(frontPage, HttpStatus.OK);
-    }
-
-    private class Message {
-
-        public Message(String message) {
-            this.message = message;
-        }
-        @Getter
-        private String message;
     }
 }

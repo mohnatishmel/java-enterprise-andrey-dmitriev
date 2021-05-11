@@ -1,8 +1,8 @@
-package by.itacademy.front.converter.impl;
+package by.itacademy.controller.converter.impl;
 
 import by.itacademy.entities.front.FrontTask;
 import by.itacademy.entities.task.Task;
-import by.itacademy.front.converter.Converter;
+import by.itacademy.controller.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

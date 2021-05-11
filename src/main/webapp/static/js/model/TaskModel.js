@@ -1,8 +1,3 @@
-function getTasks(command) {
-    return $.getJSON("/?command=" + command);
-}
-
-
 
 function TaskList() {
     this.list = []

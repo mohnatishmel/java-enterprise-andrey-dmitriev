@@ -1,6 +1,6 @@
-package by.itacademy.front.validator.impl;
+package by.itacademy.controller.validator.impl;
 
-import by.itacademy.front.validator.Validator;
+import by.itacademy.controller.validator.Validator;
 import by.itacademy.security.model.authentication.AuthenticationToken;
 import org.springframework.stereotype.Component;
 

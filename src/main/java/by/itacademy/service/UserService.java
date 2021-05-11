@@ -47,6 +47,22 @@ public class UserService {
         }
     }
 
+    public List<User> getAllLocked(int excludeId) throws ApplicationBasedException {
+        try {
+            return userDao.getByAccountNonLocked(false, excludeId);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public List<User> getAllNotLocked(int excludeId) throws ApplicationBasedException {
+        try {
+            return userDao.getByAccountNonLocked(true, excludeId);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
+    }
+
     public User registerUser(User user) throws AuthorizationException {
         if (userDao.getByName(user.getLogin()) == null) {
             List<Role> roles = new ArrayList<>();

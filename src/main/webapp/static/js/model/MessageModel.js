@@ -1,6 +1,6 @@
 
 function convertUnlockRequestMessageToJson(message) {
-    return JSON.stringify({message});
+    return JSON.stringify(message);
 
 }
 

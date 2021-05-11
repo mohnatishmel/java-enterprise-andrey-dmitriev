@@ -24,7 +24,7 @@ function deleteAllUsersFromViewList() {
 }
 
 function deleteUser(jsonUser) {
-    sendJson(jsonUser, "DeleteUser", function success(data) {
+    sendJson(jsonUser, "/rest/users/", "DELETE", function success(data) {
         console.log(data.message);
     });
 }

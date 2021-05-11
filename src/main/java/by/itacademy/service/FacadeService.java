@@ -8,9 +8,10 @@ import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
 import by.itacademy.persistence.TaskDao;
+import by.itacademy.security.service.SecurityContext;
 import by.itacademy.security.service.SecurityService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,27 +19,18 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Log4j2
+@RequiredArgsConstructor
+
 @Service
 public class FacadeService {
 
-    private SecurityService securityService;
-    private FileService fileService;
-    private UserService userService;
-    private UnlockRequestMessageService unlockRequestMessageService;
-    private TaskService taskService;
-    private TaskDao taskDao;
-
-    @Autowired
-    public FacadeService(SecurityService securityService, FileService fileService,
-                         UserService userService, UnlockRequestMessageService unlockRequestMessageService,
-                         TaskService taskService, TaskDao taskDao) {
-        this.securityService = securityService;
-        this.fileService = fileService;
-        this.userService = userService;
-        this.unlockRequestMessageService = unlockRequestMessageService;
-        this.taskService = taskService;
-        this.taskDao = taskDao;
-    }
+    private final SecurityService securityService;
+    private final SecurityContext securityContext;
+    private final FileService fileService;
+    private final UserService userService;
+    private final UnlockRequestMessageService unlockRequestMessageService;
+    private final TaskService taskService;
+    private final TaskDao taskDao;
 
     public List<Task> getTasksForUser(int id) throws ApplicationBasedException, AuthorizationException{
         if (securityService.authorizeForCurrentUser(id)
@@ -123,7 +115,7 @@ public class FacadeService {
     }
 
     public void uploadFileForTask(File file) throws ApplicationBasedException, AuthorizationException {
-        int userId = taskDao.getById((int) file.getId()).getUserId();
+        int userId = taskDao.getById(file.getId()).getUserId();
         if (securityService.authorizeForCurrentUser(userId)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             fileService.uploadFileForTask(file);
@@ -146,9 +138,17 @@ public class FacadeService {
         return userService.registerUser(user);
     }
 
-    public List<User> getAllUsers() throws ApplicationBasedException, AuthorizationException{
+    public List<User> getAllLocked() throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
-            return userService.getAllUsers();
+            return userService.getAllLocked(securityContext.getPrincipal().getId());
+        } else {
+            throw new AuthorizationException("You are not authorized for this action");
+        }
+    }
+
+    public List<User> getAllNotLocked() throws ApplicationBasedException, AuthorizationException {
+        if (securityService.authorize(new Role("ADMIN_ROLE"))) {
+            return userService.getAllNotLocked(securityContext.getPrincipal().getId());
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }

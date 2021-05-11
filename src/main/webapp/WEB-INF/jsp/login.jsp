@@ -181,4 +181,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/AuthenticationModel.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/Dao.js"></script>
 </html>

@@ -5,7 +5,7 @@ function logOutSuccess(data) {
 }
 
 function getPrincipal() {
-    $.when(getCurrentUser()).then(function (jsonPrincipal) {
+    $.when(getJson("/principal")).then(function (jsonPrincipal) {
         principal = new Principal(jsonPrincipal);
         console.log("User " + jsonPrincipal.credential.login + " authenticated");
         authorize();

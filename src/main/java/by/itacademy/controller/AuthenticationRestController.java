@@ -1,6 +1,7 @@
 package by.itacademy.controller;
 
 import by.itacademy.entities.front.FrontUser;
+import by.itacademy.entities.front.Message;
 import by.itacademy.entities.user.Credential;
 import by.itacademy.entities.user.PersonalInformation;
 import by.itacademy.entities.user.Role;
@@ -8,8 +9,9 @@ import by.itacademy.entities.user.User;
 import by.itacademy.exception.InputDataValidationException;
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
-import by.itacademy.front.converter.impl.UserToFrontUserConverter;
-import by.itacademy.front.validator.impl.AuthenticationTokenValidator;
+import by.itacademy.controller.converter.Converter;
+import by.itacademy.controller.converter.impl.UserToFrontUserConverter;
+import by.itacademy.controller.validator.impl.AuthenticationTokenValidator;
 import by.itacademy.security.model.authentication.AuthenticationToken;
 import by.itacademy.security.model.user.Roles;
 import by.itacademy.security.service.AuthenticationProvider;
@@ -28,6 +30,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 
+@RequestMapping("/")
 @RestController
 public class AuthenticationRestController {
 
@@ -36,7 +39,7 @@ public class AuthenticationRestController {
     private final AuthenticationTokenValidator validator;
     private final FacadeService facadeService;
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<FrontUser> login(@RequestBody AuthenticationToken token, HttpSession httpSession)
             throws IOException, AuthenticationException {
 
@@ -51,7 +54,7 @@ public class AuthenticationRestController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<FrontUser> register(@RequestBody AuthenticationToken token, HttpSession httpSession)
             throws InputDataValidationException, AuthorizationException {
 
@@ -80,9 +83,22 @@ public class AuthenticationRestController {
         }
     }
 
-    @GetMapping("/logout")
-    public void logout(HttpSession httpSession) {
+    @GetMapping("principal")
+    public ResponseEntity<FrontUser> process() throws AuthorizationException {
+        User principal = (User) securityContext.getPrincipal();
+        if (principal != null) {
+            Converter<User, FrontUser> converter =  new UserToFrontUserConverter();
+            FrontUser frontUser = converter.convert(principal);
+            return new ResponseEntity(frontUser, HttpStatus.OK);
+        } else {
+           throw new AuthorizationException("No principal found");
+        }
+    }
+
+    @GetMapping("logout")
+    public ResponseEntity<Message> logout(HttpSession httpSession) {
         httpSession.setAttribute("user", null);
         securityContext.setPrincipal(null);
+        return new ResponseEntity(new Message("User logged out"),HttpStatus.OK);
     }
 }
