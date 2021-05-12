@@ -85,6 +85,9 @@ viewerNav.somedayView = function () {
     this.trashBoxViewBtn.removeClass("active-btn");
     this.fixedViewBtn.removeClass("active-btn");
 
+    this.trashBoxDropdownMenuButton.hide();
+    this.fixedDropdownMenu.hide();
+    this.lockedUsersDropdownMenu.hide();
 };
 
 viewerNav.fixedView = function () {

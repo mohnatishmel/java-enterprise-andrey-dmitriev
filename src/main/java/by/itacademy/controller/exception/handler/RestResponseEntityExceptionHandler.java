@@ -12,6 +12,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Message> exceptionHandling(Exception e) {
+        e.printStackTrace();
         return new ResponseEntity(new Message(e.getMessage()), HttpStatus.OK);
     }
 }

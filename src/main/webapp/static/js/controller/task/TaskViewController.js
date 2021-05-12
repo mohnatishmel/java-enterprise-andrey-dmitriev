@@ -1,5 +1,5 @@
 
-function showTaskListCommonView(command, page) {
+function showTaskListCommonView(url, page) {
 
     initCreateTaskForm();
 
@@ -7,18 +7,18 @@ function showTaskListCommonView(command, page) {
 
     viewList = new TaskList();
 
-    $.when(getJsonPage(command, page, pageCapacity)).then(function (page) {
+    $.when(getJsonPage(url, page, pageCapacity)).then(function (page) {
         mapTasksFromJsonForCommonView(page.content);
         console.log("showTaskListCommonView");
         initPagination(page ,page.total, function (page) {
-            showTaskListCommonView(command, page);
+            showTaskListCommonView(url, page);
         })
     })
 
 
 }
 
-function showTaskListTrashBoxView(command, page) {
+function showTaskListTrashBoxView(url, page) {
 
     initCreateTaskForm();
 
@@ -26,11 +26,11 @@ function showTaskListTrashBoxView(command, page) {
 
     viewList = new TaskList();
 
-    $.when(getJsonPage(command, page, pageCapacity)).then(function (page) {
+    $.when(getJsonPage(url, page, pageCapacity)).then(function (page) {
         mapTasksFromJsonForTrashBoxView(page.content);
         console.log("showTaskListCommonView");
-        initPagination(page.total, function (page) {
-            showTaskListCommonView(command, page);
+        initPagination(page ,page.total, function (page) {
+            showTaskListCommonView(url, page);
         })
     })
 }
@@ -73,7 +73,7 @@ function mapTasksFromJsonForCommonView(jsonTaskList) {
 
         let today = new Date();
         today.setHours(0,0,0,0)
-        let taskDeadLine = new Date(jsonTask.deadLine + " UTC");
+        let taskDeadLine = new Date(jsonTask.deadLine);
 
         if (taskDeadLine.getTime() < today.getTime()) {
             newTask.expired();
@@ -105,7 +105,7 @@ function mapTasksFromJsonForTrashBoxView(jsonTaskList) {
 
         let today = new Date();
         today.setHours(0,0,0,0)
-        let taskDeadLine = new Date(jsonTask.deadLine + " UTC");
+        let taskDeadLine = new Date(jsonTask.deadLine);
 
         if (taskDeadLine.getTime() < today.getTime()) {
             newTask.expired();

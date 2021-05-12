@@ -94,7 +94,7 @@ public class TaskRestController {
 
     private ResponseEntity<FrontPage<List<FrontTask>>> getTasksList(Page<Task> page) {
         List<FrontTask> frontTasks = taskConverter.convert(page.getContent());
-        FrontPage<List<FrontTask>> frontPage = new FrontPage(frontTasks, page.getTotalElements());
+        FrontPage<List<FrontTask>> frontPage = new FrontPage(page.getNumber(), frontTasks, page.getTotalElements());
         return new ResponseEntity(frontPage, HttpStatus.OK);
     }
 }

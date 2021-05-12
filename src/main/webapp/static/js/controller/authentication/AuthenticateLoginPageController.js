@@ -62,7 +62,7 @@ function authenticateSuccess(jsonPrinciple) {
         accountLockedForm.show();
     } else {
         window.location.href = "/main";
-        header.setUserName(jsonPrinciple.credential.login);
+        // header.setUserName(jsonPrinciple.credential.login);
         console.log("User " + jsonPrinciple.credential.login + " authenticated");
     }
 }

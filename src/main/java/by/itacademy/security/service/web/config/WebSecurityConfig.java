@@ -3,19 +3,28 @@ package by.itacademy.security.service.web.config;
 import by.itacademy.entities.user.Role;
 import by.itacademy.exception.security.authorization.UrlPatternNotFoundException;
 import by.itacademy.security.model.user.GrantedAuthority;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
 
+@Component
 public class WebSecurityConfig {
 
-    private static WebSecurityConfig instance;
+    @Getter
+    @Setter
+    private String staticResourcesLocation = "/static/";
+    @Getter
+    @Setter
+    private String loginPageLocation = "/login/";
 
-    private static List<String> urls;
-    private static List<List<GrantedAuthority>> authorities;
+    private List<String> urls;
+    private List<List<GrantedAuthority>> authorities;
 
     {
         urls = new ArrayList<>();
@@ -42,12 +51,5 @@ public class WebSecurityConfig {
         String message = "No matches to url '" + url + "'";
         log.debug(message);
         throw new UrlPatternNotFoundException(message);
-    }
-
-    public static WebSecurityConfig getInstance() {
-        if (instance == null) {
-            instance = new WebSecurityConfig();
-        }
-        return instance;
     }
 }

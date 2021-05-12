@@ -1,5 +1,5 @@
 function downloadFile(id) {
-    $.getJSON("/tasks/"+ id + "/files", function (result) {
+    $.getJSON("/rest/tasks/"+ id + "/files", function (result) {
 
         let name = result.name;
 
@@ -30,7 +30,7 @@ function uploadFile() {
     formData.append("file", fileUploadForm.getFile());
     formData.append("name", fileUploadForm.getFileName());
     let id = fileUploadForm.getTaskId();
-    let url = "/tasks/"+ id + "/files";
+    let url = "/rest/tasks/"+ id + "/files";
     $.ajax({
         url : url,
         type : "POST",

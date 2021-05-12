@@ -6,7 +6,9 @@ import by.itacademy.entities.user.PersonalInformation;
 import by.itacademy.entities.user.User;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.persistence.*;
+import by.itacademy.security.encoder.PasswordEncoder;
 import by.itacademy.security.model.user.GrantedAuthority;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,28 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
+@RequiredArgsConstructor
 
 @Service
 public class UserService {
 
-    private UserDao userDao;
-    private PersonalInformationDao personalInformationDao;
-    private CredentialsDao credentialsDao;
-    private RoleDao roleDao;
-    private TaskService taskService;
-    private UnlockRequestMessageService unlockRequestMessageService;
-
-    @Autowired
-    public UserService(UserDao userDao, PersonalInformationDao personalInformationDao,
-                       CredentialsDao credentialsDao, RoleDao roleDao,
-                       TaskService taskService, UnlockRequestMessageService unlockRequestMessageService) {
-        this.userDao = userDao;
-        this.personalInformationDao = personalInformationDao;
-        this.credentialsDao = credentialsDao;
-        this.roleDao = roleDao;
-        this.taskService = taskService;
-        this.unlockRequestMessageService = unlockRequestMessageService;
-    }
+    private final UserDao userDao;
+    private final PersonalInformationDao personalInformationDao;
+    private final CredentialsDao credentialsDao;
+    private final RoleDao roleDao;
+    private final TaskService taskService;
+    private final UnlockRequestMessageService unlockRequestMessageService;
+    private final PasswordEncoder passwordEncoder;
 
     public User getById(int id) throws ApplicationBasedException {
         try {
@@ -66,6 +58,8 @@ public class UserService {
     public User registerUser(User user) throws AuthorizationException {
         if (userDao.getByName(user.getLogin()) == null) {
             List<Role> roles = new ArrayList<>();
+            String encodedPassword = user.getCredential().getPassword();
+            user.getCredential().setPassword(encodedPassword);
             for (GrantedAuthority role : user.getAuthorities()) {
                 role =  roleDao.getRoleByRoleName(role.getAuthority());
                 role.getAuthority();

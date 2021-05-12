@@ -64,7 +64,7 @@ public class AuthenticationRestController {
             String error = "Fields can't be empty";
             throw new InputDataValidationException(error);
         } else {
-            roleList.add(new Role(Roles.USER_ROLE.name()));
+            roleList.add(new Role(Roles.USER_ROLE));
 
             User user = User.builder()
                     .credential(new Credential(token.getLogin(), token.getPassword()))
@@ -97,7 +97,7 @@ public class AuthenticationRestController {
 
     @GetMapping("logout")
     public ResponseEntity<Message> logout(HttpSession httpSession) {
-        httpSession.setAttribute("user", null);
+        httpSession.setAttribute("principle", null);
         securityContext.setPrincipal(null);
         return new ResponseEntity(new Message("User logged out"),HttpStatus.OK);
     }

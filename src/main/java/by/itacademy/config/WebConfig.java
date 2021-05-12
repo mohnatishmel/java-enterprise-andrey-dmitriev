@@ -1,5 +1,6 @@
 package by.itacademy.config;
 
+import by.itacademy.constant.Constant;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+        registry.addResourceHandler(Constant.STATIC_RESOURCES_LOCATION + "**")
+                .addResourceLocations(Constant.STATIC_RESOURCES_LOCATION);
     }
 }

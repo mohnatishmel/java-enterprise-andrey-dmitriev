@@ -56,6 +56,7 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
                 @Param("fixed") boolean fixed,
                 @Param("inBasket") boolean inBasket);
 
+    Page<Task> getByDeadLineIsLessThanEqualAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date dateStart, int id, Pageable pageable);
     Page<Task> getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date dateStart, Date dateEnd, int id, Pageable pageable);
     Page<Task> getByDeadLineIsGreaterThanAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date data, int id, Pageable pageable);
     Page<Task> getByFixedIsTrueAndUserId(int id, Pageable pageable);

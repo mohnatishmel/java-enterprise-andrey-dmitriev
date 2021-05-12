@@ -18,7 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 
 @RestController
-@RequestMapping("/tasks/")
+@RequestMapping("/rest/tasks/")
 public class FileRestController {
 
     private final FacadeService facadeService;

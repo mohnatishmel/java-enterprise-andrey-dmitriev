@@ -1,25 +1,23 @@
 package by.itacademy.security.service;
 
-
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.security.model.user.GrantedAuthority;
+import by.itacademy.security.model.user.Roles;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
+@RequiredArgsConstructor
+
 @Service
 public class SecurityService {
 
-    private SecurityContext securityContext;
-
-    @Autowired
-    public SecurityService(SecurityContext securityContext) {
-        this.securityContext = securityContext;
-    }
+    private final SecurityContext securityContext;
+    private final WebSecurityConfig webSecurityConfig;
 
     public boolean authorizeForCurrentUser(int id) {
         boolean result = false;
@@ -31,31 +29,32 @@ public class SecurityService {
         return result;
     }
 
-    public boolean authorize(GrantedAuthority ... authoritiesNeeded) throws AuthorizationException {
+    public boolean authorize(GrantedAuthority... authoritiesNeeded) throws AuthorizationException {
         return authorize(Arrays.asList(authoritiesNeeded));
     }
 
     public boolean authorize(String url) throws AuthorizationException {
-            List<GrantedAuthority> authoritiesNeeded = WebSecurityConfig.getInstance().findMatches(url);
-            return authorize(authoritiesNeeded);
+        List<GrantedAuthority> authoritiesNeeded = webSecurityConfig.findMatches(url);
+        if (authoritiesNeeded.stream().filter(role -> role.getAuthority().equals(Roles.GUEST_ROLE)).findAny().isPresent()) {
+            return true;
+        }
+        return authorize(authoritiesNeeded);
     }
 
-    private boolean authorize(List<GrantedAuthority> authoritiesNeeded ) throws AuthorizationException {
-        boolean result = false;
-        UserDetails p = securityContext.getPrincipal();
-        if (securityContext.getPrincipal() != null) {
-            List<GrantedAuthority> grantedAuthorities =
-                    (List<GrantedAuthority>) securityContext.getPrincipal().getAuthorities();
-            if (!grantedAuthorities.isEmpty() && !authoritiesNeeded.isEmpty()) {
-                for (GrantedAuthority grantedAuthority : grantedAuthorities) {
-                    for (GrantedAuthority authorityNeeded : authoritiesNeeded) {
-                        if (grantedAuthority != null && grantedAuthority.equals(authorityNeeded)) {
-                            result = true;
-                        }
+    private boolean authorize(List<GrantedAuthority> authoritiesNeeded) throws AuthorizationException {
+        UserDetails principle = securityContext.getPrincipal();
+        if (principle != null) {
+            List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>) principle.getAuthorities();
+
+            for (GrantedAuthority grantedAuthority : grantedAuthorities) {
+                for (GrantedAuthority authorityNeeded : authoritiesNeeded) {
+                    if (grantedAuthority != null && grantedAuthority.equals(authorityNeeded)
+                            || grantedAuthority.getAuthority().equals(Roles.GUEST_ROLE)) {
+                        return true;
                     }
                 }
             }
         }
-        return result;
+        throw new AuthorizationException("You are not authorized for this action");
     }
 }

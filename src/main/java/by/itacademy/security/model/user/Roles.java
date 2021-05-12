@@ -1,6 +1,7 @@
 package by.itacademy.security.model.user;
 
-public enum Roles {
-    USER_ROLE,
-    ADMIN_ROLE
+public class Roles {
+    public static final String USER_ROLE = "USER_ROLE";
+    public static final String ADMIN_ROLE = "ADMIN_ROLE";
+    public static final String GUEST_ROLE = "GUEST_ROLE";
 }

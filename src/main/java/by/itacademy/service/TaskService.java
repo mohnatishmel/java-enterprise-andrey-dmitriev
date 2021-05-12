@@ -42,8 +42,8 @@ public class TaskService {
     public Page<Task> getTodayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
         try {
             long[] timeRange = getDayStartAndDayEndInMilliseconds(0);
-            return taskDao.getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse
-                    (new java.sql.Date(timeRange[0]), new java.sql.Date(timeRange[1]), id, pageable);
+            return taskDao.getByDeadLineIsLessThanEqualAndUserIdAndFixedIsFalseAndInBasketIsFalse
+                    (new java.sql.Date(timeRange[0]), id, pageable);
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
         }

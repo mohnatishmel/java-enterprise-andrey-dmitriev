@@ -1,10 +1,12 @@
-
-let pagination = {};
+let pagination = {
+    pages: 0,
+    currentPage: 0
+};
 pagination.hide = function () {
-    $("#pagination").addClass("d-none");
+    $("#paginationUl").addClass("d-none");
 }
 pagination.show = function () {
-    $("#pagination").removeClass("d-none");
+    $("#paginationUl").removeClass("d-none");
 }
 
 pagination.clear = function () {
@@ -15,10 +17,18 @@ pagination.append = function (page) {
     $("#paginationUl").append($($.parseHTML(page)).hide().fadeIn(200));
 }
 
+pagination.activePage = function (pageNumber) {
+    for (let i = 1; i <= this.pages; i++) {
+        $("#pageBtn" + i ).removeClass("page-btn-active");
+    }
+    pageNumber++;
+    $("#pageBtn" + pageNumber).addClass("page-btn-active")
+}
+
 function createPreviousPageBtn() {
     let $previousBtnTemplate = $("#previousPageBtnTemplate");
     let $newPreviousBtn = $previousBtnTemplate.clone();
-    $newPreviousBtn.attr("id", "$previousPageBtn");
+    $newPreviousBtn.attr("id", "previousPageBtn");
     let $newLi = $("<li></li>");
     $newLi.addClass("page-item");
     $newLi.append($newPreviousBtn);

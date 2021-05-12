@@ -2,9 +2,11 @@ package by.itacademy.security.service;
 
 import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authentication.BadCredentialsException;
+import by.itacademy.security.encoder.PasswordEncoder;
 import by.itacademy.security.model.authentication.UserDetailService;
 import by.itacademy.security.model.user.UserDetails;
 import by.itacademy.security.model.authentication.AuthenticationToken;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -12,22 +14,19 @@ import org.springframework.stereotype.Service;
 
 
 @Log4j2
+@RequiredArgsConstructor
 
 @Service
 public class AuthenticationProvider {
 
-    private UserDetailService userDetailService;
-
-    @Autowired
-    public AuthenticationProvider(UserDetailService userDetailService) {
-        this.userDetailService = userDetailService;
-    }
+    private final UserDetailService userDetailService;
+    private final PasswordEncoder passwordEncoder;
 
     public UserDetails authenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
         UserDetails user = null;
 
         String login = authenticationToken.getLogin();
-        String password = authenticationToken.getPassword();
+        String password = passwordEncoder.encodePassword(authenticationToken.getPassword());
 
         if (login != null) {
             try {

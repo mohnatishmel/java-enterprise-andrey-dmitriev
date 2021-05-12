@@ -147,7 +147,7 @@
         }
 
         .viewList {
-            height: 75%;
+            min-height: 70%;
         }
 
         /*------------------  VIEW LIST  --------------------*/
@@ -226,9 +226,36 @@
             border-radius: 50%;
         }
         /*------------------  TOGGLE SWITCH  --------------------*/
+        /*------------------  PAGINATION  --------------------*/
+        .pagination {
+        }
 
-        .container {
+        /*.my-page-item {*/
+        /*    border: none;*/
+        /*}*/
+        .page-btn {
+            width: 1.8em;
+            height: 1.8em;
+            margin: 2px;
+            border: 1px solid #eee;
+            background-color: #eee;
+            border-radius: 5px;
+            color: #343a40;
+        }
+
+        .page-btn:hover,
+        .page-btn-active {
+            background-color: white;
+            border: 1px solid #b5b3b3;
+
+        }
+        /*------------------  PAGINATION  --------------------*/
+
+
+        .content-section {
             max-width: 800px;
+            min-height: 80%;
+            padding-top: 3%;
         }
 
         .trash-box i {
@@ -264,7 +291,7 @@
         }
 
         body {
-            /*background-color: #bababa;*/
+            height: 100%;
         }
 
         .user-label {
@@ -305,6 +332,7 @@
 
 
 
+
         /*.dropdown-item,*/
         /*.navbar-collapse {*/
         /*    text-align: center;*/
@@ -320,7 +348,7 @@
 
 </header>
 
-<div class="container">
+<section id="contentSection" class="d-none container content-section align-self-stretch">
 
     <c:import url="/WEB-INF/jsp/template/task/task_edit_form_tmpl.jsp"/>
 
@@ -333,7 +361,7 @@
     <c:import url="/WEB-INF/jsp/template/viewer_tmpl.jsp"/>
 
     <c:import url="/WEB-INF/jsp/template/pagination_tmpl.jsp"/>
-</div>
+</section>
 </body>
 <script>
     let viewList;
@@ -354,6 +382,7 @@
             showTime();
             getPrincipal();
             viewerNav.taskNav();
+            $("#contentSection").removeClass("d-none");
         });
 
         function clearBox(elementID) {

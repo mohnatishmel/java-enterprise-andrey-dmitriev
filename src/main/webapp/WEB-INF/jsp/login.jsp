@@ -125,21 +125,20 @@
         }
 
         #messageSendSuccess p {
-            margin: 1em auto 2em auto ;
+            margin: 1em auto 2em auto;
             display: block;
         }
-
-
 
 
     </style>
 
 </head>
 <body>
+<section id="contentSection" class="d-none">
+    <c:import url="/WEB-INF/jsp/template/account_locked_mesage_tmpl.jsp"/>
 
-<c:import url="/WEB-INF/jsp/template/account_locked_mesage_tmpl.jsp"/>
-
-<c:import url="/WEB-INF/jsp/template/authentication_form_tmpl.jsp"/>
+    <c:import url="/WEB-INF/jsp/template/authentication_form_tmpl.jsp"/>
+</section>
 </body>
 <script>
 
@@ -151,6 +150,7 @@
             loginForm.hideAlert();
             registerForm.hideAlert();
             $("#registerForm").hide();
+            $("#contentSection").removeClass("d-none");
         });
 
         // const $registrationForm = $("#registrationForm");
@@ -162,22 +162,27 @@
             })
         })
 
-<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>--%>
-<%--        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>--%>
+        <%--        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>--%>
 
     })
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/LoginFormView.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/RegisterFormView.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/view/authentication/AccountLockedFormView.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/controller/authentication/AuthenticateLoginPageController.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/controller/authentication/AccountLockedFormController.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/static/js/view/authentication/LoginFormView.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/static/js/view/authentication/RegisterFormView.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/static/js/view/authentication/AccountLockedFormView.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/static/js/controller/authentication/AuthenticateLoginPageController.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/static/js/controller/authentication/AccountLockedFormController.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/AuthenticationModel.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/model/MessageModel.js"></script>

@@ -75,7 +75,7 @@ INSERT INTO users (credentials_id, personal_information_id, profile_enable) VALU
 -- Data for table `tasks`
 --
 
-INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2021-07-17 13:54:18', 'task1', false, false, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
+INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2020-07-17 13:54:18', 'task1', false, false, 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
 INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (1, '2021-05-25 13:11:34', 'task2', true, false,'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
 INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (3, '2021-10-02 20:20:28', 'task3', false, false, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
 INSERT INTO tasks (user_id, deadline, task_name, fixed, in_basket, description) VALUES (4, '2021-08-27 12:25:14', 'task4', false, true, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.');
