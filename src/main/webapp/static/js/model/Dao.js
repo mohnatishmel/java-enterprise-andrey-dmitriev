@@ -26,7 +26,7 @@ function sendJson(data, url, method, success) {
             success(data);
         },
         error: function (data) {
-            alert(data.message);
+            alert(data.responseJSON.message);
         }
     });
 }

@@ -17,121 +17,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <style>
-        /*------------------  LOGIN FORM  --------------------*/
 
-        body {
-            background-color: #eee;
-        }
-
-        .account-locked-form,
-        .user-form {
-            max-width: 600px;
-            min-width: 600px;
-            margin: auto;
-            margin-top: 5em;
-            padding: 0;
-            padding: 1.5em;
-            background-color: white;
-            /*border: 1px solid #868e96;*/
-            /*border-radius: 5px;*/
-            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
-        }
-
-        .login-btn {
-
-        }
-
-        .input-group {
-            border: 2px solid #eee;
-            position: relative;
-            background: #eee;
-            margin: 25px 0;
-            border-radius: 2px;
-            overflow: hidden;
-            padding: 10px;
-        }
-
-        .input-group textarea,
-        .input-group input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            outline: none;
-            font-weight: 500;
-            font-family: "Open Sans", sans-serif;
-            font-size: 16px;
-        }
-
-        .input-group label {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            padding-left: 10px;
-            font-weight: 500;
-            color: #aaa;
-        }
-
-        .user-form {
-        }
-
-        .account-locked-form-modal .modal-content,
-        .account-locked-form-modal .modal-dialog {
-            /*position: fixed;*/
-            background: #eee;
-            margin: auto;
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            border: 0;
-        }
-
-        .account-locked-form-modal .modal,
-        .account-locked-form-modal .modal-dialog {
-            max-width: none;
-            height: 100%;
-            width: 100%;
-        }
-
-        .card-footer input {
-            width: 100%;
-            padding: 25px;
-            font-size: 24px;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            background: #195f91;
-            border: none;
-            color: #fff;
-            box-shadow: none;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .action-change {
-            border-color: rgba(0, 0, 0, 0);
-            margin: auto;
-        }
-
-        .btn-group {
-            display: inline-block;
-        }
-
-        /*------------------  LOGIN FORM  --------------------*/
-
-        #messageSendSuccess button {
-            margin: auto;
-            width: 3em;
-        }
-
-        #messageSendSuccess p {
-            margin: 1em auto 2em auto;
-            display: block;
-        }
-
-
-    </style>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/login.css">
 </head>
 <body>
 <section id="contentSection" class="d-none">
@@ -141,7 +28,6 @@
 </section>
 </body>
 <script>
-
     let principal = null;
 
     jQuery(function () {
@@ -153,24 +39,12 @@
             $("#contentSection").removeClass("d-none");
         });
 
-        // const $registrationForm = $("#registrationForm");
-        // const $loginForm = $("#loginForm");
         $(document).on("click", "#action-change", function () {
             console.log("click")
             $("#userForm").fadeOut(100, function () {
                 $("#submit").value = "Register";
             })
         })
-
-        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/LoginFormView.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/RegisterFormView.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/view/authentication/AccountLockedFormView.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AuthenticateLoginPageController.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/controller/authentication/AccountLockedFormController.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/model/AuthenticationModel.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/model/MessageModel.js"/>--%>
-        <%--        <c:import url="/WEB-INF/jsp/js/model/Dao.js"/>--%>
-
     })
 </script>
 <script type="text/javascript"

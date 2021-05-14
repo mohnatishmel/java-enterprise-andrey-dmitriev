@@ -13,10 +13,7 @@ viewerNav.lockedUsersViewBtn.on("click", function () {
 });
 
 viewerNav.incomeMessagesBtn.on("click", function () {
-    currentView = "INCOME_MESSAGES";
-    viewerNav.incomeMessages();
-    showMessageList("/rest/unlock/requests/messages");
-    console.log("current view: " + currentView);
+    incomeMessagesView();
 });
 
 viewerNav.enableAllLockedUsersBtn.on("click", function () {
@@ -28,3 +25,10 @@ viewerNav.deleteAllLockedUsersBtn.on("click", function () {
     deleteAllUsersFromViewList();
     viewList = {};
 });
+
+function incomeMessagesView() {
+    currentView = "INCOME_MESSAGES";
+    viewerNav.incomeMessages();
+    showMessageList("/rest/unlock/requests/messages");
+    console.log("current view: " + currentView);
+}

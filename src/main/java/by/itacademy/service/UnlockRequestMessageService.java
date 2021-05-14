@@ -22,8 +22,7 @@ public class UnlockRequestMessageService {
 
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException {
         try {
-            return (List<UnlockRequestMessage>) unlockRequestMessageDao.findAll();
-
+            return unlockRequestMessageDao.findAll();
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
         }
@@ -46,6 +45,10 @@ public class UnlockRequestMessageService {
     }
 
     public void deleteByUserId(int id) throws ApplicationBasedException {
+        try {
         unlockRequestMessageDao.deleteByUserId(id);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
     }
 }

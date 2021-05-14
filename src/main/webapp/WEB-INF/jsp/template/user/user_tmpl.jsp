@@ -8,12 +8,6 @@
             <div class="ml-2">
                 <h6 class="mb-0 name" id="userName"></h6>
                 <div class="d-flex flex-row mt-1 text-black-50 date-time">
-<%--                            <div><i class="fa fa-calendar-o"></i>--%>
-<%--                                <span class="ml-2" id="taskDeadline"></span>--%>
-<%--                            </div>--%>
-<%--                            <div class="ml-3"><i class="fa fa-clock-o"></i>--%>
-<%--                                <span id="daysLeft" class="ml-2"></span>--%>
-<%--                            </div>--%>
                 </div>
             </div>
         </div>

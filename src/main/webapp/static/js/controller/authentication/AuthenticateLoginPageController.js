@@ -62,20 +62,18 @@ function authenticateSuccess(jsonPrinciple) {
         accountLockedForm.show();
     } else {
         window.location.href = "/main";
-        // header.setUserName(jsonPrinciple.credential.login);
         console.log("User " + jsonPrinciple.credential.login + " authenticated");
     }
 }
 
 function loginError(data) {
-    const message = data.message;
-    alert(message);
+    const message = data.responseJSON.message;
     console.log("Authentication error: " + message);
     loginForm.showAlert(message);
 }
 
 function registrationError(data) {
-    const message = data.message;
+    const message = data.responseJSON.message;
     console.log("Authentication error: " + message);
     registerForm.showAlert(message);
 }

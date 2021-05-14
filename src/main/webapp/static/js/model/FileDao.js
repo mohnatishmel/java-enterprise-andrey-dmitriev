@@ -1,5 +1,5 @@
 function downloadFile(id) {
-    $.getJSON("/rest/tasks/"+ id + "/files", function (result) {
+    return $.getJSON("/rest/tasks/"+ id + "/files", function (result) {
 
         let name = result.name;
 
@@ -43,8 +43,8 @@ function uploadFile() {
         success: function () {
             alert('The file has been uploaded successfully.');
         },
-        error: function (data, status, er) {
-            alert("error: " + data + " status: " + status + " er:" + er);
+        error: function (data) {
+            alert(data.responseJSON.message);
         }
     });
     console.log(document.getElementById("uploadFileInput").files[0].name + "is uploaded")

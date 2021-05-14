@@ -5,7 +5,4 @@ public class InputDataValidationException extends Exception {
         super(message);
     }
 
-    public InputDataValidationException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

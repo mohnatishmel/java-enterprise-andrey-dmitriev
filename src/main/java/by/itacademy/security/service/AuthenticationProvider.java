@@ -29,14 +29,10 @@ public class AuthenticationProvider {
         String password = passwordEncoder.encodePassword(authenticationToken.getPassword());
 
         if (login != null) {
-            try {
-                user = userDetailService.getByName(login);
-                if (!password.equals(user.getPassword())) {
-                    log.debug("bad credentials");
-                    throw new BadCredentialsException();
-                }
-            } catch (DataAccessException e) {
-
+            user = userDetailService.getByName(login);
+            if (!password.equals(user.getPassword())) {
+                log.debug("bad credentials");
+                throw new BadCredentialsException();
             }
         }
 

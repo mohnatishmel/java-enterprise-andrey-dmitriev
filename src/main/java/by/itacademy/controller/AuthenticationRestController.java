@@ -56,7 +56,7 @@ public class AuthenticationRestController {
 
     @PostMapping("register")
     public ResponseEntity<FrontUser> register(@RequestBody AuthenticationToken token, HttpSession httpSession)
-            throws InputDataValidationException, AuthorizationException {
+            throws InputDataValidationException, AuthenticationException {
 
         List<Role> roleList = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class AuthenticationRestController {
             String error = "Fields can't be empty";
             throw new InputDataValidationException(error);
         } else {
-            roleList.add(new Role(Roles.USER_ROLE));
+            roleList.add(new Role(Roles.USER));
 
             User user = User.builder()
                     .credential(new Credential(token.getLogin(), token.getPassword()))

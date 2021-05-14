@@ -18,10 +18,17 @@ public class WebSecurityConfig {
 
     @Getter
     @Setter
-    private String staticResourcesLocation = "/static/";
+    private String staticResourcesPath = "/static/";
     @Getter
     @Setter
-    private String loginPageLocation = "/login/";
+    private String loginPath = "/login/";
+    @Getter
+    @Setter
+    private String registerPath = "/register/";
+    @Getter
+    @Setter
+    private String errorPath = "/error/";
+
 
     private List<String> urls;
     private List<List<GrantedAuthority>> authorities;

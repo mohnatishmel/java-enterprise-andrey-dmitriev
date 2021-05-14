@@ -30,15 +30,6 @@ public class TaskService {
         this.securityContext = securityContext;
     }
 
-    public List<Task> getTasksForUser(int id) throws ApplicationBasedException {
-        try {
-            return taskDao.getByUserId(id);
-        } catch (
-                DataAccessException e) {
-            throw new ApplicationBasedException(e);
-        }
-    }
-
     public Page<Task> getTodayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException {
         try {
             long[] timeRange = getDayStartAndDayEndInMilliseconds(0);
@@ -87,7 +78,7 @@ public class TaskService {
 
     public void createTask(Task task) throws ApplicationBasedException {
         try {
-            int userId = ((User) securityContext.getPrincipal()).getId();
+            int userId = (securityContext.getPrincipal()).getId();
             task.setUserId(userId);
             taskDao.create(task.getUserId(),
                     task.getName(),
@@ -102,7 +93,7 @@ public class TaskService {
 
     public void updateTask(Task task) throws ApplicationBasedException {
         try {
-            int userId = ((User) securityContext.getPrincipal()).getId();
+            int userId = (securityContext.getPrincipal()).getId();
             task.setUserId(userId);
             taskDao.update(task.getId(),
                     task.getName(),

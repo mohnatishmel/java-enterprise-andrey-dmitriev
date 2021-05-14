@@ -57,7 +57,9 @@ function mapTasksFromJsonForCommonView(jsonTaskList) {
             updateTaskWithoutFetching(id);
         });
         toolbox.downloadToolboxBtn.on("click", function () {
-            downloadFile(id);
+            downloadFile(id).fail(function(data) {
+                alert(data.responseJSON.message);
+            });
         });
         toolbox.updateToolboxBtn.on("click", function () {
             initUpdateTaskForm(id);

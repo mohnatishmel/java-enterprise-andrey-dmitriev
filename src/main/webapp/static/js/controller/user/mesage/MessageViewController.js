@@ -26,10 +26,12 @@ function mapMessageFromJson(jsonMessageList) {
 
         toolbox.resolveRequestToggleSwitch.on("click", function () {
             resolveUnlockUserRequest(id);
+            viewList.hideByUserId(newMessage.userId);
         });
 
         toolbox.deleteMessageBtn.click(function () {
             deleteMessage(id);
+            viewList.hideByUserId(newMessage.userId);
         });
     });
 }

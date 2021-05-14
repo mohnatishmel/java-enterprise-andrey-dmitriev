@@ -21,6 +21,18 @@ function MessageList() {
         })
         return message;
     }
+
+    this.hideByUserId = function (id) {
+        let message = null;
+        let referenceId = id;
+        let targetId;
+        this.list.forEach(function (t) {
+            targetId = t.userId;
+            if (referenceId === targetId) {
+                t.hide();
+            }
+        })
+    }
 }
 
 function Message(jsonUnlockMessage) {

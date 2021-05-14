@@ -1,5 +1,6 @@
 package by.itacademy.config;
 
+import by.itacademy.constant.Constant;
 import by.itacademy.security.model.user.Roles;
 import by.itacademy.security.service.web.config.WebSecurityConfig;
 import lombok.RequiredArgsConstructor;
@@ -16,19 +17,22 @@ public class WebSecurityConfigurer {
 
     @PostConstruct
     public void init() {
-        webSecurityConfig.setLoginPageLocation("/login");
-        webSecurityConfig.setStaticResourcesLocation("/static");
+        webSecurityConfig.setLoginPath(Constant.LOGIN_PATH);
+        webSecurityConfig.setRegisterPath(Constant.REGISTRATION_PATH);
+        webSecurityConfig.setStaticResourcesPath(Constant.STATIC_RESOURCES_PATH);
+        webSecurityConfig.setErrorPath(Constant.ERROR_PATH);
 
-        webSecurityConfig.add("/", Roles.GUEST_ROLE)
-                .add("/static.*", Roles.GUEST_ROLE)
-                .add("/login", Roles.GUEST_ROLE)
-                .add("/register", Roles.GUEST_ROLE)
-                .add("/logout", Roles.USER_ROLE, Roles.ADMIN_ROLE)
-                .add("/principal", Roles.USER_ROLE, Roles.ADMIN_ROLE)
-                .add("/main", Roles.USER_ROLE, Roles.ADMIN_ROLE)
-                .add("/rest/tasks.*", Roles.USER_ROLE, Roles.ADMIN_ROLE)
-                .add("/rest/users.*", Roles.ADMIN_ROLE)
-                .add("/rest/tasks/.*/files", Roles.USER_ROLE, Roles.ADMIN_ROLE)
-                .add("/rest/unlock/requests/messages", Roles.USER_ROLE, Roles.ADMIN_ROLE);
+        webSecurityConfig.add("/", Roles.GUEST)
+                .add(Constant.ERROR_PATH + ".*", Roles.GUEST)
+                .add(Constant.STATIC_RESOURCES_PATH + ".*", Roles.GUEST)
+                .add(Constant.LOGIN_PATH + ".*", Roles.GUEST)
+                .add(Constant.REGISTRATION_PATH + ".*", Roles.GUEST)
+                .add("/logout", Roles.USER, Roles.ADMIN)
+                .add("/principal", Roles.USER, Roles.ADMIN)
+                .add("/main", Roles.USER, Roles.ADMIN)
+                .add("/rest/tasks.*", Roles.USER, Roles.ADMIN)
+                .add("/rest/users.*", Roles.ADMIN)
+                .add("/rest/tasks/.*/files", Roles.USER, Roles.ADMIN)
+                .add("/rest/unlock/requests/messages", Roles.USER, Roles.ADMIN);
     }
 }

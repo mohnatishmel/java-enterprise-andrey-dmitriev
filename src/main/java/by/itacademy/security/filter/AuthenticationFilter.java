@@ -32,13 +32,14 @@ public class AuthenticationFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
-        if (!url.matches(webSecurityConfig.getStaticResourcesLocation() + ".*")
-                && !url.matches(webSecurityConfig.getLoginPageLocation() + ".*")) {
+        if (!url.matches(webSecurityConfig.getStaticResourcesPath() + ".*")
+                && !url.matches(webSecurityConfig.getLoginPath() + ".*")
+                && !url.matches(webSecurityConfig.getRegisterPath() + ".*")) {
             request.getServletContext()
-                    .getRequestDispatcher(webSecurityConfig.getLoginPageLocation())
+                    .getRequestDispatcher(webSecurityConfig.getLoginPath())
                     .forward(request, response);
+            return;
         }
         chain.doFilter(request, response);
-        return;
     }
 }

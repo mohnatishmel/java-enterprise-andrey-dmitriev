@@ -1,6 +1,7 @@
 package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;;
+import by.itacademy.exception.security.authentication.AuthenticationException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.entities.file.File;
 import by.itacademy.entities.message.UnlockRequestMessage;
@@ -32,58 +33,44 @@ public class FacadeService {
     private final TaskService taskService;
     private final TaskDao taskDao;
 
-    public List<Task> getTasksForUser(int id) throws ApplicationBasedException, AuthorizationException{
-        if (securityService.authorizeForCurrentUser(id)
-                & securityService.authorize(new Role("USER_ROLE"))) {
-            return taskService.getTasksForUser(id);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
-        }
-    }
-
     public Page<Task> getTodayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return taskService.getTodayTasksForUser(id, pageable);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public Page<Task> getTomorrowTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return taskService.getTomorrowTasksForUser(id, pageable);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public Page<Task> getSomedayTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return taskService.getSomedayTasksForUser(id, pageable);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public Page<Task> getTrashBoxTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return taskService.getTrashBoxTasksForUser(id, pageable);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public Page<Task> getFixedTasksForUser(int id, Pageable pageable) throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorizeForCurrentUser(id)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return taskService.getFixedTasksForUser(id, pageable);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public void createTask(Task task) throws ApplicationBasedException, AuthorizationException {
@@ -129,29 +116,26 @@ public class FacadeService {
         if (securityService.authorizeForCurrentUser(userId)
                 & securityService.authorize(new Role("USER_ROLE"))) {
             return fileService.getFile(id);
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
-    public User registerUser(User user) throws AuthorizationException {
+    public User registerUser(User user) throws AuthenticationException {
         return userService.registerUser(user);
     }
 
     public List<User> getAllLocked() throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
             return userService.getAllLocked(securityContext.getPrincipal().getId());
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public List<User> getAllNotLocked() throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
             return userService.getAllNotLocked(securityContext.getPrincipal().getId());
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public void updateUserIsLocked(User updateUser) throws ApplicationBasedException, AuthorizationException {
@@ -182,9 +166,8 @@ public class FacadeService {
     public List<UnlockRequestMessage> getUnlockRequestMessages() throws ApplicationBasedException, AuthorizationException {
         if (securityService.authorize(new Role("ADMIN_ROLE"))) {
             return unlockRequestMessageService.getUnlockRequestMessages();
-        } else {
-            throw new AuthorizationException("You are not authorized for this action");
         }
+        throw new AuthorizationException("You are not authorized for this action");
     }
 
     public void createUnlockUserRequest(UnlockRequestMessage requestMessage) throws ApplicationBasedException, AuthorizationException {
@@ -210,7 +193,7 @@ public class FacadeService {
             user.setAccountNotLocked(true);
             updateUserIsLocked(user);
 
-            unlockRequestMessageService.deleteUnlockUserRequest(requestMessage);
+            unlockRequestMessageService.deleteByUserId(requestMessage.getUserId());
         } else {
             throw new AuthorizationException("You are not authorized for this action");
         }

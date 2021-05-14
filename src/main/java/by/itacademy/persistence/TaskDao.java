@@ -35,8 +35,7 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM tasks WHERE user_id = :userId",
-            nativeQuery = true)
+    @Query(value = "DELETE FROM Task WHERE userId = :userId")
     void deleteByUserId(@Param("userId") int userId);
 
     @Modifying

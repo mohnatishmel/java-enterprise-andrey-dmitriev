@@ -4,10 +4,15 @@ import by.itacademy.entities.user.Role;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.user.PersonalInformation;
 import by.itacademy.entities.user.User;
+import by.itacademy.exception.security.authentication.AuthenticationException;
+import by.itacademy.exception.security.authentication.UserNameAlreadyExistsException;
+import by.itacademy.exception.security.authentication.UserNotFoundException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.persistence.*;
 import by.itacademy.security.encoder.PasswordEncoder;
+import by.itacademy.security.model.authentication.UserDetailService;
 import by.itacademy.security.model.user.GrantedAuthority;
+import by.itacademy.security.model.user.UserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +21,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RequiredArgsConstructor
 
 @Service
-public class UserService {
+public class UserService implements UserDetailService {
 
     private final UserDao userDao;
     private final PersonalInformationDao personalInformationDao;
@@ -30,6 +36,12 @@ public class UserService {
     private final TaskService taskService;
     private final UnlockRequestMessageService unlockRequestMessageService;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails getByName(String name) throws UserNotFoundException {
+        return userDao.getByName(name).orElseThrow(() ->
+                new UserNotFoundException(String.format("User with name '%s' not found", name)));
+    }
 
     public User getById(int id) throws ApplicationBasedException {
         try {
@@ -55,8 +67,8 @@ public class UserService {
         }
     }
 
-    public User registerUser(User user) throws AuthorizationException {
-        if (userDao.getByName(user.getLogin()) == null) {
+    public User registerUser(User user) throws AuthenticationException {
+        if ( ! userDao.getByName(user.getLogin()).isPresent()) {
             List<Role> roles = new ArrayList<>();
             String encodedPassword = user.getCredential().getPassword();
             user.getCredential().setPassword(encodedPassword);
@@ -69,7 +81,7 @@ public class UserService {
             user.setRoles(roles);
             user = userDao.save(user);
         } else {
-            throw new AuthorizationException("User name already exist");
+            throw new UserNameAlreadyExistsException("User with such name already exist");
         }
         return user;
     }

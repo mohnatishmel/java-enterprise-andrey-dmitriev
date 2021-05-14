@@ -1,6 +1,7 @@
 package by.itacademy.exception;
 
 public class ApplicationBasedException extends Exception {
+    
     public ApplicationBasedException(String message) {
         super(message);
     }

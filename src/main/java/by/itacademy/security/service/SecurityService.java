@@ -35,7 +35,7 @@ public class SecurityService {
 
     public boolean authorize(String url) throws AuthorizationException {
         List<GrantedAuthority> authoritiesNeeded = webSecurityConfig.findMatches(url);
-        if (authoritiesNeeded.stream().filter(role -> role.getAuthority().equals(Roles.GUEST_ROLE)).findAny().isPresent()) {
+        if (authoritiesNeeded.stream().filter(role -> role.getAuthority().equals(Roles.GUEST)).findAny().isPresent()) {
             return true;
         }
         return authorize(authoritiesNeeded);
@@ -49,12 +49,12 @@ public class SecurityService {
             for (GrantedAuthority grantedAuthority : grantedAuthorities) {
                 for (GrantedAuthority authorityNeeded : authoritiesNeeded) {
                     if (grantedAuthority != null && grantedAuthority.equals(authorityNeeded)
-                            || grantedAuthority.getAuthority().equals(Roles.GUEST_ROLE)) {
+                            || grantedAuthority.getAuthority().equals(Roles.GUEST)) {
                         return true;
                     }
                 }
             }
         }
-        throw new AuthorizationException("You are not authorized for this action");
+        throw new AuthorizationException("You are not authorized to see that content");
     }
 }

@@ -2,6 +2,7 @@ package by.itacademy.service;
 
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.file.File;
+import by.itacademy.exception.FileNotFoundException;
 import by.itacademy.persistence.TaskFileDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,7 @@ public class FileService {
 
     public File getFile(long id) throws ApplicationBasedException {
         try {
-            Optional<File> optionalFile = taskFileDao.findById((int) id);
-            if (optionalFile.isPresent()) {
-                return optionalFile.get();
-            }
-            throw new ApplicationBasedException("file not found");
+           return taskFileDao.findById((int) id).orElseThrow(() -> new FileNotFoundException("No files for this task"));
 
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
