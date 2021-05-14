@@ -9,6 +9,7 @@ import by.itacademy.entities.task.Task;
 import by.itacademy.entities.user.Role;
 import by.itacademy.entities.user.User;
 import by.itacademy.persistence.TaskDao;
+import by.itacademy.security.model.authentication.AuthenticationToken;
 import by.itacademy.security.service.SecurityContext;
 import by.itacademy.security.service.SecurityService;
 import lombok.RequiredArgsConstructor;
@@ -120,8 +121,8 @@ public class FacadeService {
         throw new AuthorizationException("You are not authorized for this action");
     }
 
-    public User registerUser(User user) throws AuthenticationException {
-        return userService.registerUser(user);
+    public User registerUser(AuthenticationToken token) throws AuthenticationException {
+        return userService.registerUser(token);
     }
 
     public List<User> getAllLocked() throws ApplicationBasedException, AuthorizationException {

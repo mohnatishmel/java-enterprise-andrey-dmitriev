@@ -37,16 +37,16 @@ INSERT INTO personal_information (first_name, last_name) VALUES ('Simeon', 'Belh
 -- Table structure for table `credentials`
 --
 
-INSERT INTO credentials (login, password) VALUES ('user', 'pass');
-INSERT INTO credentials (login, password) VALUES ('admin', 'pass');
-INSERT INTO credentials (login, password) VALUES ('user1', 'OypZ5Qdjb');
-INSERT INTO credentials (login, password) VALUES ('user2', 'ZNpoafWzXkX');
-INSERT INTO credentials (login, password) VALUES ('user3', 'iICPFhu');
-INSERT INTO credentials (login, password) VALUES ('user4', 'B2SWfGyiKQPB');
-INSERT INTO credentials (login, password) VALUES ('user5', 'uRRqzDMsM');
-INSERT INTO credentials (login, password) VALUES ('user6', 'J2wtx7RW');
-INSERT INTO credentials (login, password) VALUES ('user7', 'OyA4vT4nQOa');
-INSERT INTO credentials (login, password) VALUES ('user8', 'QlH8W4F');
+INSERT INTO credentials (login, password) VALUES ('user', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('admin', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user1', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user2', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user3', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user4', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user5', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user6', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user7', '1a1dc91c907325c69271ddf0c944bc72');
+INSERT INTO credentials (login, password) VALUES ('user8', '1a1dc91c907325c69271ddf0c944bc72');
 
 
 -- --------------------------------------------------------

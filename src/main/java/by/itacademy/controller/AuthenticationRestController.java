@@ -64,16 +64,9 @@ public class AuthenticationRestController {
             String error = "Fields can't be empty";
             throw new InputDataValidationException(error);
         } else {
-            roleList.add(new Role(Roles.USER));
 
-            User user = User.builder()
-                    .credential(new Credential(token.getLogin(), token.getPassword()))
-                    .personalInformation(new PersonalInformation(0, "", ""))
-                    .roles(roleList)
-                    .accountNotLocked(true)
-                    .build();
 
-            user = facadeService.registerUser(user);
+            User user = facadeService.registerUser(token);
 
             securityContext.setPrincipal(user);
             httpSession.setAttribute("principle", user);

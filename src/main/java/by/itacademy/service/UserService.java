@@ -1,5 +1,6 @@
 package by.itacademy.service;
 
+import by.itacademy.entities.user.Credential;
 import by.itacademy.entities.user.Role;
 import by.itacademy.exception.ApplicationBasedException;
 import by.itacademy.entities.user.PersonalInformation;
@@ -10,8 +11,10 @@ import by.itacademy.exception.security.authentication.UserNotFoundException;
 import by.itacademy.exception.security.authorization.AuthorizationException;
 import by.itacademy.persistence.*;
 import by.itacademy.security.encoder.PasswordEncoder;
+import by.itacademy.security.model.authentication.AuthenticationToken;
 import by.itacademy.security.model.authentication.UserDetailService;
 import by.itacademy.security.model.user.GrantedAuthority;
+import by.itacademy.security.model.user.Roles;
 import by.itacademy.security.model.user.UserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -67,11 +70,11 @@ public class UserService implements UserDetailService {
         }
     }
 
-    public User registerUser(User user) throws AuthenticationException {
-        if ( ! userDao.getByName(user.getLogin()).isPresent()) {
+    public User registerUser(AuthenticationToken token) throws AuthenticationException {
+        User user;
+        if ( ! userDao.getByName(token.getLogin()).isPresent()) {
+            user = initUser(token);
             List<Role> roles = new ArrayList<>();
-            String encodedPassword = user.getCredential().getPassword();
-            user.getCredential().setPassword(encodedPassword);
             for (GrantedAuthority role : user.getAuthorities()) {
                 role =  roleDao.getRoleByRoleName(role.getAuthority());
                 role.getAuthority();
@@ -84,14 +87,6 @@ public class UserService implements UserDetailService {
             throw new UserNameAlreadyExistsException("User with such name already exist");
         }
         return user;
-    }
-
-    public List<User> getAllUsers() throws ApplicationBasedException {
-        try {
-            return userDao.getAll();
-        } catch (DataAccessException e) {
-            throw new ApplicationBasedException(e);
-        }
     }
 
     public void updateUser(User updateUser) throws ApplicationBasedException {
@@ -126,5 +121,17 @@ public class UserService implements UserDetailService {
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
         }
+    }
+
+    private User initUser(AuthenticationToken token) {
+        List<Role> roles = new ArrayList<>();
+        roles.add(new Role(Roles.USER));
+
+        return User.builder()
+                .credential(new Credential(token.getLogin(), passwordEncoder.encodePassword(token.getPassword())))
+                .personalInformation(new PersonalInformation(0, "", ""))
+                .roles(roles)
+                .accountNotLocked(true)
+                .build();
     }
 }
