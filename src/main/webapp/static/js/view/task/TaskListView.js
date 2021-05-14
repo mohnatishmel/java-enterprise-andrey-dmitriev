@@ -58,7 +58,7 @@ function initTask(jsonTask, toolbox) {
     $newToolBox.find("#toTrashBoxToolboxBtn").attr("id", "toTrashBoxToolboxBtn" + id);
     $newToolBox.find("#updateToolboxBtn").attr("id", "updateToolboxBtn" + id);
     $newToolBox.find("#uploadToolboxBtn").attr("id", "uploadToolboxBtn" + id);
-    $newToolBox.find("#downloadToolboxBtn").attr("id", "downloadToolboxBtn" + id);
+    $newToolBox.find("#downloadToolboxBtn").attr("id", "downloadToolboxBtn" + id).hide();
     $newToolBox.find("#fixedToolboxToggleSwitch").attr("id", "fixedToolboxToggleSwitch" + id);
 
     console.log("tool box for task_" + id + " initialized")

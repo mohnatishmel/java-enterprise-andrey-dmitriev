@@ -24,57 +24,57 @@ function TaskList() {
     }
 }
 
-function Task(id) {
-
-    this.id = id;
+function Task(jsonTask) {
+    this.hasFile = jsonTask.hasFile;
+    this.id = jsonTask.id;
     this.getId = function () {
         return this.id;
     }
     this.getName = function () {
-        return document.getElementById("taskName" + id).innerText;
+        return document.getElementById("taskName" + this.id).innerText;
     }
     this.getDescription = function () {
-        return document.getElementById("taskDescription" + id).innerText;
+        return document.getElementById("taskDescription" + this.id).innerText;
     }
     this.getDeadline = function () {
-        return document.getElementById("taskDeadline" + id).innerText;
+        return document.getElementById("taskDeadline" + this.id).innerText;
     }
     this.isInBasket = function () {
-        return document.getElementById("inBasket" + id).value;
+        return document.getElementById("inBasket" + this.id).value;
     }
     this.isFixed = function () {
-        return document.getElementById("fixed" + id).value;
+        return document.getElementById("fixed" + this.id).value;
     }
 
 
     this.setName = function (val) {
-        document.getElementById("taskName" + id).innerText = val;
+        document.getElementById("taskName" + this.id).innerText = val;
     }
     this.setDescription = function (val) {
-        return document.getElementById("taskDescription" + id).innerText = val;
+        return document.getElementById("taskDescription" + this.id).innerText = val;
     }
     this.setDeadline = function (val) {
-        document.getElementById("taskDeadline" + id).innerText = val;
+        document.getElementById("taskDeadline" + this.id).innerText = val;
     }
     this.setInBasket = function (val) {
-        document.getElementById("inBasket" + id).value = val;
+        document.getElementById("inBasket" + this.id).value = val;
     }
     this.setFixed = function (val) {
-        document.getElementById("fixed" + id).value = val;
+        document.getElementById("fixed" + this.id).value = val;
     }
 
     this.hide = function () {
-        let $t = $("#headingTask" + id);
+        let $t = $("#headingTask" + this.id);
         fadeOut($t);
     }
 
     this.disappear = function () {
-        let $t = $("#headingTask" + id);
+        let $t = $("#headingTask" + this.id);
         $t.fadeOut("fast");
     }
 
     this.toggleFixed = function () {
-        let $li = $("#headingTask" + id)
+        let $li = $("#headingTask" + this.id)
         let f = this.isFixed();
         let t = true;
         if(String(f) == String(t)) {
@@ -101,8 +101,8 @@ function Task(id) {
     }
 
     this.expired = function () {
-        $("#headingTask" + id).find(".check-icon").addClass("expired");
-        $("#daysLeft" + id).addClass("expired");
+        $("#headingTask" + this.id).find(".check-icon").addClass("expired");
+        $("#daysLeft" + this.id).addClass("expired");
     }
 }
 
@@ -123,6 +123,7 @@ function TaskToolBoxForTrashBox(id) {
 
 function getJsonTask(updateData) {
     let task = {}
+    task.hasFile = updateData.hasFile;
     task.id = updateData.getId();
     task.name = updateData.getName();
     task.description = updateData.getDescription();

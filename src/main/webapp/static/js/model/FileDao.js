@@ -42,6 +42,7 @@ function uploadFile() {
         // cache : false,
         success: function () {
             alert('The file has been uploaded successfully.');
+            fileUploadSuccess();
         },
         error: function (data) {
             alert(data.responseJSON.message);

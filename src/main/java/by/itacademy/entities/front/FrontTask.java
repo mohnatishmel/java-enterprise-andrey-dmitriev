@@ -17,5 +17,6 @@ public class FrontTask {
     private Date deadLine;
     private boolean fixed;
     private boolean inBasket;
+    private boolean hasFile;
 
 }

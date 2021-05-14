@@ -20,15 +20,16 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO tasks(user_id, task_name, description, deadline, fixed, in_basket) " +
-            "VALUES(:userId,:name,:description,:deadline,:fixed,:inBasket);",
+    @Query(value = "INSERT INTO tasks(user_id, task_name, description, deadline, fixed, in_basket, has_file) " +
+            "VALUES(:userId,:name,:description,:deadline,:fixed,:inBasket,:hasFile);",
             nativeQuery = true)
     void create(@Param("userId") int userId,
                 @Param("name") String name,
                 @Param("description") String description,
                 @Param("deadline") Date deadline,
                 @Param("fixed") boolean fixed,
-                @Param("inBasket") boolean inBasket);
+                @Param("inBasket") boolean inBasket,
+                @Param("hasFile") boolean hasFile);
 
     @Query("from Task t where t.userId = :userId")
     List<Task> getByUserId(@Param("userId") int userId);
@@ -45,7 +46,8 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
             "t.description = :description, " +
             "t.deadLine = :deadLine, " +
             "t.fixed = :fixed, " +
-            "t.inBasket = :inBasket " +
+            "t.inBasket = :inBasket, " +
+            "t.hasFile = :hasFile " +
             "where t.id = :id")
 
     void update(@Param("id") int id,
@@ -53,7 +55,8 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Integer> {
                 @Param("description") String description,
                 @Param("deadLine") Date deadLine,
                 @Param("fixed") boolean fixed,
-                @Param("inBasket") boolean inBasket);
+                @Param("inBasket") boolean inBasket,
+                @Param("hasFile") boolean hasFile);
 
     Page<Task> getByDeadLineIsLessThanEqualAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date dateStart, int id, Pageable pageable);
     Page<Task> getByDeadLineBetweenAndUserIdAndFixedIsFalseAndInBasketIsFalse(Date dateStart, Date dateEnd, int id, Pageable pageable);

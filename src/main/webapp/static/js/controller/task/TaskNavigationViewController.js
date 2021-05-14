@@ -1,36 +1,21 @@
 viewerNav.todayViewBtn.on("click", function () {
-    currentView = "TODAY";
-    viewerNav.todayView();
-    showTaskListCommonView("/rest/tasks/today", 0);
-    console.log("current view: " + currentView);
+    todayTaskView(0)
 });
 
 viewerNav.tomorrowViewBtn.on("click", function () {
-    currentView = "TOMORROW";
-    viewerNav.tomorrowView();
-    showTaskListCommonView("/rest/tasks/tomorrow", 0);
-    console.log("current view: " + currentView);
+    tomorrowTaskView(0)
 });
 
 viewerNav.somedayViewBtn.on("click", function () {
-    currentView = "SOMEDAY";
-    viewerNav.somedayView();
-    showTaskListCommonView("/rest/tasks/someday", 0);
-    console.log("current view: " + currentView);
+    somedayTaskView(0)
 });
 
 viewerNav.fixedViewBtn.on("click", function () {
-    currentView = "FIXED";
-    viewerNav.fixedView();
-    showTaskListCommonView("/rest/tasks/fixed", 0);
-    console.log("current view: " + currentView);
+    fixedTaskView(0)
 });
 
 viewerNav.trashBoxViewBtn.on("click", function () {
-    currentView = "TRASH_BOX";
-    viewerNav.trashBoxView();
-    showTaskListTrashBoxView("/rest/tasks/trashBox", 0);
-    console.log("current view: " + currentView);
+    trashBoxTaskView(0)
 });
 
 viewerNav.emptyTaskTrashBoxBtn.on("click", function () {
@@ -49,5 +34,42 @@ viewerNav.clearFixedTasksBtn.on("click", function () {
     deleteAllTasksFromViewList();
     viewList = {};
 });
+
+
+function todayTaskView(pageNumber) {
+    currentView = "TODAY";
+    viewerNav.todayView();
+    showTaskListCommonView("/rest/tasks/today", pageNumber);
+    console.log("current view: " + currentView);
+};
+
+function tomorrowTaskView(pageNumber) {
+    currentView = "TOMORROW";
+    viewerNav.tomorrowView();
+    showTaskListCommonView("/rest/tasks/tomorrow", pageNumber);
+    console.log("current view: " + currentView);
+};
+
+function somedayTaskView(pageNumber) {
+    currentView = "SOMEDAY";
+    viewerNav.somedayView();
+    showTaskListCommonView("/rest/tasks/someday", pageNumber);
+    console.log("current view: " + currentView);
+};
+
+function fixedTaskView(pageNumber) {
+    currentView = "FIXED";
+    viewerNav.fixedView();
+    showTaskListCommonView("/rest/tasks/fixed", pageNumber);
+    console.log("current view: " + currentView);
+};
+
+function trashBoxTaskView(pageNumber) {
+    currentView = "TRASH_BOX";
+    viewerNav.trashBoxView();
+    showTaskListTrashBoxView("/rest/tasks/trashBox", pageNumber);
+    console.log("current view: " + currentView);
+};
+
 
 

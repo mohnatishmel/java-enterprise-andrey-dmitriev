@@ -85,7 +85,18 @@ public class TaskService {
                     task.getDescription(),
                     new java.sql.Date(task.getDeadLine().getTime()),
                     task.isFixed(),
-                    task.isInBasket());
+                    task.isInBasket(),
+                    false);
+        } catch (DataAccessException e) {
+            throw new ApplicationBasedException(e);
+        }
+    }
+
+    public void updateTaskHasFile(int id, boolean hasFile) throws ApplicationBasedException {
+        try {
+            Task task = taskDao.getById(id);
+            task.setHasFile(hasFile);
+            updateTask(task);
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
         }
@@ -100,7 +111,8 @@ public class TaskService {
                     task.getDescription(),
                     new java.sql.Date(task.getDeadLine().getTime()),
                     task.isFixed(),
-                    task.isInBasket());
+                    task.isInBasket(),
+                    task.isHasFile());
         } catch (DataAccessException e) {
             throw new ApplicationBasedException(e);
         }

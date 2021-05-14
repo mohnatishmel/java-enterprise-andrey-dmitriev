@@ -51,12 +51,12 @@
         <div class="float-right" data-toggle="tooltip" data-placement="top" title="Put task into trash box">
             <i class="fa fa-trash-o inactive" aria-hidden="true" id="toTrashBoxToolboxBtn"></i>
         </div>
-        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Download file">
-            <i class="fa fa-download inactive" id="downloadToolboxBtn" aria-hidden="true"></i>
-        </div>
         <div class="float-right" data-toggle="tooltip" data-placement="top" title="Upload file">
             <i class="fa fa-upload inactive" aria-hidden="true" id="uploadToolBoxBtn" data-toggle="modal"
                data-target="#uploadFileModal"></i>
+        </div>
+        <div class="float-right" data-toggle="tooltip" data-placement="top" title="Download file">
+            <i class="fa fa-download inactive" id="downloadToolboxBtn" aria-hidden="true"></i>
         </div>
     </div>
 </div>

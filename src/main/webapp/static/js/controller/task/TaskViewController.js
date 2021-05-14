@@ -45,8 +45,8 @@ function mapTasksFromJsonForCommonView(jsonTaskList) {
 
         taskView.append(newTask);
 
-        toolbox = new TaskToolBoxStandard(id);
-        newTask = new Task(id);
+        toolbox = new TaskToolBoxStandard(id,);
+        newTask = new Task(jsonTask);
         viewList.put(newTask);
 
         toolbox.uploadToolboxBtn.on("click", function () {
@@ -80,6 +80,10 @@ function mapTasksFromJsonForCommonView(jsonTaskList) {
         if (taskDeadLine.getTime() < today.getTime()) {
             newTask.expired();
         }
+
+        if (newTask.hasFile) {
+            $("#downloadToolboxBtn" + id).show();
+        }
     });
 }
 
@@ -94,7 +98,7 @@ function mapTasksFromJsonForTrashBoxView(jsonTaskList) {
         taskView.append(newTask);
 
         toolbox = new TaskToolBoxForTrashBox(id);
-        newTask = new Task(id);
+        newTask = new Task(jsonTask);
         viewList.put(newTask);
 
         toolbox.deleteTaskBtn.on("click", function () {

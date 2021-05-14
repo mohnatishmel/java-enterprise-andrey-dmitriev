@@ -37,4 +37,6 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(name = "HAS_FILE")
+    private boolean hasFile;
 }

@@ -105,7 +105,7 @@ ALTER TABLE roles_map ALTER COLUMN roles_map_id int(11) NOT NULL AUTO_INCREMENT;
 -- Table structure for table tasks
 --
 
-CREATE TABLE tasks ( task_id int(11) NOT NULL, user_id int(11) NOT NULL, task_name varchar(255), description varchar(600), deadline datetime NOT NULL, fixed boolean(1) NOT NULL, in_basket boolean(1) NOT NULL);
+CREATE TABLE tasks ( task_id int(11) NOT NULL, user_id int(11) NOT NULL, task_name varchar(255), description varchar(600), deadline datetime NOT NULL, fixed boolean(1) NOT NULL, in_basket boolean(1) NOT NULL, has_file boolean(1) NOT NULL);
 --
 -- Indexes for table tasks
 --

@@ -18,6 +18,7 @@ public class TaskToFrontTaskConverter implements Converter<Task, FrontTask> {
                 .inBasket(task.isInBasket())
                 .name(task.getName())
                 .userId(task.getUserId())
+                .hasFile(task.isHasFile())
                 .build();
     }
 }

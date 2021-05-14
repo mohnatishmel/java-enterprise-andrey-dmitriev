@@ -6,3 +6,8 @@ function initUploadFileForm(id) {
 document.getElementById("uploadFileBtn").addEventListener("click", function () {
     uploadFile();
 })
+
+function fileUploadSuccess() {
+    let id = fileUploadForm.getTaskId();
+    $("#downloadToolboxBtn" + id).show("fast");
+}
